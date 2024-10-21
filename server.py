@@ -45,7 +45,7 @@ def handle_register(message_parts, addr):
     rq_number = message_parts[1]
     name = message_parts[2]
     udp_socket = message_parts[4]
-    tcp_socket = message_parts[5]
+    tcp_socket = message_parts[5]       # For Storing the TCP socket for checkout
 
     with peer_lock:
         if name in registered_peers:
@@ -94,7 +94,7 @@ def handle_offer(message_parts, addr):
     price = message_parts[4]
 
     logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
-    # Further logic like negotiation can be handled here
+    #todo: Further logic like negotiation to be handled here
 
 
 def send_udp_response(message, addr):

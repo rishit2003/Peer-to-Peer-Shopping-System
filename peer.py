@@ -6,6 +6,7 @@ import time
 # Function to register the peer with the server
 def register_with_server(name, udp_port, tcp_port):
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # todo: Why RQ# isn't passed as integer?
     register_msg = f"REGISTER RQ# {name} 127.0.0.1 {udp_port} {tcp_port}"
     print(f"Sending registration message: {register_msg}")
     udp_socket.sendto(register_msg.encode(), ('localhost', 5000))
@@ -21,7 +22,7 @@ def handle_tcp_transaction(tcp_port):
     server_socket.bind(('localhost', tcp_port))
     server_socket.listen(1)
 
-    conn, addr = server_socket.accept()
+    conn, addr = server_socket.accept()     # Waits for the TCP connection to be made
     print(f"TCP transaction started with {addr}")
 
     data = conn.recv(1024).decode()
