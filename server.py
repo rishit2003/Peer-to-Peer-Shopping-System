@@ -106,3 +106,5 @@ def send_udp_response(message, addr):
 if __name__ == "__main__":
     udp_thread = threading.Thread(target=udp_listener)
     udp_thread.start()
+
+#todo: create txt file with registered clients and deregistered clients

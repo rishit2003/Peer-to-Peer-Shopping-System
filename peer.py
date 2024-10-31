@@ -60,4 +60,4 @@ if __name__ == "__main__":
     # Simulate peers from the test_peers.txt file
     simulate_peers_from_file("test_peers.txt")
 
-#Rishit - commit
+#todo: create thread for dealing with the message responses from server and to server
