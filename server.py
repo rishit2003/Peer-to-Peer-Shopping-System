@@ -105,7 +105,7 @@ def send_udp_response(message, addr):
 
 if __name__ == "__main__":
     udp_thread = threading.Thread(target=udp_listener)
-    udp_thread.daemon = True  # Ensures the server exits if the main thread exits
+    # udp_thread.daemon = True  # Ensures the server exits if the main thread exits
     udp_thread.start()
 
 
