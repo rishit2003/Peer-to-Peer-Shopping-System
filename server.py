@@ -11,7 +11,6 @@ registered_peers = {}
 # Lock to ensure thread safety when accessing shared data
 peer_lock = threading.Lock()
 
-
 def udp_listener():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind(('localhost', 5000))
@@ -23,12 +22,12 @@ def udp_listener():
         logging.info(f"Received message from {addr}: {message}")  # Log received message
         threading.Thread(target=handle_udp_message, args=(data, addr)).start()
 
-
 def handle_udp_message(data, addr):
     message = data.decode()
     message_parts = message.split()
     msg_type = message_parts[0]
 
+    # Locking each handler function with peer_lock to ensure thread safety
     if msg_type == "REGISTER":
         handle_register(message_parts, addr)
     elif msg_type == "DE-REGISTER":
@@ -39,7 +38,6 @@ def handle_udp_message(data, addr):
         handle_offer(message_parts, addr)
     else:
         logging.warning(f"Unknown message type from {addr}: {message}")
-
 
 def handle_register(message_parts, addr):
     rq_number = message_parts[1]
@@ -59,7 +57,6 @@ def handle_register(message_parts, addr):
 
     send_udp_response(response, addr)
 
-
 def handle_deregister(message_parts, addr):
     rq_number = message_parts[1]
     name = message_parts[2]
@@ -68,9 +65,12 @@ def handle_deregister(message_parts, addr):
         if name in registered_peers:
             del registered_peers[name]
             logging.info(f"{name} de-registered successfully.")
+            response = f"DE-REGISTERED {rq_number}"
         else:
+            response = f"DE-REGISTER-DENIED {rq_number} Name not found"
             logging.warning(f"DE-REGISTER ignored. {name} not found.")
 
+    send_udp_response(response, addr)
 
 def handle_search(message_parts, addr):
     rq_number = message_parts[1]
@@ -82,10 +82,9 @@ def handle_search(message_parts, addr):
     with peer_lock:
         for peer_name, peer_info in registered_peers.items():
             if peer_name != name:
-                search_msg = f"SEARCH {rq_number} {item_name} {item_description}"
+                search_msg = f"SEARCH {rq_number} {item_name} {item_description} {max_price}"
                 send_udp_response(search_msg, peer_info['address'])
                 logging.info(f"SEARCH request from {name} forwarded to {peer_name} for item '{item_name}'")
-
 
 def handle_offer(message_parts, addr):
     rq_number = message_parts[1]
@@ -96,15 +95,19 @@ def handle_offer(message_parts, addr):
     logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
     #todo: Further logic like negotiation to be handled here
 
-
 def send_udp_response(message, addr):
-    udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udp_socket.sendto(message.encode(), addr)
-    logging.info(f"Sent UDP response to {addr}: {message}")
-
+    # Lock to make sure the UDP response is handled without race conditions
+    with peer_lock:
+        udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        udp_socket.sendto(message.encode(), addr)
+        udp_socket.close()
+        logging.info(f"Sent UDP response to {addr}: {message}")
 
 if __name__ == "__main__":
     udp_thread = threading.Thread(target=udp_listener)
+    # udp_thread.daemon = True  # Ensures the server exits if the main thread exits
     udp_thread.start()
+
+
 
 #todo: create txt file with registered clients and deregistered clients

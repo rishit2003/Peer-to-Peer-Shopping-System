@@ -9,12 +9,18 @@ def register_with_server(name, udp_port, tcp_port):
     # todo: Why RQ# isn't passed as integer?
     register_msg = f"REGISTER RQ# {name} 127.0.0.1 {udp_port} {tcp_port}"
     print(f"Sending registration message: {register_msg}")
-    udp_socket.sendto(register_msg.encode(), ('localhost', 5000))
 
-    # Listen for response from server
-    data, _ = udp_socket.recvfrom(1024)
-    print(f"Server response for {name}: {data.decode()}")
-
+    # Try to send registration message and handle exceptions
+    try:
+        udp_socket.sendto(register_msg.encode(), ('localhost', 5000))
+        data, _ = udp_socket.recvfrom(1024)
+        print(f"Server response for {name}: {data.decode()}")
+    except ConnectionResetError:
+        print(f"Connection error: Unable to register {name}. Server may not be available.")
+    except Exception as e:
+        print(f"Unexpected error occurred during registration for {name}: {e}")
+    finally:
+        udp_socket.close()
 
 # Function to handle TCP transactions
 def handle_tcp_transaction(tcp_port):
@@ -22,15 +28,19 @@ def handle_tcp_transaction(tcp_port):
     server_socket.bind(('localhost', tcp_port))
     server_socket.listen(1)
 
-    conn, addr = server_socket.accept()     # Waits for the TCP connection to be made
-    print(f"TCP transaction started with {addr}")
+    try:
+        conn, addr = server_socket.accept()
+        print(f"TCP transaction started with {addr}")
 
-    data = conn.recv(1024).decode()
-    print(f"Transaction details: {data}")
+        data = conn.recv(1024).decode()
+        print(f"Transaction details: {data}")
 
-    conn.sendall("INFORM_Res Name CC# Exp_Date Address".encode())
-    conn.close()
-
+        conn.sendall("INFORM_Res Name CC# Exp_Date Address".encode())
+        conn.close()
+    except Exception as e:
+        print(f"Error during TCP transaction: {e}")
+    finally:
+        server_socket.close()
 
 # Function to simulate a peer from input data
 def simulate_peer(name, udp_port, tcp_port):
@@ -40,7 +50,6 @@ def simulate_peer(name, udp_port, tcp_port):
 
     # Register with the server
     register_with_server(name, udp_port, tcp_port)
-
 
 # Read peer data from input file and simulate each peer
 def simulate_peers_from_file(filename):
@@ -55,9 +64,11 @@ def simulate_peers_from_file(filename):
             threading.Thread(target=simulate_peer, args=(name, udp_port, tcp_port)).start()
             time.sleep(1)  # Delay to simulate a staggered start
 
-
 if __name__ == "__main__":
-    # Simulate peers from the test_peers.txt file
-    simulate_peers_from_file("test_peers.txt")
+    try:
+        # Simulate peers from the test_peers.txt file
+        simulate_peers_from_file("test_peers.txt")
+    except KeyboardInterrupt:
+        print("Process interrupted by user.")
 
 #todo: create thread for dealing with the message responses from server and to server
