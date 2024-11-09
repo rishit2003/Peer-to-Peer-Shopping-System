@@ -1,3 +1,4 @@
+
 2024-11-08 18:16:40,541 - INFO - Server started, listening on UDP port 5000...
 2024-11-08 18:16:45,494 - INFO - Received message from ('127.0.0.1', 59278): REGISTER RQ# Peer1 127.0.0.1 6000 7000
 2024-11-08 18:16:45,495 - INFO - Registered Peer1 with UDP port 6000 and TCP port 7000
@@ -48,3 +49,94 @@
 2024-11-08 18:17:24,411 - INFO - Received message from ('127.0.0.1', 55613): REGISTER RQ# Peer10 127.0.0.1 6009 9009
 2024-11-08 18:17:24,412 - INFO - Registered Peer10 with UDP port 6009 and TCP port 9009
 2024-11-08 18:17:24,412 - INFO - Sent UDP response to ('127.0.0.1', 55613): REGISTERED RQ#
+=======
+2024-11-08 18:07:54,914 - INFO - Server started, listening on UDP port 5000...
+2024-11-08 18:08:02,556 - INFO - Received message from ('127.0.0.1', 49590): REGISTER RQ# Peer1 127.0.0.1 6000 7000
+2024-11-08 18:08:02,556 - INFO - Registered Peer1 with UDP port 6000 and TCP port 7000
+2024-11-08 18:08:02,556 - INFO - Sent UDP response to ('127.0.0.1', 49590): REGISTERED RQ#
+2024-11-08 18:08:03,562 - INFO - Received message from ('127.0.0.1', 55688): REGISTER RQ# Peer2 127.0.0.1 6001 7001
+2024-11-08 18:08:03,563 - INFO - Registered Peer2 with UDP port 6001 and TCP port 7001
+2024-11-08 18:08:03,564 - INFO - Sent UDP response to ('127.0.0.1', 55688): REGISTERED RQ#
+2024-11-08 18:08:04,567 - INFO - Received message from ('127.0.0.1', 58461): REGISTER RQ# Peer3 127.0.0.1 6002 7002
+2024-11-08 18:08:04,568 - INFO - Registered Peer3 with UDP port 6002 and TCP port 7002
+2024-11-08 18:08:04,568 - INFO - Sent UDP response to ('127.0.0.1', 58461): REGISTERED RQ#
+2024-11-08 18:08:05,570 - INFO - Received message from ('127.0.0.1', 64147): REGISTER RQ# Peer4 127.0.0.1 6003 7003
+2024-11-08 18:08:05,570 - INFO - Registered Peer4 with UDP port 6003 and TCP port 7003
+2024-11-08 18:08:05,571 - INFO - Sent UDP response to ('127.0.0.1', 64147): REGISTERED RQ#
+2024-11-08 18:08:06,573 - INFO - Received message from ('127.0.0.1', 51496): REGISTER RQ# Peer5 127.0.0.1 6004 7004
+2024-11-08 18:08:06,574 - INFO - Registered Peer5 with UDP port 6004 and TCP port 7004
+2024-11-08 18:08:06,574 - INFO - Sent UDP response to ('127.0.0.1', 51496): REGISTERED RQ#
+2024-11-08 18:08:07,576 - INFO - Received message from ('127.0.0.1', 62188): REGISTER RQ# Peer6 127.0.0.1 6005 7005
+2024-11-08 18:08:07,576 - INFO - Registered Peer6 with UDP port 6005 and TCP port 7005
+2024-11-08 18:08:07,577 - INFO - Sent UDP response to ('127.0.0.1', 62188): REGISTERED RQ#
+2024-11-08 18:08:08,581 - INFO - Received message from ('127.0.0.1', 50258): REGISTER RQ# Peer7 127.0.0.1 6006 7006
+2024-11-08 18:08:08,582 - INFO - Registered Peer7 with UDP port 6006 and TCP port 7006
+2024-11-08 18:08:08,582 - INFO - Sent UDP response to ('127.0.0.1', 50258): REGISTERED RQ#
+2024-11-08 18:08:09,583 - INFO - Received message from ('127.0.0.1', 59681): REGISTER RQ# Peer8 127.0.0.1 6007 7007
+2024-11-08 18:08:09,583 - INFO - Registered Peer8 with UDP port 6007 and TCP port 7007
+2024-11-08 18:08:09,584 - INFO - Sent UDP response to ('127.0.0.1', 59681): REGISTERED RQ#
+2024-11-08 18:08:10,585 - INFO - Received message from ('127.0.0.1', 64894): REGISTER RQ# Peer9 127.0.0.1 6008 7008
+2024-11-08 18:08:10,585 - INFO - Registered Peer9 with UDP port 6008 and TCP port 7008
+2024-11-08 18:08:10,586 - INFO - Sent UDP response to ('127.0.0.1', 64894): REGISTERED RQ#
+2024-11-08 18:08:11,590 - INFO - Received message from ('127.0.0.1', 57850): REGISTER RQ# Peer10 127.0.0.1 6009 7009
+2024-11-08 18:08:11,591 - INFO - Registered Peer10 with UDP port 6009 and TCP port 7009
+2024-11-08 18:08:11,591 - INFO - Sent UDP response to ('127.0.0.1', 57850): REGISTERED RQ#
+2024-11-08 18:12:51,976 - INFO - Server started, listening on UDP port 5000...
+2024-11-08 18:12:54,883 - INFO - Received message from ('127.0.0.1', 63051): REGISTER RQ# Peer1 127.0.0.1 6000 7000
+2024-11-08 18:12:54,883 - INFO - Registered Peer1 with UDP port 6000 and TCP port 7000
+2024-11-08 18:12:54,883 - INFO - Sent UDP response to ('127.0.0.1', 63051): REGISTERED RQ#
+2024-11-08 18:12:55,889 - INFO - Received message from ('127.0.0.1', 59148): REGISTER RQ# Peer2 127.0.0.1 6001 7001
+2024-11-08 18:12:55,890 - INFO - Registered Peer2 with UDP port 6001 and TCP port 7001
+2024-11-08 18:12:55,890 - INFO - Sent UDP response to ('127.0.0.1', 59148): REGISTERED RQ#
+2024-11-08 18:12:56,893 - INFO - Received message from ('127.0.0.1', 60223): REGISTER RQ# Peer3 127.0.0.1 6002 7002
+2024-11-08 18:12:56,893 - INFO - Registered Peer3 with UDP port 6002 and TCP port 7002
+2024-11-08 18:12:56,893 - INFO - Sent UDP response to ('127.0.0.1', 60223): REGISTERED RQ#
+2024-11-08 18:12:57,896 - INFO - Received message from ('127.0.0.1', 52199): REGISTER RQ# Peer4 127.0.0.1 6003 7003
+2024-11-08 18:12:57,897 - INFO - Registered Peer4 with UDP port 6003 and TCP port 7003
+2024-11-08 18:12:57,897 - INFO - Sent UDP response to ('127.0.0.1', 52199): REGISTERED RQ#
+2024-11-08 18:12:58,901 - INFO - Received message from ('127.0.0.1', 55276): REGISTER RQ# Peer5 127.0.0.1 6004 7004
+2024-11-08 18:12:58,902 - INFO - Registered Peer5 with UDP port 6004 and TCP port 7004
+2024-11-08 18:12:58,902 - INFO - Sent UDP response to ('127.0.0.1', 55276): REGISTERED RQ#
+2024-11-08 18:12:59,906 - INFO - Received message from ('127.0.0.1', 51912): REGISTER RQ# Peer6 127.0.0.1 6005 7005
+2024-11-08 18:12:59,906 - INFO - Registered Peer6 with UDP port 6005 and TCP port 7005
+2024-11-08 18:12:59,907 - INFO - Sent UDP response to ('127.0.0.1', 51912): REGISTERED RQ#
+2024-11-08 18:13:00,911 - INFO - Received message from ('127.0.0.1', 50697): REGISTER RQ# Peer7 127.0.0.1 6006 7006
+2024-11-08 18:13:00,911 - INFO - Registered Peer7 with UDP port 6006 and TCP port 7006
+2024-11-08 18:13:00,912 - INFO - Sent UDP response to ('127.0.0.1', 50697): REGISTERED RQ#
+2024-11-08 18:13:01,914 - INFO - Received message from ('127.0.0.1', 59753): REGISTER RQ# Peer8 127.0.0.1 6007 7007
+2024-11-08 18:13:01,914 - INFO - Registered Peer8 with UDP port 6007 and TCP port 7007
+2024-11-08 18:13:01,914 - INFO - Sent UDP response to ('127.0.0.1', 59753): REGISTERED RQ#
+2024-11-08 18:13:02,918 - INFO - Received message from ('127.0.0.1', 59206): REGISTER RQ# Peer9 127.0.0.1 6008 7008
+2024-11-08 18:13:02,919 - INFO - Registered Peer9 with UDP port 6008 and TCP port 7008
+2024-11-08 18:13:02,919 - INFO - Sent UDP response to ('127.0.0.1', 59206): REGISTERED RQ#
+2024-11-08 18:13:28,693 - INFO - Server started, listening on UDP port 5000...
+2024-11-08 18:13:31,145 - INFO - Received message from ('127.0.0.1', 60121): REGISTER RQ# Peer1 127.0.0.1 6000 9000
+2024-11-08 18:13:31,146 - INFO - Registered Peer1 with UDP port 6000 and TCP port 9000
+2024-11-08 18:13:31,146 - INFO - Sent UDP response to ('127.0.0.1', 60121): REGISTERED RQ#
+2024-11-08 18:13:32,150 - INFO - Received message from ('127.0.0.1', 62172): REGISTER RQ# Peer2 127.0.0.1 6001 9001
+2024-11-08 18:13:32,151 - INFO - Registered Peer2 with UDP port 6001 and TCP port 9001
+2024-11-08 18:13:32,151 - INFO - Sent UDP response to ('127.0.0.1', 62172): REGISTERED RQ#
+2024-11-08 18:13:33,155 - INFO - Received message from ('127.0.0.1', 53192): REGISTER RQ# Peer3 127.0.0.1 6002 9002
+2024-11-08 18:13:33,156 - INFO - Registered Peer3 with UDP port 6002 and TCP port 9002
+2024-11-08 18:13:33,156 - INFO - Sent UDP response to ('127.0.0.1', 53192): REGISTERED RQ#
+2024-11-08 18:13:34,157 - INFO - Received message from ('127.0.0.1', 50414): REGISTER RQ# Peer4 127.0.0.1 6003 9003
+2024-11-08 18:13:34,158 - INFO - Registered Peer4 with UDP port 6003 and TCP port 9003
+2024-11-08 18:13:34,158 - INFO - Sent UDP response to ('127.0.0.1', 50414): REGISTERED RQ#
+2024-11-08 18:13:35,163 - INFO - Received message from ('127.0.0.1', 62111): REGISTER RQ# Peer5 127.0.0.1 6004 9004
+2024-11-08 18:13:35,164 - INFO - Registered Peer5 with UDP port 6004 and TCP port 9004
+2024-11-08 18:13:35,164 - INFO - Sent UDP response to ('127.0.0.1', 62111): REGISTERED RQ#
+2024-11-08 18:13:36,167 - INFO - Received message from ('127.0.0.1', 63308): REGISTER RQ# Peer6 127.0.0.1 6005 9005
+2024-11-08 18:13:36,168 - INFO - Registered Peer6 with UDP port 6005 and TCP port 9005
+2024-11-08 18:13:36,168 - INFO - Sent UDP response to ('127.0.0.1', 63308): REGISTERED RQ#
+2024-11-08 18:13:37,171 - INFO - Received message from ('127.0.0.1', 52712): REGISTER RQ# Peer7 127.0.0.1 6006 9006
+2024-11-08 18:13:37,171 - INFO - Registered Peer7 with UDP port 6006 and TCP port 9006
+2024-11-08 18:13:37,171 - INFO - Sent UDP response to ('127.0.0.1', 52712): REGISTERED RQ#
+2024-11-08 18:13:38,177 - INFO - Received message from ('127.0.0.1', 64172): REGISTER RQ# Peer8 127.0.0.1 6007 9007
+2024-11-08 18:13:38,178 - INFO - Registered Peer8 with UDP port 6007 and TCP port 9007
+2024-11-08 18:13:38,178 - INFO - Sent UDP response to ('127.0.0.1', 64172): REGISTERED RQ#
+2024-11-08 18:13:39,180 - INFO - Received message from ('127.0.0.1', 53629): REGISTER RQ# Peer9 127.0.0.1 6008 9008
+2024-11-08 18:13:39,180 - INFO - Registered Peer9 with UDP port 6008 and TCP port 9008
+2024-11-08 18:13:39,180 - INFO - Sent UDP response to ('127.0.0.1', 53629): REGISTERED RQ#
+2024-11-08 18:13:40,186 - INFO - Received message from ('127.0.0.1', 50834): REGISTER RQ# Peer10 127.0.0.1 6009 9009
+2024-11-08 18:13:40,186 - INFO - Registered Peer10 with UDP port 6009 and TCP port 9009
+2024-11-08 18:13:40,186 - INFO - Sent UDP response to ('127.0.0.1', 50834): REGISTERED RQ#
