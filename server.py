@@ -72,20 +72,41 @@ class Server:
                 file.write(f"{name}, UDP: {udp_socket}, TCP: {tcp_socket}, Address: {addr}\n")
 
     def handle_search(self, message_parts, addr):
-        # Implementation omitted for brevity
-        pass
+        rq_number = message_parts[1]
+        name = message_parts[2]
+        item_name = message_parts[3]
+        item_description = " ".join(message_parts[4:-1])
+        max_price = message_parts[-1]
+
+        with self.peer_lock:
+            for peer_name, peer_info in self.registered_peers.items():
+                if peer_name != name:
+                    search_msg = f"SEARCH {rq_number} {item_name} {item_description} {max_price}"
+                    self.send_udp_response(search_msg, peer_info['address'])
+                    logging.info(f"SEARCH request from {name} forwarded to {peer_name} for item '{item_name}'")
+
 
     def handle_offer(self, message_parts, addr):
-        # Implementation omitted for brevity
-        pass
+        rq_number = message_parts[1]
+        seller_name = message_parts[2]
+        item_name = message_parts[3]
+        price = message_parts[4]
+
+        logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
+        # TODO: Further logic like negotiation to be handled here
+
 
     def send_udp_response(self, message, addr):
         with self.peer_lock:
             self.server_socket.sendto(message.encode(), addr)
+        logging.info(f"Sent UDP response to {addr}: {message}")
 
     def start(self):
         threading.Thread(target=self.udp_listener).start()
 
+
 if __name__ == "__main__":
     server = Server()
     server.start()
+
+

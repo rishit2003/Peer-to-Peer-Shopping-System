@@ -133,3 +133,6 @@ if __name__ == "__main__":
             break
         else:
             print("Invalid choice. Please try again.")
+
+#TODO : Create function for auto generating RQ number using the ip address
+#TODO : Create a queue for storing RQ number based on the task
