@@ -7,14 +7,15 @@ class Server:
     def __init__(self):
         self.registered_peers = {}
         self.peer_lock = threading.Lock()
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Single socket for both send and receive
+        self.file_name = "server.txt"
 
     def udp_listener(self):
-        server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        server_socket.bind(('localhost', 5000))
+        self.server_socket.bind(('localhost', 5000))
         logging.info("Server started, listening on UDP port 5000...")
 
         while True:
-            data, addr = server_socket.recvfrom(1024)
+            data, addr = self.server_socket.recvfrom(1024)
             threading.Thread(target=self.handle_udp_message, args=(data, addr)).start()
 
     def handle_udp_message(self, data, addr):
@@ -44,8 +45,8 @@ class Server:
                 response = f"REGISTER-DENIED {rq_number} Name already in use"
             else:
                 self.registered_peers[name] = {'address': addr, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket}
+                self.update_peer_file()  # Update the file to include the new registration
                 response = f"REGISTERED {rq_number}"
-
         self.send_udp_response(response, addr)
 
     def handle_deregister(self, message_parts, addr):
@@ -55,10 +56,20 @@ class Server:
         with self.peer_lock:
             if name in self.registered_peers:
                 del self.registered_peers[name]
+                self.update_peer_file()  # Update the file to reflect the deregistration
                 response = f"DE-REGISTERED {rq_number}"
             else:
                 response = f"DE-REGISTER-DENIED {rq_number} Name not found"
         self.send_udp_response(response, addr)
+
+    def update_peer_file(self):
+        """Writes the current list of registered peers to the server.txt file."""
+        with open(self.file_name, "w") as file:  # Overwrite the file with the current state
+            for name, details in self.registered_peers.items():
+                addr = details['address']
+                udp_socket = details['udp_socket']
+                tcp_socket = details['tcp_socket']
+                file.write(f"{name}, UDP: {udp_socket}, TCP: {tcp_socket}, Address: {addr}\n")
 
     def handle_search(self, message_parts, addr):
         # Implementation omitted for brevity
@@ -70,9 +81,7 @@ class Server:
 
     def send_udp_response(self, message, addr):
         with self.peer_lock:
-            udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            udp_socket.sendto(message.encode(), addr)
-            udp_socket.close()
+            self.server_socket.sendto(message.encode(), addr)
 
     def start(self):
         threading.Thread(target=self.udp_listener).start()
