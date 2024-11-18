@@ -57,12 +57,12 @@ class Peer:
     def register_with_server(self):
         register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.client.address} {self.udp_port} {self.tcp_port}"
         print(f"Sending registration message: {register_msg}")
-        self.send_and_wait_for_response(register_msg, ('localhost', 5000))
+        self.send_and_wait_for_response(register_msg, (server_ip, 5000))
 
     def deregister_with_server(self):
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
         print(f"Sending deregistration message: {deregister_msg}")
-        self.send_and_wait_for_response(deregister_msg, ('localhost', 5000))
+        self.send_and_wait_for_response(deregister_msg, (server_ip, 5000))
 
 
     def handle_tcp_transaction(self):
@@ -105,6 +105,9 @@ if __name__ == "__main__":
     # time.sleep(1)  # Delay to simulate staggered registration
     # Peer2 = Peer(name="Peer2", udp_port=6001, tcp_port=9001, rq_number="RQ2")
     # threading.Thread(target=Peer2.start).start()
+
+    input_serverIP = input("Enter Server's IP: ")
+    server_ip = input_serverIP
 
     # Single-line input for peer details
     input_line = input("Enter peer details (e.g., Peer1 6000 9000): ")

@@ -11,7 +11,9 @@ class Server:
         self.file_name = "server.txt"
 
     def udp_listener(self):
-        self.server_socket.bind(('localhost', 5000))
+        server_ip = get_server_ip()
+        print(f"Server is running on {server_ip}, listening on UDP port 5000")
+        self.server_socket.bind((server_ip, 5000))
         logging.info("Server started, listening on UDP port 5000...")
 
         while True:
@@ -95,7 +97,6 @@ class Server:
         logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
         # TODO: Further logic like negotiation to be handled here
 
-
     def send_udp_response(self, message, addr):
         with self.peer_lock:
             self.server_socket.sendto(message.encode(), addr)
@@ -103,6 +104,13 @@ class Server:
 
     def start(self):
         threading.Thread(target=self.udp_listener).start()
+
+def get_server_ip():
+    """Determine the server's network IP."""
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        s.connect(("8.8.8.8", 80))  # Connect to a public IP to determine local network IP
+        return s.getsockname()[0]
+
 
 
 if __name__ == "__main__":
