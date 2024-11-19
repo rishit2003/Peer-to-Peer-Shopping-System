@@ -2,13 +2,34 @@
 import socket
 import threading
 import logging
+import json
+import os
 
 class Server:
     def __init__(self):
         self.registered_peers = {}
         self.peer_lock = threading.Lock()
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Single socket for both send and receive
-        self.file_name = "server.txt"
+        self.server_file = "server.json"
+        self.active_requests = {}
+        # Load server state from the file, if it exists
+        self.load_server_state()
+
+    def load_server_state(self):
+        """Load registered peers and active requests from server.json."""
+        if os.path.exists(self.server_file):
+            with open(self.server_file, "r") as file:
+                data = json.load(file)
+                self.registered_peers = data.get("registered_peers", {})
+                self.active_requests = data.get("active_requests", {})
+        else:
+            self.registered_peers = {}
+            self.active_requests = {}
+
+    def save_server_state(self):
+        """Save registered peers and active requests to server.json."""
+        with open(self.server_file, "w") as file:
+            json.dump({"registered_peers": self.registered_peers, "active_requests": self.active_requests}, file, indent=4)
 
     def udp_listener(self):
         server_ip = get_server_ip()
@@ -43,12 +64,19 @@ class Server:
         tcp_socket = message_parts[5]
 
         with self.peer_lock:
+            # Add the request to active_requests
+            self.active_requests[rq_number] = {'name': name, 'operation': 'REGISTER', 'status': 'Processing'}
+            self.save_server_state()  # Save the new request to requests.json
+
             if name in self.registered_peers:
                 response = f"REGISTER-DENIED {rq_number} Name already in use"
+                self.active_requests[rq_number]['status'] = 'Failed'
             else:
-                self.registered_peers[name] = {'address': addr, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket}
-                self.update_peer_file()  # Update the file to include the new registration
+                self.registered_peers[name] = {"rq_number": rq_number, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket,'address': addr}
                 response = f"REGISTERED {rq_number}"
+                self.active_requests[rq_number]['status'] = 'Completed'
+            self.save_server_state()  # Update the request status in requests.json
+
         self.send_udp_response(response, addr)
 
     def handle_deregister(self, message_parts, addr):
@@ -56,22 +84,23 @@ class Server:
         name = message_parts[2]
 
         with self.peer_lock:
+            # Add the request to active_requests
+            self.active_requests[rq_number] = {'name': name, 'operation': 'DE-REGISTER', 'status': 'Processing'}
+            self.save_server_state()
+
             if name in self.registered_peers:
                 del self.registered_peers[name]
-                self.update_peer_file()  # Update the file to reflect the deregistration
+                # Remove all requests ever made by this peer
+                self.active_requests = {
+                    rq: details for rq, details in self.active_requests.items() if details['name'] != name
+                }
                 response = f"DE-REGISTERED {rq_number}"
             else:
                 response = f"DE-REGISTER-DENIED {rq_number} Name not found"
-        self.send_udp_response(response, addr)
+                self.active_requests[rq_number]['status'] = 'Failed'
+            self.save_server_state()  # Update the request status in requests.json
 
-    def update_peer_file(self):
-        """Writes the current list of registered peers to the server.txt file."""
-        with open(self.file_name, "w") as file:  # Overwrite the file with the current state
-            for name, details in self.registered_peers.items():
-                addr = details['address']
-                udp_socket = details['udp_socket']
-                tcp_socket = details['tcp_socket']
-                file.write(f"{name}, UDP: {udp_socket}, TCP: {tcp_socket}, Address: {addr}\n")
+        self.send_udp_response(response, addr)
 
     def handle_search(self, message_parts, addr):
         rq_number = message_parts[1]
