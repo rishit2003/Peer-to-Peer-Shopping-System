@@ -16,12 +16,14 @@ class Peer:
             self.address = address
             self.credit_card = self.CreditCard()
 
+    rq_counter = 1
+
     def __init__(self, name, udp_port, tcp_port):
         self.name = name
         self.udp_port = udp_port
         self.tcp_port = tcp_port
         self.address = get_local_ip()
-        self.client = self.Client(f"RQ#{name}", name, self.address)
+        self.client = self.Client(self.generate_rq_number(), name, self.address)
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind((self.address, self.udp_port))  # Bind to listen for messages
         self.response_event = threading.Event()  # Event to signal when a response is received
@@ -39,6 +41,12 @@ class Peer:
             except Exception as e:
                 print(f"Error while listening to server messages: {e}")
                 break
+
+    def generate_rq_number(self):
+        """Generate a simple RQ# based on IP address and a counter."""
+        rq_number = f"{self.address}-{Peer.rq_counter}"
+        Peer.rq_counter += 1
+        return rq_number
 
     def send_and_wait_for_response(self, message, server_address, timeout=5):
         """Send a message to the server and wait for a response via listen_to_server."""
