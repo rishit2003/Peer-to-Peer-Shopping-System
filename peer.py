@@ -16,12 +16,14 @@ class Peer:
             self.address = address
             self.credit_card = self.CreditCard()
 
+    rq_counter = 1
+
     def __init__(self, name, udp_port, tcp_port):
         self.name = name
         self.udp_port = udp_port
         self.tcp_port = tcp_port
         self.address = get_local_ip()
-        self.client = self.Client(f"RQ#{name}", name, self.address)
+        self.client = self.Client(self.generate_rq_number(), name, self.address)
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind((self.address, self.udp_port))  # Bind to listen for messages
         self.response_event = threading.Event()  # Event to signal when a response is received
@@ -40,6 +42,12 @@ class Peer:
                 print(f"Error while listening to server messages: {e}")
                 break
 
+    def generate_rq_number(self):
+        """Generate a simple RQ# based on IP address and a counter."""
+        rq_number = f"{self.address}-{Peer.rq_counter}"
+        Peer.rq_counter += 1
+        return rq_number
+
     def send_and_wait_for_response(self, message, server_address, timeout=5):
         """Send a message to the server and wait for a response via listen_to_server."""
         self.response_event.clear()  # Reset the event before sending a message
@@ -57,12 +65,12 @@ class Peer:
     def register_with_server(self):
         register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.client.address} {self.udp_port} {self.tcp_port}"
         print(f"Sending registration message: {register_msg}")
-        self.send_and_wait_for_response(register_msg, ('localhost', 5000))
+        self.send_and_wait_for_response(register_msg, (server_ip, 5000))
 
     def deregister_with_server(self):
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
         print(f"Sending deregistration message: {deregister_msg}")
-        self.send_and_wait_for_response(deregister_msg, ('localhost', 5000))
+        self.send_and_wait_for_response(deregister_msg, (server_ip, 5000))
 
 
     def handle_tcp_transaction(self):
@@ -105,6 +113,9 @@ if __name__ == "__main__":
     # time.sleep(1)  # Delay to simulate staggered registration
     # Peer2 = Peer(name="Peer2", udp_port=6001, tcp_port=9001, rq_number="RQ2")
     # threading.Thread(target=Peer2.start).start()
+
+    input_serverIP = input("Enter Server's IP: ")
+    server_ip = input_serverIP
 
     # Single-line input for peer details
     input_line = input("Enter peer details (e.g., Peer1 6000 9000): ")
