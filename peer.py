@@ -42,6 +42,39 @@ class Peer:
                 print(f"Error while listening to server messages: {e}")
                 break
 
+    def handle_server_message(self, message, addr):
+        """Handles different types of server messages."""
+        parts = message.split()
+        msg_type = parts[0]
+
+        if msg_type == "NEGOTIATE":
+            self.handle_negotiate(parts, addr)
+        elif msg_type == "FOUND":
+            self.handle_found(parts)
+        elif msg_type == "NOT_FOUND":
+            self.handle_not_found(parts)
+        else:
+            print(f"Unknown message type received: {msg_type}")
+
+    def handle_negotiate(self, parts, addr):
+        """Handles NEGOTIATE message from the server."""
+        rq_number = parts[1]
+        item_name = parts[2]
+        max_price = float(parts[3])
+
+        print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
+
+        # Logic to decide whether to accept or refuse the negotiation
+        accept_negotiation = input(f"Accept negotiation? (yes/no): ").strip().lower()
+        if accept_negotiation == "yes":
+            response = f"ACCEPT {rq_number} {item_name} {max_price}"
+        else:
+            response = f"REFUSE {rq_number} {item_name} {max_price}"
+
+        # Send the response back to the server
+        self.udp_socket.sendto(response.encode(), addr)
+        print(f"Sent response to server: {response}")
+
     def generate_rq_number(self):
         """Generate a simple RQ# based on IP address and a counter."""
         rq_number = f"{self.address}-{Peer.rq_counter}"
