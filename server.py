@@ -60,11 +60,11 @@ class Server:
         elif msg_type == "DE-REGISTER":
             self.handle_deregister(message_parts, addr)
         elif msg_type == "LOOKING_FOR":
-            self.handle_search(message_parts, addr)
+            self.handle_search(data, addr)
         elif msg_type == "OFFER":
-            self.handle_offer(message_parts, addr)
+            self.handle_offer(data, addr)
         else:
-            logging.warning(f"Unknown message type from {addr}: {message}")
+            logging.warning(f"Unknown message type from {addr}: {data.decode()}")
 
     def handle_register(self, message_parts, addr):
         rq_number = message_parts[1]

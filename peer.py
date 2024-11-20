@@ -1,4 +1,6 @@
 # peer.py
+import json
+import os
 import socket
 import threading
 import time
@@ -28,6 +30,8 @@ class Peer:
         self.udp_socket.bind((self.address, self.udp_port))  # Bind to listen for messages
         self.response_event = threading.Event()  # Event to signal when a response is received
         self.response_message = None  # Placeholder for the server's response
+        self.inventory_file = f"{self.name}_inventory.json"
+        self.initialize_inventory()
 
     def listen_to_server(self):
         """Continuously listens for server messages on a dedicated thread."""
@@ -42,12 +46,40 @@ class Peer:
                 print(f"Error while listening to server messages: {e}")
                 break
 
+    def initialize_inventory(self):
+        """Initialize the inventory file for the peer."""
+        if not os.path.exists(self.inventory_file):
+            # Create an empty inventory or predefined structure
+            inventory = []
+            with open(self.inventory_file, "w") as file:
+                json.dump(inventory, file, indent=4)
+            print(f"Inventory file created: {self.inventory_file}")
+        else:
+            print(f"Inventory file already exists: {self.inventory_file}")
+
+    def add_item_to_inventory(self, item_name, item_description, price):
+        """Add an item to the peer's inventory."""
+        item = {"item_name": item_name, "item_description": item_description, "price": price}
+        # Load existing inventory, update, and save back
+        inventory = self.load_inventory()
+        inventory.append(item)
+        with open(self.inventory_file, "w") as file:
+            json.dump(inventory, file, indent=4)
+        print(f"Item added to inventory: {item}")
+
+    def load_inventory(self):
+        """Load the inventory from the JSON file."""
+        with open(self.inventory_file, "r") as file:
+            return json.load(file)
+
     def handle_server_message(self, message, addr):
         """Handles different types of server messages."""
         parts = message.split()
         msg_type = parts[0]
 
-        if msg_type == "NEGOTIATE":
+        if msg_type == "SEARCH":
+            self.handle_search(parts)
+        elif msg_type == "NEGOTIATE":
             self.handle_negotiate(parts, addr)
         elif msg_type == "FOUND":
             self.handle_found(parts)
@@ -104,6 +136,11 @@ class Peer:
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
         print(f"Sending deregistration message: {deregister_msg}")
         self.send_and_wait_for_response(deregister_msg, (server_ip, 5000))
+
+    def looking_for_item_server(self, itemName, itemDescription, maxPrice):
+        looking_for_msg = f"LOOKING_FOR {self.client.rq_number} {self.name} {itemName} {itemDescription} {maxPrice}"
+        print(f"Sending looking for: {looking_for_msg}")
+        self.send_and_wait_for_response(looking_for_msg, (server_ip, 5000))
 
 
     def handle_tcp_transaction(self):
@@ -165,14 +202,24 @@ if __name__ == "__main__":
         print("\nOptions:")
         print("1. Register")
         print("2. Deregister")
-        print("3. Exit")
-        choice = input("Choose an option (1, 2, or 3): ")
+        print("3. Look for item")
+        print("4. Add Item to Inventory")
+        print("5. Exit")
+        choice = input("Choose an option: ")
+        if choice == "3" or choice == "4":
+            itemName = input("Item_name: ")
+            itemDescription = input("Description: ")
+            itemPrice = float(input("Price: "))
 
         if choice == '1':
             peer.register_with_server()
         elif choice == '2':
             peer.deregister_with_server()
         elif choice == '3':
+            peer.looking_for_item_server(itemName, itemDescription, itemPrice)
+        elif choice == '4':
+            peer.add_item_to_inventory(itemName, itemDescription, itemPrice)
+        elif choice == '5':
             print("Exiting program.")
             break
         else:
