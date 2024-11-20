@@ -131,7 +131,7 @@ class Server:
 
             for peer_name, peer_info in self.registered_peers.items():
                 if peer_name != name:
-                    search_msg = f"SEARCH {rq_number} {item_name} {item_description} {max_price}"
+                    search_msg = f"SEARCH {rq_number} {item_name} {item_description}"
                     self.send_udp_response(search_msg, peer_info['address'])
                     logging.info(f"SEARCH request from {name} forwarded to {peer_name} for item '{item_name}'")
 
