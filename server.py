@@ -4,6 +4,8 @@ import threading
 import logging
 import json
 import os
+import signal
+import sys
 
 class Server:
     def __init__(self):
@@ -12,19 +14,26 @@ class Server:
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Single socket for both send and receive
         self.server_file = "server.json"
         self.active_requests = {}
-        # Load server state from the file, if it exists
+        # Load server state from the file, if it is not empty
         self.load_server_state()
 
     def load_server_state(self):
-        """Load registered peers and active requests from server.json."""
         if os.path.exists(self.server_file):
-            with open(self.server_file, "r") as file:
-                data = json.load(file)
-                self.registered_peers = data.get("registered_peers", {})
-                self.active_requests = data.get("active_requests", {})
+            try:
+                with open(self.server_file, "r") as file:
+                    data = json.load(file)
+                    self.registered_peers = data.get("registered_peers", {})
+                    self.active_requests = data.get("active_requests", {})
+                    print(
+                        f"Loaded {len(self.registered_peers)} registered peers and {len(self.active_requests)} active requests.")
+            except json.JSONDecodeError as e:
+                print(f"Error loading server state: {e}. Starting fresh.")
+                self.registered_peers = {}
+                self.active_requests = {}
         else:
             self.registered_peers = {}
             self.active_requests = {}
+            print("No previous state found. Starting fresh.")
 
     def save_server_state(self):
         """Save registered peers and active requests to server.json."""
@@ -110,12 +119,21 @@ class Server:
         max_price = message_parts[-1]
 
         with self.peer_lock:
+            self.active_requests[rq_number] = {
+                'name': name,
+                'operation': 'LOOKING_FOR',
+                'item_name': item_name,
+                'item_description': item_description,
+                'max_price': max_price,
+                'status': 'Processing'
+            }
+            self.save_server_state()
+
             for peer_name, peer_info in self.registered_peers.items():
                 if peer_name != name:
-                    search_msg = f"SEARCH {rq_number} {item_name} {item_description} {max_price}"
+                    search_msg = f"SEARCH {rq_number} {item_name} {item_description}"
                     self.send_udp_response(search_msg, peer_info['address'])
                     logging.info(f"SEARCH request from {name} forwarded to {peer_name} for item '{item_name}'")
-
 
     def handle_offer(self, message_parts, addr):
         rq_number = message_parts[1]
@@ -124,7 +142,55 @@ class Server:
         price = message_parts[4]
 
         logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
-        # TODO: Further logic like negotiation to be handled here
+
+        if rq_number not in self.active_requests:
+            response = f"INVALID_RQ {rq_number} Request not found"
+            self.send_udp_response(response, addr)
+            logging.warning(f"Invalid RQ number in offer: {rq_number}")
+            return
+
+        buyer_request = self.active_requests[rq_number]
+        max_price = float(buyer_request.get('max_price', 0))
+        buyer_name = buyer_request['name']
+        buyer_address = self.registered_peers[buyer_name]['address']
+
+        if price <= max_price:
+            response_to_buyer = f"FOUND {rq_number} {item_name} {price}"
+            self.send_udp_response(response_to_buyer, buyer_address)
+
+            self.active_requests[rq_number]['status'] = 'Found'
+            self.active_requests[rq_number]['reserved_seller'] = seller_name
+            self.save_server_state()
+            logging.info(f"Item '{item_name}' reserved for {buyer_name} from {seller_name} at price {price}")
+        else:
+            negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
+            self.send_udp_response(negotiate_message, addr)
+            logging.info(f"Negotiation initiated with {seller_name} for item '{item_name}' at max price {max_price}")
+
+    def handle_seller_response(self, message_parts, addr):
+        rq_number = message_parts[1]
+        response_type = message_parts[0]
+        item_name = message_parts[2]
+        max_price = float(message_parts[3])
+
+        if rq_number not in self.active_requests:
+            logging.warning(f"Invalid RQ number in seller response: {rq_number}")
+            return
+
+        buyer_request = self.active_requests[rq_number]
+        buyer_name = buyer_request['name']
+        buyer_address = self.registered_peers[buyer_name]['address']
+
+        if response_type == "ACCEPT":
+            response_to_buyer = f"FOUND {rq_number} {item_name} {max_price}"
+            self.send_udp_response(response_to_buyer, buyer_address)
+            buyer_request['status'] = 'Completed'
+            logging.info(f"Negotiation successful: {item_name} sold to {buyer_name} at price {max_price}")
+        elif response_type == "REFUSE":
+            response_to_buyer = f"NOT_FOUND {rq_number} {item_name} {max_price}"
+            self.send_udp_response(response_to_buyer, buyer_address)
+            buyer_request['status'] = 'Not Found'
+            logging.info(f"Negotiation failed: {item_name} not sold to {buyer_name}")
 
     def send_udp_response(self, message, addr):
         with self.peer_lock:
@@ -145,5 +211,4 @@ def get_server_ip():
 if __name__ == "__main__":
     server = Server()
     server.start()
-
 
