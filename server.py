@@ -42,9 +42,11 @@ class Server:
 
     def udp_listener(self):
         server_ip = get_server_ip()
-        print(f"Server is running on {server_ip}, listening on UDP port 5000")
-        self.server_socket.bind((server_ip, 5000))
-        logging.info("Server started, listening on UDP port 5000...")
+        print(f"Server is running on {server_ip}")
+        server_udp_port = get_server_udp_port()
+        print(f"listening on UDP port {server_udp_port}.")
+        self.server_socket.bind((server_ip, server_udp_port))
+        logging.info("Server started, listening on UDP port {server_udp_port}...")
 
         while True:
             data, addr = self.server_socket.recvfrom(1024)
@@ -205,6 +207,9 @@ def get_server_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))  # Connect to a public IP to determine local network IP
         return s.getsockname()[0]
+
+def get_server_udp_port():
+    return int(input("Enter the UDP port for Server: "))
 
 
 
