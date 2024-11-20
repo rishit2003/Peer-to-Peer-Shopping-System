@@ -78,13 +78,13 @@ class Peer:
         msg_type = parts[0]
 
         if msg_type == "SEARCH":
-            self.handle_search(parts)
+            self.handle_search(parts)   # TODO: Need to implement this
         elif msg_type == "NEGOTIATE":
             self.handle_negotiate(parts, addr)
         elif msg_type == "FOUND":
-            self.handle_found(parts)
+            self.handle_found(parts)       # TODO: Need to implement this
         elif msg_type == "NOT_FOUND":
-            self.handle_not_found(parts)
+            self.handle_not_found(parts)    # TODO: Need to implement this
         else:
             print(f"Unknown message type received: {msg_type}")
 
@@ -225,5 +225,3 @@ if __name__ == "__main__":
         else:
             print("Invalid choice. Please try again.")
 
-#TODO : Create function for auto generating RQ number using the ip address
-#TODO : Create a queue for storing RQ number based on the task
