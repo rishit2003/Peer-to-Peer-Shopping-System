@@ -8,22 +8,7 @@
                 "192.168.0.19",
                 6001
             ]
-        },
-        "Peer1": {
-            "rq_number": "192.168.0.19-1",
-            "udp_socket": "6000",
-            "tcp_socket": "9000",
-            "address": [
-                "192.168.0.19",
-                6000
-            ]
         }
     },
-    "active_requests": {
-        "192.168.0.19-1": {
-            "name": "Peer1",
-            "operation": "REGISTER",
-            "status": "Completed"
-        }
-    }
+    "active_requests": {}
 }
