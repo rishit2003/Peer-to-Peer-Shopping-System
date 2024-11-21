@@ -4,6 +4,8 @@ import os
 import socket
 import threading
 import time
+import uuid
+
 
 class Peer:
     class Client:
@@ -32,16 +34,24 @@ class Peer:
         self.response_message = None  # Placeholder for the server's response
         self.inventory_file = f"{self.name}_inventory.json"
         self.initialize_inventory()
+        self.running = True  # Control flag for threads
+        self.threads = []  # To track threads
 
     def listen_to_server(self):
         """Continuously listens for server messages on a dedicated thread."""
         print(f"{self.name} is now listening for server messages...")
-        while True:
+        while self.running:
             try:
                 data, addr = self.udp_socket.recvfrom(1024)
+                if not self.running:
+                    break
                 self.response_message = data.decode()
                 print(f"Message from {addr}: {self.response_message}")
                 self.response_event.set()  # Signal that a response has been received
+            except socket.error as e:
+                if not self.running:
+                    break
+                print(f"Socket error in listen_to_server: {e}")
             except Exception as e:
                 print(f"Error while listening to server messages: {e}")
                 break
@@ -108,10 +118,8 @@ class Peer:
         print(f"Sent response to server: {response}")
 
     def generate_rq_number(self):
-        """Generate a simple RQ# based on IP address and a counter."""
-        rq_number = f"{self.address}-{Peer.rq_counter}"
-        Peer.rq_counter += 1
-        return rq_number
+        """Generate a unique RQ# using UUID."""
+        return str(uuid.uuid4())
 
     def send_and_wait_for_response(self, message, server_address, timeout=5):
         """Send a message to the server and wait for a response via listen_to_server."""
@@ -147,20 +155,56 @@ class Peer:
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind(('localhost', self.tcp_port))
         server_socket.listen(1)
+        self.server_socket = server_socket  # Store the server socket to close it during shutdown
         try:
-            conn, addr = server_socket.accept()
-            print(f"TCP transaction started with {addr}")
-            data = conn.recv(1024).decode()
-            print(f"Transaction details: {data}")
-            conn.sendall("INFORM_Res Name CC# Exp_Date Address".encode())
-        except Exception as e:
-            print(f"Error during TCP transaction: {e}")
+            while self.running:
+                try:
+                    server_socket.settimeout(1)  # Add a timeout to prevent indefinite blocking
+                    conn, addr = server_socket.accept()
+                    if not self.running:
+                        conn.close()
+                        break
+                    print(f"TCP transaction started with {addr}")
+                    data = conn.recv(1024).decode()
+                    print(f"Transaction details: {data}")
+                    conn.sendall("INFORM_Res Name CC# Exp_Date Address".encode())
+                    conn.close()
+                except socket.timeout:
+                    continue  # Check `self.running` after timeout
+                except Exception as e:
+                    if not self.running:
+                        print("Server shutting down.")
+                    else:
+                        print(f"Error during TCP transaction: {e}")
         finally:
             server_socket.close()
 
     def start(self):
-        threading.Thread(target=self.listen_to_server, daemon=True).start()  # Start listening in a thread
-        threading.Thread(target=self.handle_tcp_transaction).start()  # Start TCP handler in a thread
+        listen_thread = threading.Thread(target=self.listen_to_server, daemon=True)  # Start listening in a thread
+        tcp_thread = threading.Thread(target=self.handle_tcp_transaction)  # Start TCP handler in a thread
+        self.threads.extend([listen_thread, tcp_thread])
+        listen_thread.start()
+        tcp_thread.start()
+
+    def shutdown(self):
+        """Gracefully shut down the peer."""
+        print("Shutting down peer...")
+        self.running = False
+
+        try:
+            self.udp_socket.close()  # Close the UDP socket
+            if hasattr(self, 'server_socket'):
+                self.server_socket.close()  # Close the TCP server socket
+        except Exception as e:
+            print(f"Error closing UDP socket: {e}")
+
+        for thread in self.threads:
+            if thread.is_alive():
+                print(f"Waiting for thread {thread.name} to finish...")
+                thread.join(timeout=2)  # Wait for each thread to terminate
+                if thread.is_alive():
+                    print(f"Thread {thread.name} did not terminate.")
+        print("Peer shut down successfully.")
 
 def get_local_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
@@ -197,31 +241,36 @@ if __name__ == "__main__":
     peer = Peer(name, udp_port, tcp_port)
     peer.start()  # Start listening and TCP transaction handling
 
-    # Interactive loop for actions
-    while True:
-        print("\nOptions:")
-        print("1. Register")
-        print("2. Deregister")
-        print("3. Look for item")
-        print("4. Add Item to Inventory")
-        print("5. Exit")
-        choice = input("Choose an option: ")
-        if choice == "3" or choice == "4":
-            itemName = input("Item_name: ")
-            itemDescription = input("Description: ")
-            itemPrice = float(input("Price: "))
+    try:
+        # Interactive loop for actions
+        while True:
+            print("\nOptions:")
+            print("1. Register")
+            print("2. Deregister")
+            print("3. Look for item")
+            print("4. Add Item to Inventory")
+            print("5. Exit")
+            choice = input("Choose an option: ")
+            if choice == "3" or choice == "4":
+                itemName = input("Item_name: ")
+                itemDescription = input("Description: ")
+                itemPrice = float(input("Price: "))
 
-        if choice == '1':
-            peer.register_with_server()
-        elif choice == '2':
-            peer.deregister_with_server()
-        elif choice == '3':
-            peer.looking_for_item_server(itemName, itemDescription, itemPrice)
-        elif choice == '4':
-            peer.add_item_to_inventory(itemName, itemDescription, itemPrice)
-        elif choice == '5':
-            print("Exiting program.")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+            if choice == '1':
+                peer.register_with_server()
+            elif choice == '2':
+                peer.deregister_with_server()
+            elif choice == '3':
+                peer.looking_for_item_server(itemName, itemDescription, itemPrice)
+            elif choice == '4':
+                peer.add_item_to_inventory(itemName, itemDescription, itemPrice)
+            elif choice == '5':
+                print("Exiting program.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+    except KeyboardInterrupt:
+        print("\nProgram interrupted.")
+    finally:
+        peer.shutdown()
 
