@@ -1,14 +1,20 @@
 {
     "registered_peers": {
-        "Peer2": {
-            "rq_number": "192.168.0.19-1",
-            "udp_socket": "6001",
-            "tcp_socket": "9001",
+        "Peer1": {
+            "rq_number": "776f6a77-dfcf-460d-a9d8-92127c9792fa",
+            "udp_socket": "6000",
+            "tcp_socket": "9000",
             "address": [
                 "192.168.0.19",
-                6001
+                6000
             ]
         }
     },
-    "active_requests": {}
+    "active_requests": {
+        "776f6a77-dfcf-460d-a9d8-92127c9792fa": {
+            "name": "Peer1",
+            "operation": "REGISTER",
+            "status": "Completed"
+        }
+    }
 }
