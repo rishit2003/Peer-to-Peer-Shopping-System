@@ -1,20 +1,17 @@
 {
-    "registered_peers": {
-        "Peer1": {
-            "rq_number": "776f6a77-dfcf-460d-a9d8-92127c9792fa",
-            "udp_socket": "6000",
-            "tcp_socket": "9000",
-            "address": [
-                "192.168.0.19",
-                6000
-            ]
-        }
-    },
+    "registered_peers": {},
     "active_requests": {
-        "776f6a77-dfcf-460d-a9d8-92127c9792fa": {
-            "name": "Peer1",
-            "operation": "REGISTER",
-            "status": "Completed"
+        "79": {
+            "name": 79,
+            "operation": "LOOKING_FOR",
+            "item_name": 75,
+            "item_description": "73 78 71 95 70 79 82 32 57 50 51 100 102 57 50 102 45 49 51 50 50 45 52 57 100 97 45 98 54 55 48 45 50 97 54 99 99 52 53 57 100 53 99 102 32 80 101 101 114 50 32 73 112 97 100 32 97 32 103 111 111 100 32 111 110 101 32 56 48 48 46",
+            "max_price": 48.0,
+            "status": "Processing",
+            "offers": [],
+            "start_time": 1732260523.1695502,
+            "timeout": 10,
+            "expected_sellers": []
         }
     }
 }

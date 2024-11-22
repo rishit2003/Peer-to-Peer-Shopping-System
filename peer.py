@@ -98,17 +98,39 @@ class Peer:
         else:
             print(f"Unknown message type received: {msg_type}")
 
+    def handle_search(self, parts):
+        """Handles SEARCH message from the server."""
+        rq_number = parts[1]
+        item_name = parts[2]
+        item_description = " ".join(parts[3:])
+
+        print(f"SEARCH received: Looking for '{item_name}' with description '{item_description}'")
+
+        # Check if the item exists in the peer's inventory
+        inventory = self.load_inventory()
+        for item in inventory:
+            if item['item_name'].lower() == item_name.lower():
+                # Item found, respond to the server with an OFFER message
+                price = item['price']
+                offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
+                self.udp_socket.sendto(offer_msg.encode(), (server_ip, server_udp_port))
+                print(f"Sent OFFER to server: {offer_msg}")
+                return
+
+        # If the item is not found, no response is necessary
+        print(f"Item '{item_name}' not found in inventory.")
+
     def handle_negotiate(self, parts, addr):
         """Handles NEGOTIATE message from the server."""
         rq_number = parts[1]
         item_name = parts[2]
         max_price = float(parts[3])
 
-        print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
+        print(f"NEGOTIATE received: For Item: {item_name} at Price: {max_price}")
 
         # Logic to decide whether to accept or refuse the negotiation
-        accept_negotiation = input(f"Accept negotiation? (yes/no): ").strip().lower()
-        if accept_negotiation == "yes":
+        accept_negotiation = input(f"Accept negotiation? (y/n): ").strip().lower()
+        if accept_negotiation == "y":
             response = f"ACCEPT {rq_number} {item_name} {max_price}"
         else:
             response = f"REFUSE {rq_number} {item_name} {max_price}"
@@ -125,10 +147,17 @@ class Peer:
         """Send a message to the server and wait for a response via listen_to_server."""
         self.response_event.clear()  # Reset the event before sending a message
         self.response_message = None  # Clear any previous response
+        parts=message.split()
+        msg_type = parts[0]
         try:
             self.udp_socket.sendto(message.encode(), server_address)
             print(f"Message sent: {message}")
-            if self.response_event.wait(timeout):  # Wait for the response within the timeout
+            if msg_type == "LOOKING_FOR":
+                if self.response_event.wait(20):
+                    print(f"Server response received via listen_to_server: {self.response_message}")
+                else:
+                    print("Timeout LOOKING_FOR: No response from the server.")
+            elif self.response_event.wait(timeout):  # Wait for the response within the timeout
                 print(f"Server response received via listen_to_server: {self.response_message}")
             else:
                 print("Timeout: No response from the server.")
