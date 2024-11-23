@@ -61,3 +61,17 @@
 2024-11-23 03:07:19,348 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
 2024-11-23 03:07:19,348 - INFO - Sent UDP response to ('192.168.0.19', 6005): FOUND 765a0190-499f-4a86-b076-839b6ecb29f7 Ipad 800.0
 2024-11-23 03:07:19,349 - INFO - Item 'Ipad' reserved for Peer2 from Peer1 at price 800.0
+2024-11-23 03:14:41,559 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 03:14:53,724 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED 0a8a773c-1542-4e10-ac81-05101e8ddc80 Name already in use
+2024-11-23 03:16:59,035 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED b3f64c51-4eac-4226-964e-5eb9099a748a Name already in use
+2024-11-23 03:17:04,359 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED b3f64c51-4eac-4226-964e-5eb9099a748a
+2024-11-23 03:17:06,699 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTER-DENIED b3f64c51-4eac-4226-964e-5eb9099a748a Name not found
+2024-11-23 03:17:09,315 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED b3f64c51-4eac-4226-964e-5eb9099a748a
+2024-11-23 03:17:25,695 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTER-DENIED a0212132-0fcb-447e-9934-8131071c2c1a Name already in use
+2024-11-23 03:17:26,964 - INFO - Sent UDP response to ('192.168.0.19', 6005): DE-REGISTERED a0212132-0fcb-447e-9934-8131071c2c1a
+2024-11-23 03:17:28,123 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTERED a0212132-0fcb-447e-9934-8131071c2c1a
+2024-11-23 03:17:39,812 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH a0212132-0fcb-447e-9934-8131071c2c1a Ipad New one
+2024-11-23 03:17:39,812 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 03:17:39,814 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-11-23 03:17:39,814 - INFO - Sent UDP response to ('192.168.0.19', 6005): FOUND a0212132-0fcb-447e-9934-8131071c2c1a Ipad 800.0
+2024-11-23 03:17:39,815 - INFO - Item 'Ipad' reserved for Peer2 from Peer1 at price 800.0
