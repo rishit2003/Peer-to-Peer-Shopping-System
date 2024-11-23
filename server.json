@@ -1,7 +1,16 @@
 {
     "registered_peers": {
+        "Peer2": {
+            "rq_number": "4772bcef-4cb3-40b1-a3cc-f8b76a4d72df",
+            "udp_socket": "6005",
+            "tcp_socket": "9005",
+            "address": [
+                "192.168.0.19",
+                6005
+            ]
+        },
         "Peer1": {
-            "rq_number": "776f6a77-dfcf-460d-a9d8-92127c9792fa",
+            "rq_number": "5a4ccdc5-2feb-48a7-bfda-590781bb0506",
             "udp_socket": "6000",
             "tcp_socket": "9000",
             "address": [
@@ -11,10 +20,23 @@
         }
     },
     "active_requests": {
-        "776f6a77-dfcf-460d-a9d8-92127c9792fa": {
+        "4772bcef-4cb3-40b1-a3cc-f8b76a4d72df": {
+            "name": "Peer2",
+            "operation": "LOOKING_FOR",
+            "item_name": "Ipad",
+            "item_description": "Ipad gen 6",
+            "max_price": "800.0",
+            "status": "Processing"
+        },
+        "5a4ccdc5-2feb-48a7-bfda-590781bb0506": {
             "name": "Peer1",
             "operation": "REGISTER",
             "status": "Completed"
+        },
+        "d70a1a3a-26e7-431b-b787-b4d1877c229b": {
+            "name": "Peer1",
+            "operation": "REGISTER",
+            "status": "Failed"
         }
     }
 }

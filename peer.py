@@ -43,11 +43,9 @@ class Peer:
         while self.running:
             try:
                 data, addr = self.udp_socket.recvfrom(1024)
+                threading.Thread(target=self.handle_server_message, args=(data, addr), daemon=True).start()
                 if not self.running:
                     break
-                self.response_message = data.decode()
-                print(f"Message from {addr}: {self.response_message}")
-                self.response_event.set()  # Signal that a response has been received
             except socket.error as e:
                 if not self.running:
                     break
@@ -82,21 +80,36 @@ class Peer:
         with open(self.inventory_file, "r") as file:
             return json.load(file)
 
-    def handle_server_message(self, message, addr):
+    def handle_server_message(self, data, addr):
         """Handles different types of server messages."""
-        parts = message.split()
-        msg_type = parts[0]
+        try:
+            message = data.decode()
+            self.response_message = message  # Set the response message
+            message_parts = message.split()
+            msg_type = message_parts[0]
 
-        if msg_type == "SEARCH":
-            self.handle_search(parts)   # TODO: Need to implement this
-        elif msg_type == "NEGOTIATE":
-            self.handle_negotiate(parts, addr)
-        elif msg_type == "FOUND":
-            self.handle_found(parts)       # TODO: Need to implement this
-        elif msg_type == "NOT_FOUND":
-            self.handle_not_found(parts)    # TODO: Need to implement this
-        else:
-            print(f"Unknown message type received: {msg_type}")
+            if msg_type == "SEARCH":
+                self.handle_search(message_parts)   # TODO: Need to implement this
+            elif msg_type == "NEGOTIATE":
+                self.handle_negotiate(message_parts, addr)
+            elif msg_type == "FOUND":
+                self.handle_found(message_parts)       # TODO: Need to implement this
+                self.response_event.set()  # Signal for a "FOUND" response
+            elif msg_type == "NOT_FOUND":
+                self.handle_not_found(message_parts)    # TODO: Need to implement this
+                self.response_event.set()  # Signal for a "NOT_FOUND" response
+            else:
+                print(f"Unknown message type received: {msg_type}")
+        except Exception as e:
+            print(f"Error in handle_server_message: {e}")
+
+    def handle_search(self, parts):
+        """Handles SEARCH message from the server."""
+        rq_number = parts[1]
+        item_name = parts[2]
+        item_description = " ".join(parts[3:])
+
+        # print(f"SEARCH received: Looking for '{item_name}' with description '{item_description}'")
 
     def handle_negotiate(self, parts, addr):
         """Handles NEGOTIATE message from the server."""

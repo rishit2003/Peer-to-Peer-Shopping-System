@@ -6,11 +6,18 @@ import json
 import os
 import signal
 import sys
+import time
+
+logging.basicConfig(
+    filename="server.log",  # Log to file
+    level=logging.INFO,     # Log messages of level INFO and above
+    format="%(asctime)s - %(levelname)s - %(message)s"  # Include timestamp and level
+)
 
 class Server:
     def __init__(self):
         self.registered_peers = {}
-        self.peer_lock = threading.Lock()
+        self.peer_lock = threading.RLock() # Use a reentrant lock
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Single socket for both send and receive
         self.server_file = "server.json"
         self.active_requests = {}
@@ -62,9 +69,11 @@ class Server:
         elif msg_type == "DE-REGISTER":
             self.handle_deregister(message_parts, addr)
         elif msg_type == "LOOKING_FOR":
-            self.handle_search(data, addr)
+            self.handle_search(message_parts, addr)
         elif msg_type == "OFFER":
-            self.handle_offer(data, addr)
+            self.handle_offer(message_parts, addr)
+        elif msg_type == "ACCEPT" or msg_type == "REFUSE":
+            self.handle_seller_response(message_parts, addr)
         else:
             logging.warning(f"Unknown message type from {addr}: {data.decode()}")
 
@@ -83,7 +92,7 @@ class Server:
                 response = f"REGISTER-DENIED {rq_number} Name already in use"
                 self.active_requests[rq_number]['status'] = 'Failed'
             else:
-                self.registered_peers[name] = {"rq_number": rq_number, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket,'address': addr}
+                self.registered_peers[name] = {"rq_number": rq_number, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket,"address": tuple(addr),}
                 response = f"REGISTERED {rq_number}"
                 self.active_requests[rq_number]['status'] = 'Completed'
             self.save_server_state()  # Update the request status in requests.json
@@ -119,6 +128,8 @@ class Server:
         item_name = message_parts[3]
         item_description = " ".join(message_parts[4:-1])
         max_price = message_parts[-1]
+
+        print(f"In Handle Search for {name}")
 
         with self.peer_lock:
             self.active_requests[rq_number] = {
