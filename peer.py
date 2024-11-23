@@ -99,9 +99,7 @@ class Peer:
             elif msg_type == "NOT_FOUND":
                 self.handle_not_found(message_parts)    # TODO: Need to implement this
                 self.response_event.set()  # Signal for a "NOT_FOUND" response
-            elif msg_type == "REGISTERED":
-                self.response_event.set()
-            elif msg_type == "DE-REGISTERED":
+            elif msg_type == "REGISTERED" or msg_type == "DE-REGISTERED" or msg_type == "REGISTER-DENIED" or msg_type == "DE-REGISTER-DENIED":
                 self.response_event.set()
             else:
                 print(f"Unknown message type received: {msg_type}")
@@ -163,7 +161,12 @@ class Peer:
         try:
             self.udp_socket.sendto(message.encode(), server_address)
             print(f"Message sent: {message}")
-            if self.response_event.wait(timeout):  # Wait for the response within the timeout
+            if message[0] == "LOOKING_FOR":
+                if self.response_event.wait(20): # Wait 20 seconds
+                    print(f"Server response received via listen_to_server: {self.response_message}")
+                else:
+                    print("Timeout LOOKING_FOR: No response from the server.")
+            elif self.response_event.wait(timeout):  # Wait for the response within the timeout
                 print(f"Server response received via listen_to_server: {self.response_message}")
             else:
                 print("Timeout: No response from the server.")
