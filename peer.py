@@ -36,6 +36,7 @@ class Peer:
         self.initialize_inventory()
         self.running = True  # Control flag for threads
         self.threads = []  # To track threads
+        self.is_registered = False  # Track registration status
 
     def listen_to_server(self):
         """Continuously listens for server messages on a dedicated thread."""
@@ -89,15 +90,19 @@ class Peer:
             msg_type = message_parts[0]
 
             if msg_type == "SEARCH":
-                self.handle_search(message_parts)   # TODO: Need to implement this
+                self.handle_search(message_parts)
             elif msg_type == "NEGOTIATE":
                 self.handle_negotiate(message_parts, addr)
             elif msg_type == "FOUND":
-                self.handle_found(message_parts)       # TODO: Need to implement this
+                self.handle_found(message_parts)       # TODO: Need to implement this with NOT_FOUND
                 self.response_event.set()  # Signal for a "FOUND" response
             elif msg_type == "NOT_FOUND":
                 self.handle_not_found(message_parts)    # TODO: Need to implement this
                 self.response_event.set()  # Signal for a "NOT_FOUND" response
+            elif msg_type == "REGISTERED":
+                self.response_event.set()
+            elif msg_type == "DE-REGISTERED":
+                self.response_event.set()
             else:
                 print(f"Unknown message type received: {msg_type}")
         except Exception as e:
@@ -110,6 +115,20 @@ class Peer:
         item_description = " ".join(parts[3:])
 
         # print(f"SEARCH received: Looking for '{item_name}' with description '{item_description}'")
+
+        # Check if the item exists in the peer's inventory
+        inventory = self.load_inventory()
+        for item in inventory:
+            if item['item_name'].lower() == item_name.lower():
+                # Item found, respond to the server with an OFFER message
+                price = item['price']
+                offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
+                self.send_and_wait_for_response(offer_msg,(server_ip, server_udp_port))
+                print(f"Sent OFFER to server: {offer_msg}")
+                return
+
+        # If the item is not found, no response is necessary
+        print(f"Item '{item_name}' not found in inventory.")
 
     def handle_negotiate(self, parts, addr):
         """Handles NEGOTIATE message from the server."""
@@ -129,6 +148,9 @@ class Peer:
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
         print(f"Sent response to server: {response}")
+
+    def handle_found(self, parts):
+        print(f"Found {parts[2]} at {parts[3]}")
 
     def generate_rq_number(self):
         """Generate a unique RQ# using UUID."""
@@ -152,11 +174,21 @@ class Peer:
         register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.client.address} {self.udp_port} {self.tcp_port}"
         print(f"Sending registration message: {register_msg}")
         self.send_and_wait_for_response(register_msg, (server_ip, server_udp_port))
+        if self.response_message and "REGISTERED" in self.response_message:
+            self.is_registered = True
+            print("Successfully registered.")
+        else:
+            print("Registration failed.")
 
     def deregister_with_server(self):
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
         print(f"Sending deregistration message: {deregister_msg}")
         self.send_and_wait_for_response(deregister_msg, (server_ip, server_udp_port))
+        if self.response_message and "DE-REGISTERED" in self.response_message:
+            self.is_registered = False
+            print("Successfully deregistered.")
+        else:
+            print("Deregistration failed.")
 
     def looking_for_item_server(self, itemName, itemDescription, maxPrice):
         looking_for_msg = f"LOOKING_FOR {self.client.rq_number} {self.name} {itemName} {itemDescription} {maxPrice}"
@@ -192,12 +224,55 @@ class Peer:
         finally:
             server_socket.close()
 
+    def start_interactive_loop(self):
+        """Interactive loop for user actions."""
+        try:
+            while self.running:
+                print("\nOptions:")
+                print("1. Register")
+                print("2. Deregister")
+                print("3. Look for item")
+                print("4. Add Item to Inventory")
+                print("5. Exit")
+                choice = input("Choose an option: ")
+                if choice in ["3", "4"]:
+                    if not self.is_registered:
+                        print("You must register with the server before performing this action.")
+                        continue
+                    itemName = input("Item_name: ")
+                    itemDescription = input("Description: ")
+                    itemPrice = float(input("Price: "))
+
+                if choice == '1':
+                    self.register_with_server()
+                elif choice == '2':
+                    self.deregister_with_server()
+                elif choice == '3':
+                    self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                elif choice == '4':
+                    self.add_item_to_inventory(itemName, itemDescription, itemPrice)
+                elif choice == '5':
+                    print("Exiting program.")
+                    self.running = False  # Exit gracefully
+                    break
+                else:
+                    print("Invalid choice. Please try again.")
+        except KeyboardInterrupt:
+            print("\nInteractive loop interrupted.")
+            self.running = False
+        finally:
+            self.shutdown()
+
     def start(self):
         listen_thread = threading.Thread(target=self.listen_to_server, daemon=True)  # Start listening in a thread
-        tcp_thread = threading.Thread(target=self.handle_tcp_transaction)  # Start TCP handler in a thread
-        self.threads.extend([listen_thread, tcp_thread])
+        tcp_thread = threading.Thread(target=self.handle_tcp_transaction, daemon=True)  # Start TCP handler in a thread
+        interactive_thread = threading.Thread(target=self.start_interactive_loop)  # Interactive loop thread
+
+        self.threads.extend([listen_thread, tcp_thread, interactive_thread])
+
         listen_thread.start()
         tcp_thread.start()
+        interactive_thread.start()
 
     def shutdown(self):
         """Gracefully shut down the peer."""
@@ -254,36 +329,4 @@ if __name__ == "__main__":
     peer = Peer(name, udp_port, tcp_port)
     peer.start()  # Start listening and TCP transaction handling
 
-    try:
-        # Interactive loop for actions
-        while True:
-            print("\nOptions:")
-            print("1. Register")
-            print("2. Deregister")
-            print("3. Look for item")
-            print("4. Add Item to Inventory")
-            print("5. Exit")
-            choice = input("Choose an option: ")
-            if choice == "3" or choice == "4":
-                itemName = input("Item_name: ")
-                itemDescription = input("Description: ")
-                itemPrice = float(input("Price: "))
-
-            if choice == '1':
-                peer.register_with_server()
-            elif choice == '2':
-                peer.deregister_with_server()
-            elif choice == '3':
-                peer.looking_for_item_server(itemName, itemDescription, itemPrice)
-            elif choice == '4':
-                peer.add_item_to_inventory(itemName, itemDescription, itemPrice)
-            elif choice == '5':
-                print("Exiting program.")
-                break
-            else:
-                print("Invalid choice. Please try again.")
-    except KeyboardInterrupt:
-        print("\nProgram interrupted.")
-    finally:
-        peer.shutdown()
 

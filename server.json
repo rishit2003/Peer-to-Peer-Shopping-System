@@ -1,42 +1,53 @@
 {
     "registered_peers": {
-        "Peer2": {
-            "rq_number": "4772bcef-4cb3-40b1-a3cc-f8b76a4d72df",
-            "udp_socket": "6005",
-            "tcp_socket": "9005",
-            "address": [
-                "192.168.0.19",
-                6005
-            ]
-        },
         "Peer1": {
-            "rq_number": "5a4ccdc5-2feb-48a7-bfda-590781bb0506",
+            "rq_number": "dd206663-db93-41b7-aaef-d06857b2269a",
             "udp_socket": "6000",
             "tcp_socket": "9000",
             "address": [
                 "192.168.0.19",
                 6000
             ]
+        },
+        "Peer2": {
+            "rq_number": "765a0190-499f-4a86-b076-839b6ecb29f7",
+            "udp_socket": "6005",
+            "tcp_socket": "9005",
+            "address": [
+                "192.168.0.19",
+                6005
+            ]
         }
     },
     "active_requests": {
-        "4772bcef-4cb3-40b1-a3cc-f8b76a4d72df": {
-            "name": "Peer2",
+        "dd206663-db93-41b7-aaef-d06857b2269a": {
+            "name": "Peer1",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
-            "item_description": "Ipad gen 6",
+            "item_description": "New one",
             "max_price": "800.0",
             "status": "Processing"
         },
-        "5a4ccdc5-2feb-48a7-bfda-590781bb0506": {
-            "name": "Peer1",
-            "operation": "REGISTER",
-            "status": "Completed"
-        },
-        "d70a1a3a-26e7-431b-b787-b4d1877c229b": {
-            "name": "Peer1",
-            "operation": "REGISTER",
-            "status": "Failed"
+        "765a0190-499f-4a86-b076-839b6ecb29f7": {
+            "name": "Peer2",
+            "operation": "LOOKING_FOR",
+            "item_name": "Ipad",
+            "item_description": "new one",
+            "max_price": "800.0",
+            "status": "Found",
+            "offers": [
+                {
+                    "seller_name": "Peer1",
+                    "price": 800.0,
+                    "address": [
+                        "192.168.0.19",
+                        6000
+                    ]
+                }
+            ],
+            "timeout_started": true,
+            "timeout": 1732349249.348382,
+            "reserved_seller": "Peer1"
         }
     }
 }
