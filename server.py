@@ -6,11 +6,18 @@ import json
 import os
 import signal
 import sys
+import time
+
+logging.basicConfig(
+    filename="server.log",  # Log to file
+    level=logging.INFO,     # Log messages of level INFO and above
+    format="%(asctime)s - %(levelname)s - %(message)s"  # Include timestamp and level
+)
 
 class Server:
     def __init__(self):
         self.registered_peers = {}
-        self.peer_lock = threading.Lock()
+        self.peer_lock = threading.RLock() # Use a reentrant lock
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Single socket for both send and receive
         self.server_file = "server.json"
         self.active_requests = {}
@@ -62,9 +69,11 @@ class Server:
         elif msg_type == "DE-REGISTER":
             self.handle_deregister(message_parts, addr)
         elif msg_type == "LOOKING_FOR":
-            self.handle_search(data, addr)
+            self.handle_search(message_parts, addr)
         elif msg_type == "OFFER":
-            self.handle_offer(data, addr)
+            self.handle_offer(message_parts, addr)
+        elif msg_type == "ACCEPT" or msg_type == "REFUSE":
+            self.handle_seller_response(message_parts, addr)
         else:
             logging.warning(f"Unknown message type from {addr}: {data.decode()}")
 
@@ -83,7 +92,7 @@ class Server:
                 response = f"REGISTER-DENIED {rq_number} Name already in use"
                 self.active_requests[rq_number]['status'] = 'Failed'
             else:
-                self.registered_peers[name] = {"rq_number": rq_number, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket,'address': addr}
+                self.registered_peers[name] = {"rq_number": rq_number, 'udp_socket': udp_socket, 'tcp_socket': tcp_socket,"address": tuple(addr),}
                 response = f"REGISTERED {rq_number}"
                 self.active_requests[rq_number]['status'] = 'Completed'
             self.save_server_state()  # Update the request status in requests.json
@@ -120,6 +129,8 @@ class Server:
         item_description = " ".join(message_parts[4:-1])
         max_price = message_parts[-1]
 
+        print(f"In Handle Search for {name}")
+
         with self.peer_lock:
             self.active_requests[rq_number] = {
                 'name': name,
@@ -141,33 +152,68 @@ class Server:
         rq_number = message_parts[1]
         seller_name = message_parts[2]
         item_name = message_parts[3]
-        price = message_parts[4]
+        price = float(message_parts[4])
 
         logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
 
-        if rq_number not in self.active_requests:
-            response = f"INVALID_RQ {rq_number} Request not found"
-            self.send_udp_response(response, addr)
-            logging.warning(f"Invalid RQ number in offer: {rq_number}")
-            return
+        with self.peer_lock:
+            if rq_number not in self.active_requests:
+                # response = f"INVALID_RQ {rq_number} Request not found"
+                # self.send_udp_response(response, addr)
+                logging.warning(f"Invalid RQ number in offer: {rq_number}")
+                return
 
-        buyer_request = self.active_requests[rq_number]
-        max_price = float(buyer_request.get('max_price', 0))
-        buyer_name = buyer_request['name']
-        buyer_address = self.registered_peers[buyer_name]['address']
+            buyer_request = self.active_requests[rq_number]
+            max_price = float(buyer_request.get('max_price', 0))
+            buyer_name = buyer_request['name']
+            buyer_address = self.registered_peers[buyer_name]['address']
+            buyer_request.setdefault('offers', []).append({'seller_name': seller_name, 'price': price, 'address': tuple(addr)})
 
-        if price <= max_price:
-            response_to_buyer = f"FOUND {rq_number} {item_name} {price}"
-            self.send_udp_response(response_to_buyer, buyer_address)
+            # Initialize a timeout if not already set
+            if 'timeout_started' not in buyer_request:
+                buyer_request['timeout_started'] = True
+                buyer_request['timeout'] = time.time() + 10  # Wait 10 seconds for all offers
 
-            self.active_requests[rq_number]['status'] = 'Found'
-            self.active_requests[rq_number]['reserved_seller'] = seller_name
-            self.save_server_state()
-            logging.info(f"Item '{item_name}' reserved for {buyer_name} from {seller_name} at price {price}")
-        else:
-            negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
-            self.send_udp_response(negotiate_message, addr)
-            logging.info(f"Negotiation initiated with {seller_name} for item '{item_name}' at max price {max_price}")
+            # Check if timeout has expired
+            if time.time() >= buyer_request['timeout']:
+                logging.info(f"Processing offers for request {rq_number} after timeout.")
+                valid_offers = [offer for offer in buyer_request['offers'] if offer['price'] <= max_price]
+
+                if valid_offers:
+                    # Find the cheapest valid offer
+                    cheapest_offer = min(valid_offers, key=lambda x: x['price'])
+                    # Notify the requester about the cheapest valid offer
+                    response_to_buyer = f"FOUND {rq_number} {item_name} {cheapest_offer['price']} from {cheapest_offer['seller_name']}"
+                    self.send_udp_response(response_to_buyer, buyer_address)
+
+                    # Update the request status
+                    buyer_request['status'] = 'Found'
+                    buyer_request['reserved_seller'] = cheapest_offer
+                    self.save_server_state()
+                    logging.info(f"Item '{item_name}' reserved for {buyer_name} from {cheapest_offer['seller_name']} at price {cheapest_offer['price']}")
+                else:
+                    # All offers exceed max price, initiate negotiation with all sellers
+                    for offer in buyer_request['offers']:
+                        negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
+                        self.send_udp_response(negotiate_message, offer['address'])
+                        logging.info(f"Negotiation initiated with {offer['seller_name']} for item '{item_name}' at max price {max_price}")
+
+                    # Update the status to indicate negotiation is in progress
+                    buyer_request['status'] = 'Negotiating'
+                    self.save_server_state()
+
+            if price <= max_price:
+                response_to_buyer = f"FOUND {rq_number} {item_name} {price}"
+                self.send_udp_response(response_to_buyer, buyer_address)
+
+                self.active_requests[rq_number]['status'] = 'Found'
+                self.active_requests[rq_number]['reserved_seller'] = seller_name
+                self.save_server_state()
+                logging.info(f"Item '{item_name}' reserved for {buyer_name} from {seller_name} at price {price}")
+            else:
+                negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
+                self.send_udp_response(negotiate_message, addr)
+                logging.info(f"Negotiation initiated with {seller_name} for item '{item_name}' at max price {max_price}")
 
     def handle_seller_response(self, message_parts, addr):
         rq_number = message_parts[1]

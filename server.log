@@ -1,0 +1,63 @@
+2024-11-23 01:06:54,779 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 01:07:13,492 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED 6d56ad54-84fb-4fda-97af-b1e7db9a0bbb Name already in use
+2024-11-23 01:07:16,243 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 6d56ad54-84fb-4fda-97af-b1e7db9a0bbb
+2024-11-23 01:07:17,701 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 6d56ad54-84fb-4fda-97af-b1e7db9a0bbb
+2024-11-23 01:07:33,769 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTERED 10a3baa5-a80e-495a-96cc-146329b1f991
+2024-11-23 01:18:43,089 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 01:19:16,332 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED a64a65c9-26e9-481f-b719-e31692c46acc Name already in use
+2024-11-23 01:19:18,959 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED a64a65c9-26e9-481f-b719-e31692c46acc
+2024-11-23 01:19:21,650 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED a64a65c9-26e9-481f-b719-e31692c46acc
+2024-11-23 01:19:38,432 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTER-DENIED b5bd3665-071f-4936-8b41-646b41ea4911 Name already in use
+2024-11-23 01:19:40,444 - INFO - Sent UDP response to ('192.168.0.19', 6005): DE-REGISTERED b5bd3665-071f-4936-8b41-646b41ea4911
+2024-11-23 01:19:42,599 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTERED b5bd3665-071f-4936-8b41-646b41ea4911
+2024-11-23 01:21:23,526 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 01:25:26,345 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 01:30:03,131 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 01:30:06,112 - INFO - Sent UDP response to ('192.168.0.19', 6005): DE-REGISTERED b5bd3665-071f-4936-8b41-646b41ea4911
+2024-11-23 01:30:06,985 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTERED b5bd3665-071f-4936-8b41-646b41ea4911
+2024-11-23 01:30:12,058 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED a64a65c9-26e9-481f-b719-e31692c46acc
+2024-11-23 01:30:14,266 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED a64a65c9-26e9-481f-b719-e31692c46acc
+2024-11-23 01:30:36,624 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH b5bd3665-071f-4936-8b41-646b41ea4911 Ipad Ipad gen 4
+2024-11-23 01:30:36,624 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 01:42:58,389 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 01:43:27,060 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTER-DENIED 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df Name already in use
+2024-11-23 01:43:28,348 - INFO - Sent UDP response to ('192.168.0.19', 6005): DE-REGISTERED 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df
+2024-11-23 01:43:29,226 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTERED 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df
+2024-11-23 01:43:33,723 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED 5a4ccdc5-2feb-48a7-bfda-590781bb0506 Name already in use
+2024-11-23 01:43:35,029 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 5a4ccdc5-2feb-48a7-bfda-590781bb0506
+2024-11-23 01:43:36,636 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 5a4ccdc5-2feb-48a7-bfda-590781bb0506
+2024-11-23 01:43:59,284 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df Ipad Ipad gen 4 New
+2024-11-23 01:43:59,284 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 01:45:59,660 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED d70a1a3a-26e7-431b-b787-b4d1877c229b Name already in use
+2024-11-23 01:46:15,627 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df Ipad Ipad gen 4
+2024-11-23 01:46:15,627 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 01:47:04,486 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df Ipad Ipad gen 4
+2024-11-23 01:47:04,486 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 01:57:35,077 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 4772bcef-4cb3-40b1-a3cc-f8b76a4d72df Ipad Ipad gen 6
+2024-11-23 01:57:35,077 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 02:35:33,566 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 02:37:51,729 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED f24e81bd-f5c9-42d9-bafb-5f67f52ca760 Name already in use
+2024-11-23 02:38:31,976 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED f24e81bd-f5c9-42d9-bafb-5f67f52ca760
+2024-11-23 02:38:47,623 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 02:39:03,557 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 12076d5e-b95f-49d9-af2e-8a206acafb7f
+2024-11-23 02:46:23,644 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED b2edda31-1dac-4d7a-b58f-9f30340ed1fe Name already in use
+2024-11-23 02:48:55,001 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 02:49:15,904 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED 218a0de4-301c-4532-b5cc-2b254bc7d6fd Name already in use
+2024-11-23 02:52:36,058 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 218a0de4-301c-4532-b5cc-2b254bc7d6fd
+2024-11-23 02:56:01,985 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED bb6d6fd1-6c1f-4ed9-8fcf-44738a235b1e
+2024-11-23 02:56:13,502 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED bb6d6fd1-6c1f-4ed9-8fcf-44738a235b1e
+2024-11-23 02:56:32,068 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED bb6d6fd1-6c1f-4ed9-8fcf-44738a235b1e
+2024-11-23 02:56:45,027 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED bb6d6fd1-6c1f-4ed9-8fcf-44738a235b1e
+2024-11-23 03:04:00,695 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-23 03:04:23,384 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED dd206663-db93-41b7-aaef-d06857b2269a
+2024-11-23 03:04:31,328 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED dd206663-db93-41b7-aaef-d06857b2269a
+2024-11-23 03:04:44,534 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED dd206663-db93-41b7-aaef-d06857b2269a
+2024-11-23 03:05:10,722 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTER-DENIED 765a0190-499f-4a86-b076-839b6ecb29f7 Name already in use
+2024-11-23 03:07:00,039 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTER-DENIED 765a0190-499f-4a86-b076-839b6ecb29f7 Name already in use
+2024-11-23 03:07:06,983 - INFO - Sent UDP response to ('192.168.0.19', 6005): DE-REGISTERED 765a0190-499f-4a86-b076-839b6ecb29f7
+2024-11-23 03:07:09,108 - INFO - Sent UDP response to ('192.168.0.19', 6005): REGISTERED 765a0190-499f-4a86-b076-839b6ecb29f7
+2024-11-23 03:07:19,345 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 765a0190-499f-4a86-b076-839b6ecb29f7 Ipad new one
+2024-11-23 03:07:19,346 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-23 03:07:19,348 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-11-23 03:07:19,348 - INFO - Sent UDP response to ('192.168.0.19', 6005): FOUND 765a0190-499f-4a86-b076-839b6ecb29f7 Ipad 800.0
+2024-11-23 03:07:19,349 - INFO - Item 'Ipad' reserved for Peer2 from Peer1 at price 800.0
