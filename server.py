@@ -122,6 +122,45 @@ class Server:
 
         self.send_udp_response(response, addr)
 
+    def finalize_transaction(self, buyer_name, seller_name, item_name, price):
+        with self.peer_lock:
+            # Ensure both buyer and seller are registered
+            if buyer_name not in self.registered_peers or seller_name not in self.registered_peers:
+                logging.error(f"Transaction failed: Buyer '{buyer_name}' or Seller '{seller_name}' is not registered.")
+                return
+
+            buyer_info = self.registered_peers[buyer_name]
+            seller_info = self.registered_peers[seller_name]
+
+            try:
+                # Establish TCP connection to buyer
+                buyer_conn = socket.create_connection((buyer_info['address'][0], int(buyer_info['tcp_socket'])))
+                buyer_msg = f"INFORM_REQ {item_name} {price}"
+                buyer_conn.sendall(buyer_msg.encode())
+                buyer_response = buyer_conn.recv(1024).decode()
+                buyer_conn.close()
+                logging.info(f"Buyer '{buyer_name}' response: {buyer_response}")
+
+                # Establish TCP connection to seller
+                seller_conn = socket.create_connection((seller_info['address'][0], int(seller_info['tcp_socket'])))
+                seller_msg = f"INFORM_REQ {item_name} {price}"
+                seller_conn.sendall(seller_msg.encode())
+                seller_response = seller_conn.recv(1024).decode()
+                seller_conn.close()
+                logging.info(f"Seller '{seller_name}' response: {seller_response}")
+
+                # Log the successful transaction
+                logging.info(
+                    f"Transaction finalized: {item_name} sold by '{seller_name}' to '{buyer_name}' for ${price}")
+                print(f"Transaction complete: {item_name} sold by '{seller_name}' to '{buyer_name}' for ${price}")
+
+            except socket.error as e:
+                logging.error(f"Socket error during transaction between '{buyer_name}' and '{seller_name}': {e}")
+                print(f"Transaction failed due to socket error: {e}")
+            except Exception as e:
+                logging.error(f"Error during transaction: {e}")
+                print(f"Transaction failed: {e}")
+
     def handle_search(self, message_parts, addr):
         rq_number = message_parts[1]
         name = message_parts[2]
