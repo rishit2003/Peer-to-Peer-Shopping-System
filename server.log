@@ -119,3 +119,57 @@
 2024-11-23 03:53:58,575 - INFO - Processing offers for request 66187467-db3a-4c48-ab85-43221c48309e after timeout.
 2024-11-23 03:53:58,575 - INFO - Sent UDP response to ('192.168.0.19', 6005): FOUND 66187467-db3a-4c48-ab85-43221c48309e Ipad 800.0 from Peer1
 2024-11-23 03:53:58,577 - INFO - Item 'Ipad' reserved for Peer2 from Peer1 at price 800.0
+2024-11-29 01:51:42,268 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 01:52:03,980 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED 5ce322d2-1ead-4886-9d51-d30d3fd13cb8 Name already in use
+2024-11-29 01:52:11,060 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 5ce322d2-1ead-4886-9d51-d30d3fd13cb8
+2024-11-29 01:52:13,792 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 5ce322d2-1ead-4886-9d51-d30d3fd13cb8
+2024-11-29 01:52:31,058 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTER-DENIED 95e40f8c-2629-468f-b626-a6208d4cbe2d Name already in use
+2024-11-29 01:52:36,617 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 95e40f8c-2629-468f-b626-a6208d4cbe2d
+2024-11-29 01:52:40,130 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 95e40f8c-2629-468f-b626-a6208d4cbe2d
+2024-11-29 01:53:12,068 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 95e40f8c-2629-468f-b626-a6208d4cbe2d Mac Macbook pro
+2024-11-29 01:53:12,069 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Mac'
+2024-11-29 01:55:12,068 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE 95e40f8c-2629-468f-b626-a6208d4cbe2d Mac 1000.0
+2024-11-29 01:55:12,070 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Mac' with RQ# 95e40f8c-2629-468f-b626-a6208d4cbe2d
+2024-11-29 01:58:14,711 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 01:59:05,675 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTER-DENIED 48ee612a-c004-4727-82e5-b407be932818 Name already in use
+2024-11-29 01:59:42,687 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 48ee612a-c004-4727-82e5-b407be932818
+2024-11-29 01:59:43,255 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 48ee612a-c004-4727-82e5-b407be932818
+2024-11-29 01:59:49,593 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 38720622-7e33-4f4b-a8ab-63b0e923ed9a
+2024-11-29 01:59:51,076 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 38720622-7e33-4f4b-a8ab-63b0e923ed9a
+2024-11-29 02:00:03,551 - INFO - Sent UDP response to ('192.168.0.19', 6001): SEARCH 38720622-7e33-4f4b-a8ab-63b0e923ed9a Mac Macbook pro
+2024-11-29 02:00:03,551 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Mac'
+2024-11-29 02:02:03,556 - INFO - Sent UDP response to ('192.168.0.19', 6000): NOT_AVAILABLE 38720622-7e33-4f4b-a8ab-63b0e923ed9a Mac 1000.0
+2024-11-29 02:02:03,559 - INFO - NOT_AVAILABLE sent to Peer1 for item 'Mac' with RQ# 38720622-7e33-4f4b-a8ab-63b0e923ed9a
+2024-11-29 02:02:34,039 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 3e2609a7-68eb-4930-91a3-d0794f076466
+2024-11-29 02:02:35,657 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 3e2609a7-68eb-4930-91a3-d0794f076466
+2024-11-29 02:02:53,641 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED cf4058d1-af26-4145-9d08-b88061d1ad84
+2024-11-29 02:02:54,184 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED cf4058d1-af26-4145-9d08-b88061d1ad84
+2024-11-29 02:03:11,276 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH cf4058d1-af26-4145-9d08-b88061d1ad84 Mac something
+2024-11-29 02:03:11,276 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Mac'
+2024-11-29 02:05:11,284 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE cf4058d1-af26-4145-9d08-b88061d1ad84 Mac 1000.0
+2024-11-29 02:05:11,286 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Mac' with RQ# cf4058d1-af26-4145-9d08-b88061d1ad84
+2024-11-29 02:13:45,585 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 02:13:59,719 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 695d5b58-2733-4cd3-b4f4-8d4b088bffc2
+2024-11-29 02:14:00,178 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 695d5b58-2733-4cd3-b4f4-8d4b088bffc2
+2024-11-29 02:14:15,030 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 88386d9e-b664-49ca-b9c9-dfcf06a66c6a
+2024-11-29 02:14:16,616 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 88386d9e-b664-49ca-b9c9-dfcf06a66c6a
+2024-11-29 02:14:27,193 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 88386d9e-b664-49ca-b9c9-dfcf06a66c6a Mac something
+2024-11-29 02:14:27,193 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Mac'
+2024-11-29 02:14:47,198 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE 88386d9e-b664-49ca-b9c9-dfcf06a66c6a Mac 1000.0
+2024-11-29 02:14:47,201 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Mac' with RQ# 88386d9e-b664-49ca-b9c9-dfcf06a66c6a
+2024-11-29 02:25:07,365 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED bd2b87d6-5e00-4a86-a038-934e49faddd2
+2024-11-29 02:25:08,989 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED bd2b87d6-5e00-4a86-a038-934e49faddd2
+2024-11-29 02:25:30,598 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED fb7b9661-8d12-4829-97d5-09a47680ba0e
+2024-11-29 02:25:32,097 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED fb7b9661-8d12-4829-97d5-09a47680ba0e
+2024-11-29 02:25:48,190 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH fb7b9661-8d12-4829-97d5-09a47680ba0e Mac Some
+2024-11-29 02:25:48,190 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Mac'
+2024-11-29 02:26:08,191 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE fb7b9661-8d12-4829-97d5-09a47680ba0e Mac 1000.0
+2024-11-29 02:26:08,191 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Mac' with RQ# fb7b9661-8d12-4829-97d5-09a47680ba0e
+2024-11-29 02:28:04,997 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 5d45231f-d440-4858-948c-02b6cf030c02
+2024-11-29 02:28:06,437 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 5d45231f-d440-4858-948c-02b6cf030c02
+2024-11-29 02:28:27,899 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 33b6cf1c-474b-4bc3-87e7-af1ff6f9a689
+2024-11-29 02:28:29,470 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 33b6cf1c-474b-4bc3-87e7-af1ff6f9a689
+2024-11-29 02:28:41,864 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 33b6cf1c-474b-4bc3-87e7-af1ff6f9a689 Mac Some
+2024-11-29 02:28:41,865 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Mac'
+2024-11-29 02:29:01,870 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE 33b6cf1c-474b-4bc3-87e7-af1ff6f9a689 Mac 1000.0
+2024-11-29 02:29:01,872 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Mac' with RQ# 33b6cf1c-474b-4bc3-87e7-af1ff6f9a689

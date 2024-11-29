@@ -1,56 +1,38 @@
 {
     "registered_peers": {
-        "Peer2": {
-            "rq_number": "66187467-db3a-4c48-ab85-43221c48309e",
-            "udp_socket": "6005",
-            "tcp_socket": "9005",
-            "address": [
-                "192.168.0.19",
-                6005
-            ]
-        },
         "Peer1": {
-            "rq_number": "567156ee-e479-4f6c-965e-a2fa13ec7cc5",
+            "rq_number": "5d45231f-d440-4858-948c-02b6cf030c02",
             "udp_socket": "6000",
             "tcp_socket": "9000",
             "address": [
                 "192.168.0.19",
                 6000
             ]
+        },
+        "Peer2": {
+            "rq_number": "33b6cf1c-474b-4bc3-87e7-af1ff6f9a689",
+            "udp_socket": "6001",
+            "tcp_socket": "9001",
+            "address": [
+                "192.168.0.19",
+                6001
+            ]
         }
     },
     "active_requests": {
-        "66187467-db3a-4c48-ab85-43221c48309e": {
-            "name": "Peer2",
-            "operation": "LOOKING_FOR",
-            "item_name": "Ipad",
-            "item_description": "New one",
-            "max_price": "800.0",
-            "status": "Found",
-            "offers": [
-                {
-                    "seller_name": "Peer1",
-                    "price": 800.0,
-                    "address": [
-                        "192.168.0.19",
-                        6000
-                    ]
-                }
-            ],
-            "timeout_thread_started": true,
-            "reserved_seller": {
-                "seller_name": "Peer1",
-                "price": 800.0,
-                "address": [
-                    "192.168.0.19",
-                    6000
-                ]
-            }
-        },
-        "567156ee-e479-4f6c-965e-a2fa13ec7cc5": {
+        "5d45231f-d440-4858-948c-02b6cf030c02": {
             "name": "Peer1",
             "operation": "REGISTER",
             "status": "Completed"
+        },
+        "33b6cf1c-474b-4bc3-87e7-af1ff6f9a689": {
+            "name": "Peer2",
+            "operation": "LOOKING_FOR",
+            "item_name": "Mac",
+            "item_description": "Some",
+            "max_price": "1000.0",
+            "status": "No Offers",
+            "offers": []
         }
     }
 }

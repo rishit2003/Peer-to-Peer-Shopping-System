@@ -119,7 +119,7 @@ class Peer:
             elif msg_type == "FOUND":
                 self.response_event.set()
                 self.handle_found(message_parts, addr)
-            elif msg_type == "REGISTERED" or msg_type == "DE-REGISTERED" or msg_type == "REGISTER-DENIED" or msg_type == "DE-REGISTER-DENIED" or msg_type == "NOT_AVAILABLE" or msg_type == "NOT_FOUND":
+            elif msg_type in ["REGISTERED", "DE-REGISTERED", "REGISTER-DENIED", "DE-REGISTER-DENIED", "NOT_AVAILABLE", "NOT_FOUND"]:
                 self.response_event.set()
             elif msg_type == "RESERVE":
                 self.response_event.set()
@@ -209,9 +209,12 @@ class Peer:
         try:
             self.udp_socket.sendto(message.encode(), server_address)
             print(f"Message sent: {message}")
-            if message[0] == "LOOKING_FOR":
-                if self.response_event.wait(20): # Wait 20 seconds
+            if message.startswith("LOOKING_FOR"):
+                if self.response_event.wait(30):  # Wait 30 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
                     print(f"Server response received via listen_to_server: {self.response_message}")
+                    # Handle NOT_AVAILABLE response
+                    if "NOT_AVAILABLE" in self.response_message:
+                        print(f"Item not available: {self.response_message}")
                 else:
                     print("Timeout LOOKING_FOR: No response from the server.")
             elif self.response_event.wait(timeout):  # Wait for the response within the timeout
