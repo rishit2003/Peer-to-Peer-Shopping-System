@@ -1,0 +1,24 @@
+{
+    "registered_peers": {
+        "Peer2": {
+            "rq_number": "6a6b9ec9-3ac4-4b4b-8251-7761f678fd21",
+            "udp_socket": "6001",
+            "tcp_socket": "9001",
+            "address": [
+                "192.168.0.19",
+                6001
+            ]
+        }
+    },
+    "active_requests": {
+        "6a6b9ec9-3ac4-4b4b-8251-7761f678fd21": {
+            "name": "Peer2",
+            "operation": "LOOKING_FOR",
+            "item_name": "Ipad",
+            "item_description": "New one",
+            "max_price": "800.0",
+            "status": "No Offers",
+            "offers": []
+        }
+    }
+}

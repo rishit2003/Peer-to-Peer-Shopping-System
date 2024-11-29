@@ -1,0 +1,14 @@
+[
+    {
+        "item_name": "Iphone",
+        "item_description": "Iphone 15 pro",
+        "price": 1000.0,
+        "reserved": false
+    },
+    {
+        "item_name": "something",
+        "item_description": "something",
+        "price": 400.0,
+        "reserved": false
+    }
+]
