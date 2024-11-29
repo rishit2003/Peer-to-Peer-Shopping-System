@@ -164,13 +164,18 @@ class Peer:
         print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
 
         # Logic to decide whether to accept or refuse the negotiation
-        accept_negotiation = input(f"Accept negotiation? (yes/no): ").strip().lower()
-        if accept_negotiation == "yes":
-            response = f"ACCEPT {rq_number} {item_name} {max_price}"
-            self.update_item_reservation(item_name, True)
-        else:
-            response = f"REFUSE {rq_number} {item_name} {max_price}"
-            self.update_item_reservation(item_name, False)
+        while(True):
+            accept_negotiation = input(f"Accept negotiation? (yes/no): ").strip().lower()
+            if accept_negotiation == "yes":
+                response = f"ACCEPT {rq_number} {item_name} {max_price}"
+                self.update_item_reservation(item_name, True)
+                break
+            elif accept_negotiation == "no":
+                response = f"REFUSE {rq_number} {item_name} {max_price}"
+                self.update_item_reservation(item_name, False)
+                break
+            else:
+                print("Invalid response received.")
 
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
@@ -210,7 +215,7 @@ class Peer:
             self.udp_socket.sendto(message.encode(), server_address)
             print(f"Message sent: {message}")
             if message.startswith("LOOKING_FOR"):
-                if self.response_event.wait(30):  # Wait 30 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
+                if self.response_event.wait(60):  # Wait 60 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
                     print(f"Server response received via listen_to_server: {self.response_message}")
                     # Handle NOT_AVAILABLE response
                     if "NOT_AVAILABLE" in self.response_message:

@@ -1,7 +1,7 @@
 {
     "registered_peers": {
         "Peer1": {
-            "rq_number": "5d45231f-d440-4858-948c-02b6cf030c02",
+            "rq_number": "3c73ade5-f960-43cf-94e5-56892c5349f3",
             "udp_socket": "6000",
             "tcp_socket": "9000",
             "address": [
@@ -10,7 +10,7 @@
             ]
         },
         "Peer2": {
-            "rq_number": "33b6cf1c-474b-4bc3-87e7-af1ff6f9a689",
+            "rq_number": "3ad0cbaa-c460-4cee-a780-b8dc9fa33b09",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
@@ -20,19 +20,29 @@
         }
     },
     "active_requests": {
-        "5d45231f-d440-4858-948c-02b6cf030c02": {
+        "3c73ade5-f960-43cf-94e5-56892c5349f3": {
             "name": "Peer1",
+            "operation": "LOOKING_FOR",
+            "item_name": "Iphone",
+            "item_description": "New one",
+            "max_price": "900.0",
+            "status": "Negotiating",
+            "offers": [
+                {
+                    "seller_name": "Peer2",
+                    "price": 1000.0,
+                    "address": [
+                        "192.168.0.19",
+                        6001
+                    ]
+                }
+            ],
+            "timeout_thread_started": true
+        },
+        "3ad0cbaa-c460-4cee-a780-b8dc9fa33b09": {
+            "name": "Peer2",
             "operation": "REGISTER",
             "status": "Completed"
-        },
-        "33b6cf1c-474b-4bc3-87e7-af1ff6f9a689": {
-            "name": "Peer2",
-            "operation": "LOOKING_FOR",
-            "item_name": "Mac",
-            "item_description": "Some",
-            "max_price": "1000.0",
-            "status": "No Offers",
-            "offers": []
         }
     }
 }
