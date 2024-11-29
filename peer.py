@@ -5,7 +5,7 @@ import socket
 import threading
 import time
 import uuid
-
+import logging
 
 class Peer:
     class Client:
@@ -37,6 +37,15 @@ class Peer:
         self.running = True  # Control flag for threads
         self.threads = []  # To track threads
         self.is_registered = False  # Track registration status
+        self.is_waiting = False  # flag to indicate waiting state
+        # Setting up dynamic logging for this peer
+        log_filename = f"{self.name}.log"
+        logging.basicConfig(
+            filename=log_filename,
+            level=logging.INFO,
+            format="%(asctime)s - %(levelname)s - %(message)s"
+        )
+        logging.info(f"Peer {self.name} initialized with UDP port {self.udp_port} and TCP port {self.tcp_port}.")
 
     def listen_to_server(self):
         """Continuously listens for server messages on a dedicated thread."""
@@ -214,24 +223,30 @@ class Peer:
         try:
             self.udp_socket.sendto(message.encode(), server_address)
             print(f"Message sent: {message}")
+            logging.info(f"Message sent: {message}")
             if message.startswith("LOOKING_FOR"):
+                self.is_waiting = True  # Start waiting
                 if self.response_event.wait(60):  # Wait 60 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
                     print(f"Server response received via listen_to_server: {self.response_message}")
                     # Handle NOT_AVAILABLE response
                     if "NOT_AVAILABLE" in self.response_message:
                         print(f"Item not available: {self.response_message}")
+                        logging.info(f"Item not available: {self.response_message}")
                 else:
                     print("Timeout LOOKING_FOR: No response from the server.")
             elif self.response_event.wait(timeout):  # Wait for the response within the timeout
                 print(f"Server response received via listen_to_server: {self.response_message}")
+                logging.info(f"Server response received via listen_to_server: {self.response_message}")
             else:
                 print("Timeout: No response from the server.")
         except Exception as e:
             print(f"Error sending message: {e}")
+        finally:
+            self.is_waiting = False  # End waiting
 
     def register_with_server(self):
         register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.client.address} {self.udp_port} {self.tcp_port}"
-        print(f"Sending registration message: {register_msg}")
+        logging.info(f"Sending registration message: {register_msg}")
         self.send_and_wait_for_response(register_msg, (server_ip, server_udp_port))
         if self.response_message and "REGISTERED" in self.response_message:
             self.is_registered = True
@@ -241,7 +256,7 @@ class Peer:
 
     def deregister_with_server(self):
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
-        print(f"Sending deregistration message: {deregister_msg}")
+        logging.info(f"Sending deregistration message: {deregister_msg}")
         self.send_and_wait_for_response(deregister_msg, (server_ip, server_udp_port))
         if self.response_message and "DE-REGISTERED" in self.response_message:
             self.is_registered = False
@@ -287,6 +302,11 @@ class Peer:
         """Interactive loop for user actions."""
         try:
             while self.running:
+                if self.is_waiting:
+                    print("Waiting for server response. Please wait...")
+                    time.sleep(1)  # Avoid busy-waiting
+                    continue
+
                 print("\nOptions:")
                 print("1. Register")
                 print("2. Deregister")
@@ -307,7 +327,9 @@ class Peer:
                 elif choice == '2':
                     self.deregister_with_server()
                 elif choice == '3':
+                    self.is_waiting = True  # Set waiting state
                     self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                    self.is_waiting = False  # Reset waiting state after response
                 elif choice == '4':
                     self.add_item_to_inventory(itemName, itemDescription, itemPrice)
                 elif choice == '5':

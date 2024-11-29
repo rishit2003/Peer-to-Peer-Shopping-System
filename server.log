@@ -202,3 +202,38 @@
 2024-11-29 02:40:53,539 - INFO - Negotiation initiated with Peer2 for item 'Iphone' at max price 900.0
 2024-11-29 02:41:27,463 - INFO - Sent UDP response to ('192.168.0.19', 6000): NOT_FOUND 3c73ade5-f960-43cf-94e5-56892c5349f3 Iphone 900.0
 2024-11-29 02:41:27,463 - INFO - Negotiation failed: Iphone not sold to Peer1
+2024-11-29 13:29:05,373 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 13:29:18,544 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 01492f9c-d287-4669-a28e-1978108ec29c
+2024-11-29 13:29:18,876 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 01492f9c-d287-4669-a28e-1978108ec29c
+2024-11-29 13:29:33,629 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 720b9d4c-01d8-4431-b9e7-239d8ec84c58
+2024-11-29 13:29:33,946 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 720b9d4c-01d8-4431-b9e7-239d8ec84c58
+2024-11-29 13:29:58,372 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 720b9d4c-01d8-4431-b9e7-239d8ec84c58 Ipad New one
+2024-11-29 13:29:58,372 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-29 13:29:58,375 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-11-29 13:30:08,381 - INFO - Processing offers for request 720b9d4c-01d8-4431-b9e7-239d8ec84c58 after timeout.
+2024-11-29 13:30:08,381 - INFO - Sent UDP response to ('192.168.0.19', 6000): NEGOTIATE 720b9d4c-01d8-4431-b9e7-239d8ec84c58 Ipad 700.0
+2024-11-29 13:30:08,381 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-11-29 13:30:35,617 - INFO - Sent UDP response to ('192.168.0.19', 6001): FOUND 720b9d4c-01d8-4431-b9e7-239d8ec84c58 Ipad 800.0 from Peer1
+2024-11-29 13:30:35,618 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 800.0
+2024-11-29 13:42:01,677 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 13:42:16,353 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED e88f99aa-ab48-496e-99af-3d81aece469a
+2024-11-29 13:42:16,709 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED e88f99aa-ab48-496e-99af-3d81aece469a
+2024-11-29 13:42:29,552 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 6a6b9ec9-3ac4-4b4b-8251-7761f678fd21
+2024-11-29 13:42:30,014 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 6a6b9ec9-3ac4-4b4b-8251-7761f678fd21
+2024-11-29 13:43:00,352 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 6a6b9ec9-3ac4-4b4b-8251-7761f678fd21 Ipad New one
+2024-11-29 13:43:00,353 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-29 13:43:20,361 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE 6a6b9ec9-3ac4-4b4b-8251-7761f678fd21 Ipad 800.0
+2024-11-29 13:43:20,361 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Ipad' with RQ# 6a6b9ec9-3ac4-4b4b-8251-7761f678fd21
+2024-11-29 13:45:21,004 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED e88f99aa-ab48-496e-99af-3d81aece469a
+2024-11-29 13:45:23,347 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED e88f99aa-ab48-496e-99af-3d81aece469a
+2024-11-29 13:45:39,292 - INFO - Sent UDP response to ('192.168.0.19', 6001): SEARCH e88f99aa-ab48-496e-99af-3d81aece469a Iphone new one
+2024-11-29 13:45:39,293 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 13:45:39,295 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 13:45:49,301 - INFO - Processing offers for request e88f99aa-ab48-496e-99af-3d81aece469a after timeout.
+2024-11-29 13:45:49,303 - INFO - Sent UDP response to ('192.168.0.19', 6001): NEGOTIATE e88f99aa-ab48-496e-99af-3d81aece469a Iphone 900.0
+2024-11-29 13:45:49,303 - INFO - Negotiation initiated with Peer2 for item 'Iphone' at max price 900.0
+2024-11-29 13:46:40,559 - INFO - Sent UDP response to ('192.168.0.19', 6000): NOT_FOUND e88f99aa-ab48-496e-99af-3d81aece469a Iphone 900.0
+2024-11-29 13:46:40,560 - INFO - Negotiation failed: Iphone not sold to Peer1
+2024-11-29 14:54:43,643 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
+2024-11-29 14:54:48,519 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
+2024-11-29 14:57:45,915 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc

@@ -1,0 +1,8 @@
+2024-11-29 14:54:42,445 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 14:54:43,631 - INFO - Message sent: DE-REGISTER d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc Peer1
+2024-11-29 14:54:43,643 - INFO - Server response received via listen_to_server: DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
+2024-11-29 14:54:48,516 - INFO - Sending registration message: REGISTER d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc Peer1 192.168.0.19 6000 9000
+2024-11-29 14:54:48,517 - INFO - Message sent: REGISTER d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc Peer1 192.168.0.19 6000 9000
+2024-11-29 14:54:48,520 - INFO - Server response received via listen_to_server: REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
+2024-11-29 14:57:45,911 - INFO - Message sent: DE-REGISTER d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc Peer1
+2024-11-29 14:57:45,916 - INFO - Server response received via listen_to_server: DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
