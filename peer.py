@@ -64,11 +64,17 @@ class Peer:
                 json.dump(inventory, file, indent=4)
             print(f"Inventory file created: {self.inventory_file}")
         else:
-            print(f"Inventory file already exists: {self.inventory_file}")
+            inventory = self.load_inventory()
+            updated_inventory = [
+                {**item, "reserved": item.get("reserved", False)} for item in inventory
+            ]
+            with open(self.inventory_file, "w") as file:
+                json.dump(updated_inventory, file, indent=4)
+            print(f"Inventory file updated: {self.inventory_file}")
 
     def add_item_to_inventory(self, item_name, item_description, price):
         """Add an item to the peer's inventory."""
-        item = {"item_name": item_name, "item_description": item_description, "price": price}
+        item = {"item_name": item_name, "item_description": item_description, "price": price, "reserved": False}
         # Load existing inventory, update, and save back
         inventory = self.load_inventory()
         inventory.append(item)
@@ -80,6 +86,23 @@ class Peer:
         """Load the inventory from the JSON file."""
         with open(self.inventory_file, "r") as file:
             return json.load(file)
+
+    def update_item_reservation(self, item_name, reserved):
+        """Update the reservation status of an item in the inventory."""
+        inventory = self.load_inventory()
+        updated = False
+        for item in inventory:
+            if item['item_name'].lower() == item_name.lower():
+                item['reserved'] = reserved
+                updated = True
+                break
+
+        if updated:
+            with open(self.inventory_file, "w") as file:
+                json.dump(inventory, file, indent=4)
+            print(f"Updated reservation status for item '{item_name}' to {reserved}.")
+        else:
+            print(f"Item '{item_name}' not found in inventory.")
 
     def handle_server_message(self, data, addr):
         """Handles different types of server messages."""
@@ -94,13 +117,16 @@ class Peer:
             elif msg_type == "NEGOTIATE":
                 self.handle_negotiate(message_parts, addr)
             elif msg_type == "FOUND":
-                self.handle_found(message_parts)       # TODO: Need to implement this with NOT_FOUND
-                self.response_event.set()  # Signal for a "FOUND" response
-            elif msg_type == "NOT_FOUND":
-                self.handle_not_found(message_parts)    # TODO: Need to implement this
-                self.response_event.set()  # Signal for a "NOT_FOUND" response
-            elif msg_type == "REGISTERED" or msg_type == "DE-REGISTERED" or msg_type == "REGISTER-DENIED" or msg_type == "DE-REGISTER-DENIED":
                 self.response_event.set()
+                self.handle_found(message_parts, addr)
+            elif msg_type == "REGISTERED" or msg_type == "DE-REGISTERED" or msg_type == "REGISTER-DENIED" or msg_type == "DE-REGISTER-DENIED" or msg_type == "NOT_AVAILABLE" or msg_type == "NOT_FOUND":
+                self.response_event.set()
+            elif msg_type == "RESERVE":
+                self.response_event.set()
+                self.handle_reserved(message_parts)
+            elif msg_type == "CANCEL":
+                self.response_event.set()
+                self.handle_cancel(message_parts)
             else:
                 print(f"Unknown message type received: {msg_type}")
         except Exception as e:
@@ -117,11 +143,12 @@ class Peer:
         # Check if the item exists in the peer's inventory
         inventory = self.load_inventory()
         for item in inventory:
-            if item['item_name'].lower() == item_name.lower():
+            if item['item_name'].lower() == item_name.lower() and not item.get("reserved", False):
                 # Item found, respond to the server with an OFFER message
                 price = item['price']
                 offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
                 self.send_and_wait_for_response(offer_msg,(server_ip, server_udp_port))
+                self.update_item_reservation(item_name, True)  # Mark as reserved
                 print(f"Sent OFFER to server: {offer_msg}")
                 return
 
@@ -140,15 +167,36 @@ class Peer:
         accept_negotiation = input(f"Accept negotiation? (yes/no): ").strip().lower()
         if accept_negotiation == "yes":
             response = f"ACCEPT {rq_number} {item_name} {max_price}"
+            self.update_item_reservation(item_name, True)
         else:
             response = f"REFUSE {rq_number} {item_name} {max_price}"
+            self.update_item_reservation(item_name, False)
 
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
         print(f"Sent response to server: {response}")
 
-    def handle_found(self, parts):
-        print(f"Found {parts[2]} at {parts[3]}")
+    def handle_reserved(self, parts):
+        self.update_item_reservation(parts[2], True)
+
+    def handle_cancel(self, parts):
+        self.update_item_reservation(parts[2], False)
+
+    def handle_found(self, parts, addr):
+        rq_number = parts[1]
+        item_name = parts[2]
+        price = float(parts[3])
+        print(f"FOUND received For Item: {item_name}")
+        accept_buy = input(f"Do you want to Buy {item_name}? (yes/no): ").strip().lower()
+        if accept_buy == "yes":
+            response = f"BUY {rq_number} {item_name} {price}"
+        else:
+            response = f"CANCEL {rq_number} {item_name} {price}"
+
+        # Send the response back to the server
+        self.udp_socket.sendto(response.encode(), addr)
+        print(f"Sent response to server: {response}")
+
 
     def generate_rq_number(self):
         """Generate a unique RQ# using UUID."""

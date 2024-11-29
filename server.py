@@ -74,6 +74,10 @@ class Server:
             self.handle_offer(message_parts, addr)
         elif msg_type == "ACCEPT" or msg_type == "REFUSE":
             self.handle_seller_response(message_parts, addr)
+        elif msg_type == "CANCEL":
+            self.handle_cancel(message_parts, addr)
+        elif msg_type == "BUY":
+            self.handle_tcp(message_parts, addr) # TODO: To implement it
         else:
             logging.warning(f"Unknown message type from {addr}: {data.decode()}")
 
@@ -138,7 +142,8 @@ class Server:
                 'item_name': item_name,
                 'item_description': item_description,
                 'max_price': max_price,
-                'status': 'Processing'
+                'status': 'Processing',
+                'offers': []
             }
             self.save_server_state()
 
@@ -147,6 +152,24 @@ class Server:
                     search_msg = f"SEARCH {rq_number} {item_name} {item_description}"
                     self.send_udp_response(search_msg, tuple(peer_info['address']))
                     logging.info(f"SEARCH request from {name} forwarded to {peer_name} for item '{item_name}'")
+
+            # Start a timeout thread to handle the case when no offers are received
+            def handle_timeout():
+                time.sleep(120)  # Wait for 2 minutes
+                with self.peer_lock:  # Ensure thread safety
+                    buyer_request = self.active_requests.get(rq_number, {})
+                    if buyer_request and not buyer_request['offers']:  # No offers received
+                        buyer_address = self.registered_peers[name]['address']
+                        response_to_buyer = f"NOT_AVAILABLE {rq_number} {item_name} {max_price}"
+                        self.send_udp_response(response_to_buyer, buyer_address)
+                        logging.info(
+                            f"NOT_AVAILABLE sent to {name} for item '{item_name}' with RQ# {rq_number}")
+
+                        # Mark the request as completed without offers
+                        buyer_request['status'] = 'No Offers'
+                        self.save_server_state()
+
+            threading.Thread(target=handle_timeout, daemon=True).start()
 
     # def handle_offer(self, message_parts, addr):
     #     rq_number = message_parts[1]
@@ -239,6 +262,11 @@ class Server:
                             response_to_buyer = f"FOUND {rq_number} {item_name} {cheapest_offer['price']} from {cheapest_offer['seller_name']}"
                             self.send_udp_response(response_to_buyer, buyer_address)
 
+                            # Send a RESERVE message to the seller
+                            reserve_message = f"RESERVE {rq_number} {item_name} {cheapest_offer['price']}"
+                            self.send_udp_response(reserve_message, cheapest_offer['address'])
+                            logging.info(f"RESERVE message sent to {cheapest_offer['seller_name']} for item '{item_name}' at price {cheapest_offer['price']}")
+
                             # Update the request status
                             buyer_request['status'] = 'Found'
                             buyer_request['reserved_seller'] = cheapest_offer
@@ -246,12 +274,12 @@ class Server:
                             logging.info(
                                 f"Item '{item_name}' reserved for {buyer_name} from {cheapest_offer['seller_name']} at price {cheapest_offer['price']}")
                         else:
-                            # All offers exceed max price, initiate negotiation with all sellers
-                            for offer in buyer_request['offers']:
-                                negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
-                                self.send_udp_response(negotiate_message, offer['address'])
-                                logging.info(
-                                    f"Negotiation initiated with {offer['seller_name']} for item '{item_name}' at max price {max_price}")
+                            # All offers exceed max price, initiate negotiation with the cheapest offer
+                            cheapest_offer = min(buyer_request['offers'], key=lambda x: x['price'])
+
+                            negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
+                            self.send_udp_response(negotiate_message, cheapest_offer['address'])
+                            logging.info(f"Negotiation initiated with {cheapest_offer['seller_name']} for item '{item_name}' at max price {max_price}")
 
                             # Update the status to indicate negotiation is in progress
                             buyer_request['status'] = 'Negotiating'
@@ -274,15 +302,66 @@ class Server:
         buyer_address = self.registered_peers[buyer_name]['address']
 
         if response_type == "ACCEPT":
-            response_to_buyer = f"FOUND {rq_number} {item_name} {max_price}"
-            self.send_udp_response(response_to_buyer, buyer_address)
-            buyer_request['status'] = 'Completed'
-            logging.info(f"Negotiation successful: {item_name} sold to {buyer_name} at price {max_price}")
+            # Determine the seller from the address
+            offers = buyer_request.get('offers', [])
+            reserved_seller = next((offer for offer in offers if offer['address'] == tuple(addr)), None)
+
+            if reserved_seller:
+                # Update the request with reserved seller information
+                buyer_request['reserved_seller'] = reserved_seller
+
+                response_to_buyer = f"FOUND {rq_number} {item_name} {reserved_seller['price']} from {reserved_seller['seller_name']}"
+                self.send_udp_response(response_to_buyer, buyer_address)
+
+                buyer_request['status'] = 'Completed'
+                self.save_server_state()  # Save the updated state with reserved seller
+                logging.info(f"Negotiation successful: {item_name} sold to {buyer_name} by {reserved_seller['seller_name']} at price {reserved_seller['price']}")
+            else:
+                logging.warning(f"No matching offer found for seller at {addr} in request {rq_number}")
         elif response_type == "REFUSE":
             response_to_buyer = f"NOT_FOUND {rq_number} {item_name} {max_price}"
             self.send_udp_response(response_to_buyer, buyer_address)
             buyer_request['status'] = 'Not Found'
             logging.info(f"Negotiation failed: {item_name} not sold to {buyer_name}")
+
+    def handle_cancel(self, message_parts, addr):
+        """Handles a CANCEL message from the buyer and notifies the seller to cancel the reservation."""
+        rq_number = message_parts[1]
+        item_name = message_parts[2]
+        price = float(message_parts[3])
+
+        logging.info(f"CANCEL received from buyer for RQ# {rq_number}, item '{item_name}', price {price}")
+
+        with self.peer_lock:
+            if rq_number not in self.active_requests:
+                logging.warning(f"Invalid RQ number in CANCEL message: {rq_number}")
+                return
+
+            buyer_request = self.active_requests[rq_number]
+            buyer_name = buyer_request['name']
+            buyer_address = self.registered_peers[buyer_name]['address']
+
+            # Check if there is a reserved seller for this request
+            reserved_seller = buyer_request.get('reserved_seller')
+            if not reserved_seller:
+                logging.warning(f"No reserved seller found for RQ# {rq_number}.")
+                # response_to_buyer = f"NOT_RESERVED {rq_number} {item_name}"
+                # self.send_udp_response(response_to_buyer, addr)
+                return
+
+            seller_name = reserved_seller['seller_name']
+            seller_address = reserved_seller['address']
+
+            # Send CANCEL message to the seller
+            cancel_message = f"CANCEL {rq_number} {item_name} {price}"
+            self.send_udp_response(cancel_message, seller_address)
+            logging.info(f"CANCEL message sent to seller {seller_name} for item '{item_name}' at {price}")
+
+            # Update the request status
+            buyer_request['status'] = 'Cancelled'
+            del buyer_request['reserved_seller']  # Remove the reserved seller entry
+            self.save_server_state()
+
 
     def send_udp_response(self, message, addr):
         with self.peer_lock:
