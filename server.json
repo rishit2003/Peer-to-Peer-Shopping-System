@@ -1,24 +1,48 @@
 {
     "registered_peers": {
+        "Peer1": {
+            "rq_number": "9777ea61-dd29-4e54-8db2-fb386ecc0e48",
+            "udp_socket": "6000",
+            "tcp_socket": "9000",
+            "address": [
+                "172.30.96.169",
+                6000
+            ]
+        },
         "Peer2": {
-            "rq_number": "6a6b9ec9-3ac4-4b4b-8251-7761f678fd21",
+            "rq_number": "f7ebf3de-ae66-41f9-b7d0-01ae12f11598",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
-                "192.168.0.19",
+                "172.30.96.169",
                 6001
             ]
         }
     },
     "active_requests": {
-        "6a6b9ec9-3ac4-4b4b-8251-7761f678fd21": {
+        "9777ea61-dd29-4e54-8db2-fb386ecc0e48": {
+            "name": "Peer1",
+            "operation": "REGISTER",
+            "status": "Completed"
+        },
+        "f7ebf3de-ae66-41f9-b7d0-01ae12f11598": {
             "name": "Peer2",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
-            "item_description": "New one",
-            "max_price": "800.0",
-            "status": "No Offers",
-            "offers": []
+            "item_description": "new",
+            "max_price": "700.0",
+            "status": "Negotiating",
+            "offers": [
+                {
+                    "seller_name": "Peer1",
+                    "price": 800.0,
+                    "address": [
+                        "172.30.96.169",
+                        6000
+                    ]
+                }
+            ],
+            "timeout_thread_started": true
         }
     }
 }

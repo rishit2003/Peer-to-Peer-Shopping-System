@@ -38,6 +38,9 @@ class Peer:
         self.threads = []  # To track threads
         self.is_registered = False  # Track registration status
         self.is_waiting = False  # flag to indicate waiting state
+        self.lock = threading.Lock()  # Lock for terminal access
+        self.in_negotiation = False
+
         # Setting up dynamic logging for this peer
         log_filename = f"{self.name}.log"
         logging.basicConfig(
@@ -111,7 +114,8 @@ class Peer:
                 json.dump(inventory, file, indent=4)
             print(f"Updated reservation status for item '{item_name}' to {reserved}.")
         else:
-            print(f"Item '{item_name}' not found in inventory.")
+            # print(f"Item '{item_name}' not found in inventory.")
+            logging.warning(f"Item '{item_name}' not found in inventory.")
 
     def handle_server_message(self, data, addr):
         """Handles different types of server messages."""
@@ -124,6 +128,7 @@ class Peer:
             if msg_type == "SEARCH":
                 self.handle_search(message_parts)
             elif msg_type == "NEGOTIATE":
+                self.lock.release_lock()
                 self.handle_negotiate(message_parts, addr)
             elif msg_type == "FOUND":
                 self.response_event.set()
@@ -170,25 +175,34 @@ class Peer:
         item_name = parts[2]
         max_price = float(parts[3])
 
-        print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
+        self.in_negotiation = True
 
-        # Logic to decide whether to accept or refuse the negotiation
-        while(True):
-            accept_negotiation = input(f"Accept negotiation? (yes/no): ").strip().lower()
-            if accept_negotiation == "yes":
-                response = f"ACCEPT {rq_number} {item_name} {max_price}"
-                self.update_item_reservation(item_name, True)
-                break
-            elif accept_negotiation == "no":
-                response = f"REFUSE {rq_number} {item_name} {max_price}"
-                self.update_item_reservation(item_name, False)
-                break
-            else:
-                print("Invalid response received.")
+        with self.lock:  # Acquire the lock for terminal interaction
+            print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
 
-        # Send the response back to the server
-        self.udp_socket.sendto(response.encode(), addr)
-        print(f"Sent response to server: {response}")
+            # Pause interactive loop
+            self.is_waiting = True
+
+            # Logic to decide whether to accept or refuse the negotiation
+            while True:
+                accept_negotiation = input(f"Accept negotiation? (y/n): ").strip().lower()
+                if accept_negotiation == 'y':
+                    response = f"ACCEPT {rq_number} {item_name} {max_price}"
+                    self.update_item_reservation(item_name, True)
+                    break
+                elif accept_negotiation == 'n':
+                    response = f"REFUSE {rq_number} {item_name} {max_price}"
+                    self.update_item_reservation(item_name, False)
+                    break
+                else:
+                    print("Invalid response received.")
+
+            # Send the response back to the server
+            self.udp_socket.sendto(response.encode(), addr)
+            print(f"Sent response to server: {response}")
+            # Resume interactive loop
+            self.is_waiting = False
+            self.in_negotiation = False
 
     def handle_reserved(self, parts):
         self.update_item_reservation(parts[2], True)
@@ -201,8 +215,8 @@ class Peer:
         item_name = parts[2]
         price = float(parts[3])
         print(f"FOUND received For Item: {item_name}")
-        accept_buy = input(f"Do you want to Buy {item_name}? (yes/no): ").strip().lower()
-        if accept_buy == "yes":
+        accept_buy = input(f"Do you want to Buy {item_name}? (y/n): ").strip().lower()
+        if accept_buy == 'y':
             response = f"BUY {rq_number} {item_name} {price}"
         else:
             response = f"CANCEL {rq_number} {item_name} {price}"
@@ -222,11 +236,11 @@ class Peer:
         self.response_message = None  # Clear any previous response
         try:
             self.udp_socket.sendto(message.encode(), server_address)
-            print(f"Message sent: {message}")
+            print(f"\nMessage sent: {message}")
             logging.info(f"Message sent: {message}")
             if message.startswith("LOOKING_FOR"):
                 self.is_waiting = True  # Start waiting
-                if self.response_event.wait(60):  # Wait 60 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
+                if self.response_event.wait(90):  # Wait 90 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
                     print(f"Server response received via listen_to_server: {self.response_message}")
                     # Handle NOT_AVAILABLE response
                     if "NOT_AVAILABLE" in self.response_message:
@@ -302,42 +316,43 @@ class Peer:
         """Interactive loop for user actions."""
         try:
             while self.running:
-                if self.is_waiting:
-                    print("Waiting for server response. Please wait...")
-                    time.sleep(1)  # Avoid busy-waiting
-                    continue
-
-                print("\nOptions:")
-                print("1. Register")
-                print("2. Deregister")
-                print("3. Look for item")
-                print("4. Add Item to Inventory")
-                print("5. Exit")
-                choice = input("Choose an option: ")
-                if choice in ["3", "4"]:
-                    if not self.is_registered:
-                        print("You must register with the server before performing this action.")
+                with self.lock:
+                    if self.is_waiting or self.in_negotiation:
+                        # print("Waiting for server response. Please wait...")
+                        time.sleep(1)  # Avoid busy-waiting
                         continue
-                    itemName = input("Item_name: ")
-                    itemDescription = input("Description: ")
-                    itemPrice = float(input("Price: "))
 
-                if choice == '1':
-                    self.register_with_server()
-                elif choice == '2':
-                    self.deregister_with_server()
-                elif choice == '3':
-                    self.is_waiting = True  # Set waiting state
-                    self.looking_for_item_server(itemName, itemDescription, itemPrice)
-                    self.is_waiting = False  # Reset waiting state after response
-                elif choice == '4':
-                    self.add_item_to_inventory(itemName, itemDescription, itemPrice)
-                elif choice == '5':
-                    print("Exiting program.")
-                    self.running = False  # Exit gracefully
-                    break
-                else:
-                    print("Invalid choice. Please try again.")
+                    print("\nOptions:")
+                    print("1. Register")
+                    print("2. Deregister")
+                    print("3. Look for item")
+                    print("4. Add Item to Inventory")
+                    print("5. Exit")
+                    choice = input("Choose an option: ")
+                    if choice in ["3", "4"]:
+                        if not self.is_registered:
+                            print("You must register with the server before performing this action.")
+                            continue
+                        itemName = input("Item_name: ")
+                        itemDescription = input("Description: ")
+                        itemPrice = float(input("Price: "))
+
+                    if choice == '1':
+                        self.register_with_server()
+                    elif choice == '2':
+                        self.deregister_with_server()
+                    elif choice == '3':
+                        # self.is_waiting = True  # Set waiting state
+                        self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                        # self.is_waiting = False  # Reset waiting state after response
+                    elif choice == '4':
+                        self.add_item_to_inventory(itemName, itemDescription, itemPrice)
+                    elif choice == '5':
+                        print("Exiting program.")
+                        self.running = False  # Exit gracefully
+                        break
+                    else:
+                        print("Invalid choice. Please try again.")
         except KeyboardInterrupt:
             print("\nInteractive loop interrupted.")
             self.running = False
