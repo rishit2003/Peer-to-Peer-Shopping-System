@@ -212,14 +212,6 @@ class Peer:
             self.in_negotiation = False
             self.input_event.clear()  # Allow main loop input handling
 
-    # def non_blocking_input(self, prompt):
-    #     """A non-blocking input function."""
-    #     print(prompt, end="", flush=True)
-    #     inputs, _, _ = select.select([sys.stdin], [], [], 0.1)  # 0.1-second timeout
-    #     if inputs:
-    #         return sys.stdin.readline().strip()
-    #     return None
-
     def handle_reserved(self, parts):
         self.update_item_reservation(parts[2], True)
 
@@ -387,9 +379,7 @@ class Peer:
                         elif choice == '2':
                             self.deregister_with_server()
                         elif choice == '3':
-                            # self.is_waiting = True  # Set waiting state
                             self.looking_for_item_server(itemName, itemDescription, itemPrice)
-                            # self.is_waiting = False  # Reset waiting state after response
                         elif choice == '4':
                             self.add_item_to_inventory(itemName, itemDescription, itemPrice)
                         elif choice == '5':
