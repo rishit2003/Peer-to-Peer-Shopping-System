@@ -349,3 +349,60 @@
 2024-11-29 17:39:31,496 - INFO - Processing offers for request f7ebf3de-ae66-41f9-b7d0-01ae12f11598 after timeout.
 2024-11-29 17:39:31,497 - INFO - Sent UDP response to ('172.30.96.169', 6000): NEGOTIATE f7ebf3de-ae66-41f9-b7d0-01ae12f11598 Ipad 700.0
 2024-11-29 17:39:31,497 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-11-30 16:02:05,032 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-30 16:02:21,505 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTER-DENIED dc727268-cefb-40bd-8ca3-8f821e975e4a Name already in use
+2024-11-30 16:02:22,561 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED dc727268-cefb-40bd-8ca3-8f821e975e4a
+2024-11-30 16:02:23,632 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED dc727268-cefb-40bd-8ca3-8f821e975e4a
+2024-11-30 16:02:33,875 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae
+2024-11-30 16:02:34,294 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae
+2024-11-30 16:03:04,024 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Clip branded
+2024-11-30 16:03:04,024 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Clip'
+2024-11-30 16:03:24,030 - INFO - Sent UDP response to ('192.168.0.19', 6001): NOT_AVAILABLE 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Clip 50.0
+2024-11-30 16:03:24,030 - INFO - NOT_AVAILABLE sent to Peer2 for item 'Clip' with RQ# 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae
+2024-11-30 16:04:45,565 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Clip branded
+2024-11-30 16:04:45,565 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Clip'
+2024-11-30 16:04:45,566 - INFO - Offer received from Peer1 for item 'Clip' at price 50.0
+2024-11-30 16:04:55,571 - INFO - Processing offers for request 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae after timeout.
+2024-11-30 16:04:55,572 - INFO - Sent UDP response to ('192.168.0.19', 6000): NEGOTIATE 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Clip 40.0
+2024-11-30 16:04:55,572 - INFO - Negotiation initiated with Peer1 for item 'Clip' at max price 40.0
+2024-11-30 16:35:15,901 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:16,343 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:19,045 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:20,229 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:35,198 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:35,827 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:41,573 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:42,653 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:57,129 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 710ce70f-1276-491a-ba5c-f2542876720d Ipad new
+2024-11-30 16:35:57,129 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-30 16:35:57,130 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-11-30 16:36:07,135 - INFO - Processing offers for request 710ce70f-1276-491a-ba5c-f2542876720d after timeout.
+2024-11-30 16:36:07,136 - INFO - Sent UDP response to ('192.168.0.19', 6000): NEGOTIATE 710ce70f-1276-491a-ba5c-f2542876720d Ipad 700.0
+2024-11-30 16:36:07,136 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-11-30 16:37:44,470 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:37:45,297 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:38:05,596 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b
+2024-11-30 16:38:05,957 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b
+2024-11-30 16:38:10,526 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:38:11,560 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:38:20,132 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Ipad new
+2024-11-30 16:38:20,132 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-30 16:38:20,133 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-11-30 16:38:30,135 - INFO - Processing offers for request 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b after timeout.
+2024-11-30 16:38:30,135 - INFO - Sent UDP response to ('192.168.0.19', 6000): NEGOTIATE 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Ipad 700.0
+2024-11-30 16:38:30,135 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-11-30 16:38:35,865 - INFO - Sent UDP response to ('192.168.0.19', 6001): FOUND 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Ipad 800.0 from Peer1
+2024-11-30 16:38:35,866 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 800.0
+2024-11-30 16:43:51,319 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-30 16:44:06,159 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b
+2024-11-30 16:44:07,021 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b
+2024-11-30 16:44:28,320 - INFO - Sent UDP response to ('192.168.0.19', 6001): DE-REGISTERED 868783a2-a824-4dc7-9922-72b3fda7b56a
+2024-11-30 16:44:28,927 - INFO - Sent UDP response to ('192.168.0.19', 6001): REGISTERED 868783a2-a824-4dc7-9922-72b3fda7b56a
+2024-11-30 16:44:36,838 - INFO - Sent UDP response to ('192.168.0.19', 6000): SEARCH 868783a2-a824-4dc7-9922-72b3fda7b56a Ipad new
+2024-11-30 16:44:36,838 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-11-30 16:44:36,840 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-11-30 16:44:46,831 - INFO - Processing offers for request 868783a2-a824-4dc7-9922-72b3fda7b56a after timeout.
+2024-11-30 16:44:46,832 - INFO - Sent UDP response to ('192.168.0.19', 6000): NEGOTIATE 868783a2-a824-4dc7-9922-72b3fda7b56a Ipad 700.0
+2024-11-30 16:44:46,832 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-11-30 16:44:52,280 - INFO - Sent UDP response to ('192.168.0.19', 6001): FOUND 868783a2-a824-4dc7-9922-72b3fda7b56a Ipad 800.0 from Peer1
+2024-11-30 16:44:52,281 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 800.0

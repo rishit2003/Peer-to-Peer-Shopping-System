@@ -1,48 +1,56 @@
 {
     "registered_peers": {
         "Peer1": {
-            "rq_number": "9777ea61-dd29-4e54-8db2-fb386ecc0e48",
+            "rq_number": "4d11cbb2-9a7b-4e28-b0dc-f6b38742549b",
             "udp_socket": "6000",
             "tcp_socket": "9000",
             "address": [
-                "172.30.96.169",
+                "192.168.0.19",
                 6000
             ]
         },
         "Peer2": {
-            "rq_number": "f7ebf3de-ae66-41f9-b7d0-01ae12f11598",
+            "rq_number": "868783a2-a824-4dc7-9922-72b3fda7b56a",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
-                "172.30.96.169",
+                "192.168.0.19",
                 6001
             ]
         }
     },
     "active_requests": {
-        "9777ea61-dd29-4e54-8db2-fb386ecc0e48": {
+        "4d11cbb2-9a7b-4e28-b0dc-f6b38742549b": {
             "name": "Peer1",
             "operation": "REGISTER",
             "status": "Completed"
         },
-        "f7ebf3de-ae66-41f9-b7d0-01ae12f11598": {
+        "868783a2-a824-4dc7-9922-72b3fda7b56a": {
             "name": "Peer2",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
             "item_description": "new",
             "max_price": "700.0",
-            "status": "Negotiating",
+            "status": "Completed",
             "offers": [
                 {
                     "seller_name": "Peer1",
                     "price": 800.0,
                     "address": [
-                        "172.30.96.169",
+                        "192.168.0.19",
                         6000
                     ]
                 }
             ],
-            "timeout_thread_started": true
+            "timeout_thread_started": true,
+            "reserved_seller": {
+                "seller_name": "Peer1",
+                "price": 800.0,
+                "address": [
+                    "192.168.0.19",
+                    6000
+                ]
+            }
         }
     }
 }

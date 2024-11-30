@@ -84,3 +84,43 @@
 2024-11-29 17:38:55,905 - INFO - Message sent: REGISTER f7ebf3de-ae66-41f9-b7d0-01ae12f11598 Peer2 172.30.96.169 6001 9001
 2024-11-29 17:38:55,908 - INFO - Server response received via listen_to_server: REGISTERED f7ebf3de-ae66-41f9-b7d0-01ae12f11598
 2024-11-29 17:39:21,486 - INFO - Message sent: LOOKING_FOR f7ebf3de-ae66-41f9-b7d0-01ae12f11598 Peer2 Ipad new 700.0
+2024-11-30 16:02:32,752 - INFO - Peer Peer2 initialized with UDP port 6001 and TCP port 9001.
+2024-11-30 16:02:33,870 - INFO - Sending deregistration message: DE-REGISTER 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer2
+2024-11-30 16:02:33,871 - INFO - Message sent: DE-REGISTER 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer2
+2024-11-30 16:02:33,875 - INFO - Server response received via listen_to_server: DE-REGISTERED 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae
+2024-11-30 16:02:34,291 - INFO - Sending registration message: REGISTER 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer2 192.168.0.19 6001 9001
+2024-11-30 16:02:34,292 - INFO - Message sent: REGISTER 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer2 192.168.0.19 6001 9001
+2024-11-30 16:02:34,295 - INFO - Server response received via listen_to_server: REGISTERED 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae
+2024-11-30 16:03:04,020 - INFO - Message sent: LOOKING_FOR 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer2 Clip branded 50.0
+2024-11-30 16:03:24,031 - INFO - Item not available: NOT_AVAILABLE 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Clip 50.0
+2024-11-30 16:04:45,559 - INFO - Message sent: LOOKING_FOR 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer2 Clip branded 40.0
+2024-11-30 16:35:14,340 - INFO - Peer Peer2 initialized with UDP port 6001 and TCP port 9001.
+2024-11-30 16:35:15,893 - INFO - Sending deregistration message: DE-REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2
+2024-11-30 16:35:15,893 - INFO - Message sent: DE-REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2
+2024-11-30 16:35:15,901 - INFO - Server response received via listen_to_server: DE-REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:16,339 - INFO - Sending registration message: REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2 192.168.0.19 6001 9001
+2024-11-30 16:35:16,340 - INFO - Message sent: REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2 192.168.0.19 6001 9001
+2024-11-30 16:35:16,343 - INFO - Server response received via listen_to_server: REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:41,570 - INFO - Sending deregistration message: DE-REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2
+2024-11-30 16:35:41,571 - INFO - Message sent: DE-REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2
+2024-11-30 16:35:41,573 - INFO - Server response received via listen_to_server: DE-REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:42,651 - INFO - Sending registration message: REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2 192.168.0.19 6001 9001
+2024-11-30 16:35:42,651 - INFO - Message sent: REGISTER 710ce70f-1276-491a-ba5c-f2542876720d Peer2 192.168.0.19 6001 9001
+2024-11-30 16:35:42,653 - INFO - Server response received via listen_to_server: REGISTERED 710ce70f-1276-491a-ba5c-f2542876720d
+2024-11-30 16:35:57,127 - INFO - Message sent: LOOKING_FOR 710ce70f-1276-491a-ba5c-f2542876720d Peer2 Ipad new 700.0
+2024-11-30 16:38:04,169 - INFO - Peer Peer2 initialized with UDP port 6001 and TCP port 9001.
+2024-11-30 16:38:05,592 - INFO - Sending deregistration message: DE-REGISTER 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Peer2
+2024-11-30 16:38:05,593 - INFO - Message sent: DE-REGISTER 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Peer2
+2024-11-30 16:38:05,596 - INFO - Server response received via listen_to_server: DE-REGISTERED 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b
+2024-11-30 16:38:05,953 - INFO - Sending registration message: REGISTER 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Peer2 192.168.0.19 6001 9001
+2024-11-30 16:38:05,954 - INFO - Message sent: REGISTER 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Peer2 192.168.0.19 6001 9001
+2024-11-30 16:38:05,958 - INFO - Server response received via listen_to_server: REGISTERED 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b
+2024-11-30 16:38:20,129 - INFO - Message sent: LOOKING_FOR 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Peer2 Ipad new 700.0
+2024-11-30 16:44:27,423 - INFO - Peer Peer2 initialized with UDP port 6001 and TCP port 9001.
+2024-11-30 16:44:28,316 - INFO - Sending deregistration message: DE-REGISTER 868783a2-a824-4dc7-9922-72b3fda7b56a Peer2
+2024-11-30 16:44:28,317 - INFO - Message sent: DE-REGISTER 868783a2-a824-4dc7-9922-72b3fda7b56a Peer2
+2024-11-30 16:44:28,320 - INFO - Server response received via listen_to_server: DE-REGISTERED 868783a2-a824-4dc7-9922-72b3fda7b56a
+2024-11-30 16:44:28,925 - INFO - Sending registration message: REGISTER 868783a2-a824-4dc7-9922-72b3fda7b56a Peer2 192.168.0.19 6001 9001
+2024-11-30 16:44:28,925 - INFO - Message sent: REGISTER 868783a2-a824-4dc7-9922-72b3fda7b56a Peer2 192.168.0.19 6001 9001
+2024-11-30 16:44:28,927 - INFO - Server response received via listen_to_server: REGISTERED 868783a2-a824-4dc7-9922-72b3fda7b56a
+2024-11-30 16:44:36,836 - INFO - Message sent: LOOKING_FOR 868783a2-a824-4dc7-9922-72b3fda7b56a Peer2 Ipad new 700.0

@@ -1,7 +1,9 @@
 # peer.py
 import json
 import os
+import select
 import socket
+import sys
 import threading
 import time
 import uuid
@@ -40,6 +42,8 @@ class Peer:
         self.is_waiting = False  # flag to indicate waiting state
         self.lock = threading.Lock()  # Lock for terminal access
         self.in_negotiation = False
+        self.in_found = False
+        self.input_event = threading.Event()    # Event to manage input flow
 
         # Setting up dynamic logging for this peer
         log_filename = f"{self.name}.log"
@@ -128,7 +132,7 @@ class Peer:
             if msg_type == "SEARCH":
                 self.handle_search(message_parts)
             elif msg_type == "NEGOTIATE":
-                self.lock.release_lock()
+                # self.lock.release_lock()
                 self.handle_negotiate(message_parts, addr)
             elif msg_type == "FOUND":
                 self.response_event.set()
@@ -167,7 +171,8 @@ class Peer:
                 return
 
         # If the item is not found, no response is necessary
-        print(f"Item '{item_name}' not found in inventory.")
+        # print(f"Item '{item_name}' not found in inventory.")
+        logging.warning(f"Item '{item_name}' not found in inventory.")
 
     def handle_negotiate(self, parts, addr):
         """Handles NEGOTIATE message from the server."""
@@ -175,34 +180,45 @@ class Peer:
         item_name = parts[2]
         max_price = float(parts[3])
 
-        self.in_negotiation = True
-
         with self.lock:  # Acquire the lock for terminal interaction
             print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
 
             # Pause interactive loop
-            self.is_waiting = True
+            self.input_event.set()  # Signal input should stop elsewhere
+            self.in_negotiation = True
 
-            # Logic to decide whether to accept or refuse the negotiation
-            while True:
-                accept_negotiation = input(f"Accept negotiation? (y/n): ").strip().lower()
-                if accept_negotiation == 'y':
-                    response = f"ACCEPT {rq_number} {item_name} {max_price}"
-                    self.update_item_reservation(item_name, True)
-                    break
-                elif accept_negotiation == 'n':
-                    response = f"REFUSE {rq_number} {item_name} {max_price}"
-                    self.update_item_reservation(item_name, False)
-                    break
-                else:
-                    print("Invalid response received.")
+        # Logic to decide whether to accept or refuse the negotiation
+        while True:
+            accept_negotiation = input(f"Accept negotiation? (y/n): ").strip().lower()
+            if accept_negotiation == 'y':
+                response = f"ACCEPT {rq_number} {item_name} {max_price}"
+                self.update_item_reservation(item_name, True)
+                break
+            elif accept_negotiation == 'n':
+                response = f"REFUSE {rq_number} {item_name} {max_price}"
+                self.update_item_reservation(item_name, False)
+                break
+            else:
+                print("Invalid response received.")
 
-            # Send the response back to the server
-            self.udp_socket.sendto(response.encode(), addr)
-            print(f"Sent response to server: {response}")
-            # Resume interactive loop
-            self.is_waiting = False
+        # Send the response back to the server
+        self.udp_socket.sendto(response.encode(), addr)
+        print(f"Sent response to server: {response}")
+        # Resume interactive loop
+        # self.is_waiting = False
+
+        with self.lock:  # Lock again for thread-safe updates
+            self.update_item_reservation(item_name, accept_negotiation == "y")
             self.in_negotiation = False
+            self.input_event.clear()  # Allow main loop input handling
+
+    # def non_blocking_input(self, prompt):
+    #     """A non-blocking input function."""
+    #     print(prompt, end="", flush=True)
+    #     inputs, _, _ = select.select([sys.stdin], [], [], 0.1)  # 0.1-second timeout
+    #     if inputs:
+    #         return sys.stdin.readline().strip()
+    #     return None
 
     def handle_reserved(self, parts):
         self.update_item_reservation(parts[2], True)
@@ -214,7 +230,13 @@ class Peer:
         rq_number = parts[1]
         item_name = parts[2]
         price = float(parts[3])
-        print(f"FOUND received For Item: {item_name}")
+
+        with self.lock:
+            print(f"FOUND received For Item: {item_name}")
+            # Pause interactive loop
+            self.input_event.set()  # Signal input should stop elsewhere
+            self.in_found = True
+
         accept_buy = input(f"Do you want to Buy {item_name}? (y/n): ").strip().lower()
         if accept_buy == 'y':
             response = f"BUY {rq_number} {item_name} {price}"
@@ -224,6 +246,11 @@ class Peer:
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
         print(f"Sent response to server: {response}")
+
+        with self.lock:  # Lock again for thread-safe updates
+            # self.update_item_reservation(item_name, accept_negotiation == "y")
+            self.in_found = False
+            self.input_event.clear()
 
 
     def generate_rq_number(self):
@@ -315,44 +342,68 @@ class Peer:
     def start_interactive_loop(self):
         """Interactive loop for user actions."""
         try:
+            printed_options = False
             while self.running:
                 with self.lock:
-                    if self.is_waiting or self.in_negotiation:
+                    if self.in_negotiation:
                         # print("Waiting for server response. Please wait...")
-                        time.sleep(1)  # Avoid busy-waiting
+                        self.input_event.wait()
                         continue
 
+                    if self.in_found:
+                        # print("Waiting for server response. Please wait...")
+                        self.input_event.wait()
+                        continue
+
+                # Print options only once until user input is processed
+                if not printed_options:
                     print("\nOptions:")
                     print("1. Register")
                     print("2. Deregister")
                     print("3. Look for item")
                     print("4. Add Item to Inventory")
                     print("5. Exit")
-                    choice = input("Choose an option: ")
-                    if choice in ["3", "4"]:
-                        if not self.is_registered:
-                            print("You must register with the server before performing this action.")
-                            continue
-                        itemName = input("Item_name: ")
-                        itemDescription = input("Description: ")
-                        itemPrice = float(input("Price: "))
+                    print("Choose an option (1-5): ", end="", flush=True)
+                    printed_options = True  # Mark options as printed
 
-                    if choice == '1':
-                        self.register_with_server()
-                    elif choice == '2':
-                        self.deregister_with_server()
-                    elif choice == '3':
-                        # self.is_waiting = True  # Set waiting state
-                        self.looking_for_item_server(itemName, itemDescription, itemPrice)
-                        # self.is_waiting = False  # Reset waiting state after response
-                    elif choice == '4':
-                        self.add_item_to_inventory(itemName, itemDescription, itemPrice)
-                    elif choice == '5':
-                        print("Exiting program.")
-                        self.running = False  # Exit gracefully
-                        break
-                    else:
-                        print("Invalid choice. Please try again.")
+                # Non-blocking input check
+                ready, _, _ = select.select([sys.stdin], [], [], 1)  # 1-second timeout
+                if ready:
+                    choice = sys.stdin.readline().strip()
+                    with self.lock:  # Ensure thread-safety while processing
+                        if self.in_negotiation:
+                            print("\nNegotiation in progress. Please wait.")
+                            continue
+                        if choice in ["3", "4"]:
+                            if not self.is_registered:
+                                print("You must register with the server before performing this action.")
+                                continue
+                            itemName = input("Item_name: ")
+                            itemDescription = input("Description: ")
+                            itemPrice = float(input("Price: "))
+
+                        if choice == '1':
+                            self.register_with_server()
+                        elif choice == '2':
+                            self.deregister_with_server()
+                        elif choice == '3':
+                            # self.is_waiting = True  # Set waiting state
+                            self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                            # self.is_waiting = False  # Reset waiting state after response
+                        elif choice == '4':
+                            self.add_item_to_inventory(itemName, itemDescription, itemPrice)
+                        elif choice == '5':
+                            print("Exiting program.")
+                            self.running = False  # Exit gracefully
+                            break
+                        else:
+                            print("Invalid choice. Please try again.")
+
+                    # Reset the flag to print options again after input is handled
+                    printed_options = False
+                else:
+                    # No input available; continue to check state
+                    continue
         except KeyboardInterrupt:
             print("\nInteractive loop interrupted.")
             self.running = False

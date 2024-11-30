@@ -100,3 +100,52 @@
 2024-11-29 17:38:41,980 - INFO - Message sent: REGISTER 9777ea61-dd29-4e54-8db2-fb386ecc0e48 Peer1 172.30.96.169 6000 9000
 2024-11-29 17:38:41,981 - INFO - Server response received via listen_to_server: REGISTERED 9777ea61-dd29-4e54-8db2-fb386ecc0e48
 2024-11-29 17:39:21,494 - INFO - Message sent: OFFER f7ebf3de-ae66-41f9-b7d0-01ae12f11598 Peer1 Ipad 800.0
+2024-11-30 16:02:19,789 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-30 16:02:21,493 - INFO - Sending registration message: REGISTER dc727268-cefb-40bd-8ca3-8f821e975e4a Peer1 192.168.0.19 6000 9000
+2024-11-30 16:02:21,494 - INFO - Message sent: REGISTER dc727268-cefb-40bd-8ca3-8f821e975e4a Peer1 192.168.0.19 6000 9000
+2024-11-30 16:02:21,505 - INFO - Server response received via listen_to_server: REGISTER-DENIED dc727268-cefb-40bd-8ca3-8f821e975e4a Name already in use
+2024-11-30 16:02:22,558 - INFO - Sending deregistration message: DE-REGISTER dc727268-cefb-40bd-8ca3-8f821e975e4a Peer1
+2024-11-30 16:02:22,558 - INFO - Message sent: DE-REGISTER dc727268-cefb-40bd-8ca3-8f821e975e4a Peer1
+2024-11-30 16:02:22,561 - INFO - Server response received via listen_to_server: DE-REGISTERED dc727268-cefb-40bd-8ca3-8f821e975e4a
+2024-11-30 16:02:23,629 - INFO - Sending registration message: REGISTER dc727268-cefb-40bd-8ca3-8f821e975e4a Peer1 192.168.0.19 6000 9000
+2024-11-30 16:02:23,630 - INFO - Message sent: REGISTER dc727268-cefb-40bd-8ca3-8f821e975e4a Peer1 192.168.0.19 6000 9000
+2024-11-30 16:02:23,632 - INFO - Server response received via listen_to_server: REGISTERED dc727268-cefb-40bd-8ca3-8f821e975e4a
+2024-11-30 16:04:45,566 - INFO - Message sent: OFFER 6a15cddf-4bb6-4ba1-81f8-178c48b0a5ae Peer1 Clip 50.0
+2024-11-30 16:11:48,901 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-30 16:13:09,828 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-30 16:35:03,030 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-30 16:35:19,042 - INFO - Sending deregistration message: DE-REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1
+2024-11-30 16:35:19,043 - INFO - Message sent: DE-REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1
+2024-11-30 16:35:19,046 - INFO - Server response received via listen_to_server: DE-REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:20,226 - INFO - Sending registration message: REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1 192.168.0.19 6000 9000
+2024-11-30 16:35:20,227 - INFO - Message sent: REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1 192.168.0.19 6000 9000
+2024-11-30 16:35:20,229 - INFO - Server response received via listen_to_server: REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:35,195 - INFO - Sending deregistration message: DE-REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1
+2024-11-30 16:35:35,197 - INFO - Message sent: DE-REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1
+2024-11-30 16:35:35,199 - INFO - Server response received via listen_to_server: DE-REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:35,825 - INFO - Sending registration message: REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1 192.168.0.19 6000 9000
+2024-11-30 16:35:35,825 - INFO - Message sent: REGISTER 79ce01d6-e893-4590-89d0-4fca25d6edda Peer1 192.168.0.19 6000 9000
+2024-11-30 16:35:35,828 - INFO - Server response received via listen_to_server: REGISTERED 79ce01d6-e893-4590-89d0-4fca25d6edda
+2024-11-30 16:35:57,130 - INFO - Message sent: OFFER 710ce70f-1276-491a-ba5c-f2542876720d Peer1 Ipad 800.0
+2024-11-30 16:37:42,067 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-30 16:37:44,460 - INFO - Sending deregistration message: DE-REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1
+2024-11-30 16:37:44,461 - INFO - Message sent: DE-REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1
+2024-11-30 16:37:44,470 - INFO - Server response received via listen_to_server: DE-REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:37:45,293 - INFO - Sending registration message: REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1 192.168.0.19 6000 9000
+2024-11-30 16:37:45,294 - INFO - Message sent: REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1 192.168.0.19 6000 9000
+2024-11-30 16:37:45,297 - INFO - Server response received via listen_to_server: REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:38:10,522 - INFO - Sending deregistration message: DE-REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1
+2024-11-30 16:38:10,524 - INFO - Message sent: DE-REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1
+2024-11-30 16:38:10,526 - INFO - Server response received via listen_to_server: DE-REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:38:11,557 - INFO - Sending registration message: REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1 192.168.0.19 6000 9000
+2024-11-30 16:38:11,557 - INFO - Message sent: REGISTER 22f11e3a-da7f-4999-b0c3-c592fd801a7d Peer1 192.168.0.19 6000 9000
+2024-11-30 16:38:11,560 - INFO - Server response received via listen_to_server: REGISTERED 22f11e3a-da7f-4999-b0c3-c592fd801a7d
+2024-11-30 16:38:20,133 - INFO - Message sent: OFFER 4deb1464-94f9-4c1d-bc4c-989fc2a3d02b Peer1 Ipad 800.0
+2024-11-30 16:44:04,466 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-30 16:44:06,150 - INFO - Sending deregistration message: DE-REGISTER 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b Peer1
+2024-11-30 16:44:06,151 - INFO - Message sent: DE-REGISTER 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b Peer1
+2024-11-30 16:44:06,160 - INFO - Server response received via listen_to_server: DE-REGISTERED 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b
+2024-11-30 16:44:07,018 - INFO - Sending registration message: REGISTER 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b Peer1 192.168.0.19 6000 9000
+2024-11-30 16:44:07,018 - INFO - Message sent: REGISTER 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b Peer1 192.168.0.19 6000 9000
+2024-11-30 16:44:07,021 - INFO - Server response received via listen_to_server: REGISTERED 4d11cbb2-9a7b-4e28-b0dc-f6b38742549b
+2024-11-30 16:44:36,839 - INFO - Message sent: OFFER 868783a2-a824-4dc7-9922-72b3fda7b56a Peer1 Ipad 800.0
