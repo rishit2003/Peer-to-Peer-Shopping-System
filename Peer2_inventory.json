@@ -3,12 +3,24 @@
         "item_name": "Iphone",
         "item_description": "Iphone 15 pro",
         "price": 1000.0,
-        "reserved": false
+        "reserved": true
     },
     {
         "item_name": "something",
         "item_description": "something",
         "price": 400.0,
+        "reserved": false
+    },
+    {
+        "item_name": "imac",
+        "item_description": "apple imac 215",
+        "price": 600.0,
+        "reserved": true
+    },
+    {
+        "item_name": "imac",
+        "item_description": "apple imac 2016",
+        "price": 700.0,
         "reserved": false
     }
 ]
