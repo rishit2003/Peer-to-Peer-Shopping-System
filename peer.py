@@ -302,34 +302,41 @@ class Peer:
         print(f"Sending looking for: {looking_for_msg}")
         self.send_and_wait_for_response(looking_for_msg, (server_ip, server_udp_port))
 
-
     def handle_tcp_transaction(self):
+        """Handle TCP transactions initiated by the server."""
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        server_socket.bind(('localhost', self.tcp_port))
-        server_socket.listen(1)
-        self.server_socket = server_socket  # Store the server socket to close it during shutdown
-        try:
-            while self.running:
-                try:
-                    server_socket.settimeout(1)  # Add a timeout to prevent indefinite blocking
-                    conn, addr = server_socket.accept()
-                    if not self.running:
-                        conn.close()
-                        break
-                    print(f"TCP transaction started with {addr}")
-                    data = conn.recv(1024).decode()
-                    print(f"Transaction details: {data}")
-                    conn.sendall("INFORM_Res Name CC# Exp_Date Address".encode())
-                    conn.close()
-                except socket.timeout:
-                    continue  # Check `self.running` after timeout
-                except Exception as e:
-                    if not self.running:
-                        print("Server shutting down.")
-                    else:
-                        print(f"Error during TCP transaction: {e}")
-        finally:
-            server_socket.close()
+        server_socket.bind((self.address, self.tcp_port))
+        server_socket.listen(5)
+        print(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
+
+        while self.running:
+            try:
+                conn, addr = server_socket.accept()
+                print(f"TCP transaction started with {addr}")
+
+                # Receive INFORM_Req message from the server
+                data = conn.recv(1024).decode()
+                if data.startswith("INFORM_Req"):
+                    print(f"Received: {data}")
+                    parts = data.split()
+                    rq_number, item_name, price = parts[1], parts[2], parts[3]
+
+                    # Respond with INFORM_Res
+                    response = f"INFORM_Res {rq_number} {self.name} {self.client.credit_card.number} {self.client.credit_card.expiry_date} {self.address}"
+                    conn.sendall(response.encode())
+                    print(f"Sent: {response}")
+
+                # Handle Shipping_Info or CANCEL messages
+                data = conn.recv(1024).decode()
+                if data.startswith("Shipping_Info"):
+                    print(f"Shipping Info received: {data}")
+                elif data.startswith("CANCEL"):
+                    print(f"Transaction cancelled: {data}")
+
+                conn.close()
+            except Exception as e:
+                if self.running:
+                    print(f"Error during TCP transaction: {e}")
 
     def start_interactive_loop(self):
         """Interactive loop for user actions."""
