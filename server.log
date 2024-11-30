@@ -237,3 +237,297 @@
 2024-11-29 14:54:43,643 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
 2024-11-29 14:54:48,519 - INFO - Sent UDP response to ('192.168.0.19', 6000): REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
 2024-11-29 14:57:45,915 - INFO - Sent UDP response to ('192.168.0.19', 6000): DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
+2024-11-29 17:47:36,475 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 17:47:58,036 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 65b6952a-3642-4b7c-a056-0d6c5128099a
+2024-11-29 17:48:22,582 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTER-DENIED 0971d3fa-8e2c-4182-89dd-ef0433248ee7 Name already in use
+2024-11-29 17:48:23,963 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 0971d3fa-8e2c-4182-89dd-ef0433248ee7
+2024-11-29 17:48:24,824 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 0971d3fa-8e2c-4182-89dd-ef0433248ee7
+2024-11-29 17:49:00,595 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 65b6952a-3642-4b7c-a056-0d6c5128099a imac 215
+2024-11-29 17:49:00,595 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 17:49:00,608 - INFO - Offer received from Peer2 for item 'imac' at price 600.0
+2024-11-29 17:49:10,609 - INFO - Processing offers for request 65b6952a-3642-4b7c-a056-0d6c5128099a after timeout.
+2024-11-29 17:49:10,609 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 65b6952a-3642-4b7c-a056-0d6c5128099a imac 600.0 from Peer2
+2024-11-29 17:49:10,609 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 65b6952a-3642-4b7c-a056-0d6c5128099a imac 600.0
+2024-11-29 17:49:10,609 - INFO - RESERVE message sent to Peer2 for item 'imac' at price 600.0
+2024-11-29 17:49:10,609 - INFO - Item 'imac' reserved for Peer1 from Peer2 at price 600.0
+2024-11-29 17:49:44,090 - INFO - Starting TCP transaction for RQ# 65b6952a-3642-4b7c-a056-0d6c5128099a, item 'imac', price 600.0
+2024-11-29 17:49:44,090 - ERROR - Error during TCP transaction for RQ# 65b6952a-3642-4b7c-a056-0d6c5128099a: tuple index out of range
+2024-11-29 17:50:53,021 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 65b6952a-3642-4b7c-a056-0d6c5128099a imac 215
+2024-11-29 17:50:53,021 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 17:51:13,022 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 65b6952a-3642-4b7c-a056-0d6c5128099a imac 600.0
+2024-11-29 17:51:13,022 - INFO - NOT_AVAILABLE sent to Peer1 for item 'imac' with RQ# 65b6952a-3642-4b7c-a056-0d6c5128099a
+2024-11-29 18:00:50,899 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 18:02:52,724 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 18:04:53,349 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTER-DENIED 3e02ece0-8607-411d-b086-bfdf5758085f Name already in use
+2024-11-29 18:04:55,484 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 3e02ece0-8607-411d-b086-bfdf5758085f
+2024-11-29 18:04:56,019 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 3e02ece0-8607-411d-b086-bfdf5758085f
+2024-11-29 18:04:59,602 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTER-DENIED 38363777-2c3e-40e2-886f-f5875bb853d8 Name already in use
+2024-11-29 18:05:00,520 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 38363777-2c3e-40e2-886f-f5875bb853d8
+2024-11-29 18:05:01,124 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 38363777-2c3e-40e2-886f-f5875bb853d8
+2024-11-29 18:05:19,608 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 3e02ece0-8607-411d-b086-bfdf5758085f imac 215
+2024-11-29 18:05:19,609 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 18:05:39,610 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 3e02ece0-8607-411d-b086-bfdf5758085f imac 600.0
+2024-11-29 18:05:39,610 - INFO - NOT_AVAILABLE sent to Peer1 for item 'imac' with RQ# 3e02ece0-8607-411d-b086-bfdf5758085f
+2024-11-29 18:06:17,069 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 3e02ece0-8607-411d-b086-bfdf5758085f imac 2017
+2024-11-29 18:06:17,069 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 18:06:17,082 - INFO - Offer received from Peer2 for item 'imac' at price 700.0
+2024-11-29 18:06:27,083 - INFO - Processing offers for request 3e02ece0-8607-411d-b086-bfdf5758085f after timeout.
+2024-11-29 18:06:27,083 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 3e02ece0-8607-411d-b086-bfdf5758085f imac 700.0 from Peer2
+2024-11-29 18:06:27,083 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 3e02ece0-8607-411d-b086-bfdf5758085f imac 700.0
+2024-11-29 18:06:27,083 - INFO - RESERVE message sent to Peer2 for item 'imac' at price 700.0
+2024-11-29 18:06:27,084 - INFO - Item 'imac' reserved for Peer1 from Peer2 at price 700.0
+2024-11-29 18:06:32,556 - INFO - Starting TCP transaction for RQ# 3e02ece0-8607-411d-b086-bfdf5758085f, item 'imac', price 700.0
+2024-11-29 18:06:32,556 - ERROR - Error during TCP transaction for RQ# 3e02ece0-8607-411d-b086-bfdf5758085f: tuple index out of range
+2024-11-29 18:12:03,115 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 18:13:32,523 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTER-DENIED 41b2aa2c-935b-4732-b459-d702e68c05e0 Name already in use
+2024-11-29 18:13:33,428 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 41b2aa2c-935b-4732-b459-d702e68c05e0
+2024-11-29 18:13:34,133 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 41b2aa2c-935b-4732-b459-d702e68c05e0
+2024-11-29 18:13:36,214 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 71ee3bd3-0b4d-415a-908a-c8d30b367c65
+2024-11-29 18:13:36,671 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 71ee3bd3-0b4d-415a-908a-c8d30b367c65
+2024-11-29 18:13:53,256 - INFO - Sent UDP response to ('192.168.2.44', 6000): SEARCH 41b2aa2c-935b-4732-b459-d702e68c05e0 s22 256
+2024-11-29 18:13:53,256 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 's22'
+2024-11-29 18:14:13,256 - INFO - Sent UDP response to ('192.168.2.107', 6001): NOT_AVAILABLE 41b2aa2c-935b-4732-b459-d702e68c05e0 s22 400.0
+2024-11-29 18:14:13,256 - INFO - NOT_AVAILABLE sent to Peer2 for item 's22' with RQ# 41b2aa2c-935b-4732-b459-d702e68c05e0
+2024-11-29 18:14:25,591 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 71ee3bd3-0b4d-415a-908a-c8d30b367c65 imac 2016
+2024-11-29 18:14:25,591 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 18:14:25,597 - INFO - Offer received from Peer2 for item 'imac' at price 700.0
+2024-11-29 18:14:35,598 - INFO - Processing offers for request 71ee3bd3-0b4d-415a-908a-c8d30b367c65 after timeout.
+2024-11-29 18:14:35,598 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 71ee3bd3-0b4d-415a-908a-c8d30b367c65 imac 700.0 from Peer2
+2024-11-29 18:14:35,598 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 71ee3bd3-0b4d-415a-908a-c8d30b367c65 imac 700.0
+2024-11-29 18:14:35,598 - INFO - RESERVE message sent to Peer2 for item 'imac' at price 700.0
+2024-11-29 18:14:35,599 - INFO - Item 'imac' reserved for Peer1 from Peer2 at price 700.0
+2024-11-29 18:14:40,611 - INFO - Starting TCP transaction for RQ# 71ee3bd3-0b4d-415a-908a-c8d30b367c65, item 'imac', price 700.0
+2024-11-29 18:14:40,611 - ERROR - Error during TCP transaction for RQ# 71ee3bd3-0b4d-415a-908a-c8d30b367c65: tuple index out of range
+2024-11-29 18:16:02,182 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 71ee3bd3-0b4d-415a-908a-c8d30b367c65 imac 2016
+2024-11-29 18:16:02,182 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 18:16:22,183 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 71ee3bd3-0b4d-415a-908a-c8d30b367c65 imac 700.0
+2024-11-29 18:16:22,183 - INFO - NOT_AVAILABLE sent to Peer1 for item 'imac' with RQ# 71ee3bd3-0b4d-415a-908a-c8d30b367c65
+2024-11-29 18:19:21,014 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 163a2c5a-5c42-481b-be9b-385555f0332d
+2024-11-29 18:19:21,581 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 163a2c5a-5c42-481b-be9b-385555f0332d
+2024-11-29 18:19:38,482 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED e296d70f-4913-48f8-88f3-458a58bf91c4
+2024-11-29 18:19:40,103 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED e296d70f-4913-48f8-88f3-458a58bf91c4
+2024-11-29 18:19:46,511 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH e296d70f-4913-48f8-88f3-458a58bf91c4 imac 216
+2024-11-29 18:19:46,511 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 18:19:46,516 - INFO - Offer received from Peer2 for item 'imac' at price 700.0
+2024-11-29 18:19:56,517 - INFO - Processing offers for request e296d70f-4913-48f8-88f3-458a58bf91c4 after timeout.
+2024-11-29 18:19:56,517 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND e296d70f-4913-48f8-88f3-458a58bf91c4 imac 700.0 from Peer2
+2024-11-29 18:19:56,517 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE e296d70f-4913-48f8-88f3-458a58bf91c4 imac 700.0
+2024-11-29 18:19:56,517 - INFO - RESERVE message sent to Peer2 for item 'imac' at price 700.0
+2024-11-29 18:19:56,518 - INFO - Item 'imac' reserved for Peer1 from Peer2 at price 700.0
+2024-11-29 19:25:11,118 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 19:26:01,075 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED baa82272-1024-477e-8631-1fd31f3b2ad0
+2024-11-29 19:26:01,890 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED ddb2c623-6c36-4d60-b2b8-b29bb84aaa43
+2024-11-29 19:26:03,995 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED ddb2c623-6c36-4d60-b2b8-b29bb84aaa43
+2024-11-29 19:26:06,893 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED baa82272-1024-477e-8631-1fd31f3b2ad0
+2024-11-29 19:26:14,436 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH baa82272-1024-477e-8631-1fd31f3b2ad0 imac 2016
+2024-11-29 19:26:14,436 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 19:26:14,443 - INFO - Offer received from Peer2 for item 'imac' at price 700.0
+2024-11-29 19:26:24,444 - INFO - Processing offers for request baa82272-1024-477e-8631-1fd31f3b2ad0 after timeout.
+2024-11-29 19:26:24,444 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND baa82272-1024-477e-8631-1fd31f3b2ad0 imac 700.0 from Peer2
+2024-11-29 19:26:24,444 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE baa82272-1024-477e-8631-1fd31f3b2ad0 imac 700.0
+2024-11-29 19:26:24,444 - INFO - RESERVE message sent to Peer2 for item 'imac' at price 700.0
+2024-11-29 19:26:24,444 - INFO - Item 'imac' reserved for Peer1 from Peer2 at price 700.0
+2024-11-29 19:26:31,535 - INFO - Starting TCP transaction for RQ# baa82272-1024-477e-8631-1fd31f3b2ad0, item 'imac', price 700.0
+2024-11-29 19:26:31,535 - ERROR - Error during TCP transaction for RQ# baa82272-1024-477e-8631-1fd31f3b2ad0: tuple index out of range
+2024-11-29 19:36:58,520 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 19:38:09,312 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 0a6256f0-be60-45b7-835e-b0245e2ef40c
+2024-11-29 19:38:10,144 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 0a6256f0-be60-45b7-835e-b0245e2ef40c
+2024-11-29 19:38:13,428 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED e7ad74da-17f2-4946-a876-4f4b3b535082
+2024-11-29 19:38:14,358 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED e7ad74da-17f2-4946-a876-4f4b3b535082
+2024-11-29 19:38:22,120 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH e7ad74da-17f2-4946-a876-4f4b3b535082 imac 2016
+2024-11-29 19:38:22,121 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 19:38:22,134 - INFO - OFFER received from Peer2 for imac at 600.0
+2024-11-29 19:38:22,134 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED e7ad74da-17f2-4946-a876-4f4b3b535082 imac 600.0
+2024-11-29 20:47:17,429 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 20:47:33,047 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 0f08ee19-0549-4f1f-9477-78469d1b2e3f
+2024-11-29 20:47:33,341 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 0f08ee19-0549-4f1f-9477-78469d1b2e3f
+2024-11-29 20:48:05,760 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED cc5e58ac-6ae6-47cd-b36d-817c317e78ca
+2024-11-29 20:48:06,762 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED cc5e58ac-6ae6-47cd-b36d-817c317e78ca
+2024-11-29 20:48:35,972 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 0f08ee19-0549-4f1f-9477-78469d1b2e3f iphone apple
+2024-11-29 20:48:35,973 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'iphone'
+2024-11-29 20:48:35,979 - INFO - Offer received from Peer2 for item 'iphone' at price 1000.0
+2024-11-29 20:48:45,979 - INFO - Processing offers for request 0f08ee19-0549-4f1f-9477-78469d1b2e3f after timeout.
+2024-11-29 20:48:45,979 - INFO - Sent UDP response to ('192.168.2.107', 6001): NEGOTIATE 0f08ee19-0549-4f1f-9477-78469d1b2e3f iphone 500.0
+2024-11-29 20:48:45,979 - INFO - Negotiation initiated with Peer2 for item 'iphone' at max price 500.0
+2024-11-29 21:02:32,576 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:02:45,990 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 609fda71-4897-4e41-b955-a1000539d523
+2024-11-29 21:02:46,559 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 609fda71-4897-4e41-b955-a1000539d523
+2024-11-29 21:03:07,789 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 8e864682-c39e-486d-8571-ebd65d6d2b12
+2024-11-29 21:03:08,759 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 8e864682-c39e-486d-8571-ebd65d6d2b12
+2024-11-29 21:03:18,914 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 609fda71-4897-4e41-b955-a1000539d523 iphone apple
+2024-11-29 21:03:18,914 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'iphone'
+2024-11-29 21:03:38,915 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 609fda71-4897-4e41-b955-a1000539d523 iphone 1000.0
+2024-11-29 21:03:38,915 - INFO - NOT_AVAILABLE sent to Peer1 for item 'iphone' with RQ# 609fda71-4897-4e41-b955-a1000539d523
+2024-11-29 21:04:05,147 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 1b90b730-63b7-4a87-a48f-7aa86a0f9922
+2024-11-29 21:04:06,009 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 1b90b730-63b7-4a87-a48f-7aa86a0f9922
+2024-11-29 21:04:13,193 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 609fda71-4897-4e41-b955-a1000539d523 Iphone apple
+2024-11-29 21:04:13,193 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:04:33,194 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 609fda71-4897-4e41-b955-a1000539d523 Iphone 1000.0
+2024-11-29 21:04:33,194 - INFO - NOT_AVAILABLE sent to Peer1 for item 'Iphone' with RQ# 609fda71-4897-4e41-b955-a1000539d523
+2024-11-29 21:04:49,681 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED fd6d6d25-9b7c-47eb-a52c-0984ed9b2030
+2024-11-29 21:04:50,469 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED fd6d6d25-9b7c-47eb-a52c-0984ed9b2030
+2024-11-29 21:04:57,758 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 609fda71-4897-4e41-b955-a1000539d523 Iphone apple
+2024-11-29 21:04:57,758 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:04:57,764 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:04:57,764 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 609fda71-4897-4e41-b955-a1000539d523 Iphone 1000.0
+2024-11-29 21:05:07,765 - INFO - Processing offers for request 609fda71-4897-4e41-b955-a1000539d523 after timeout.
+2024-11-29 21:05:07,765 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 609fda71-4897-4e41-b955-a1000539d523 Iphone 1000.0 from Peer2
+2024-11-29 21:05:07,765 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 609fda71-4897-4e41-b955-a1000539d523 Iphone 1000.0
+2024-11-29 21:05:07,765 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:05:07,765 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:11:07,969 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:11:22,308 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED aed8e432-29dd-4310-8eb7-c8912f98a718
+2024-11-29 21:11:22,906 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED aed8e432-29dd-4310-8eb7-c8912f98a718
+2024-11-29 21:11:46,289 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED bbe758d8-e2b5-4de3-9ed6-64ec5f725a3a
+2024-11-29 21:11:47,143 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED bbe758d8-e2b5-4de3-9ed6-64ec5f725a3a
+2024-11-29 21:11:55,555 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH aed8e432-29dd-4310-8eb7-c8912f98a718 Iphone apple
+2024-11-29 21:11:55,556 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:11:55,560 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:11:55,560 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED aed8e432-29dd-4310-8eb7-c8912f98a718 Iphone 1000.0
+2024-11-29 21:12:05,561 - INFO - Processing offers for request aed8e432-29dd-4310-8eb7-c8912f98a718 after timeout.
+2024-11-29 21:12:05,561 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND aed8e432-29dd-4310-8eb7-c8912f98a718 Iphone 1000.0 from Peer2
+2024-11-29 21:12:05,561 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE aed8e432-29dd-4310-8eb7-c8912f98a718 Iphone 1000.0
+2024-11-29 21:12:05,561 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:12:05,562 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:15:20,283 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:15:34,810 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 5d1e7070-695c-4f4e-b050-1f793fc105f2
+2024-11-29 21:15:35,485 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 5d1e7070-695c-4f4e-b050-1f793fc105f2
+2024-11-29 21:15:54,704 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED c1d9c607-5bce-40b2-9b88-4f79e1459df2
+2024-11-29 21:15:55,838 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED c1d9c607-5bce-40b2-9b88-4f79e1459df2
+2024-11-29 21:16:03,417 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone apple
+2024-11-29 21:16:03,417 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:16:03,422 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:16:03,422 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone 1000.0
+2024-11-29 21:16:13,423 - INFO - Processing offers for request 5d1e7070-695c-4f4e-b050-1f793fc105f2 after timeout.
+2024-11-29 21:16:13,423 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone 1000.0 from Peer2
+2024-11-29 21:16:13,423 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone 1000.0
+2024-11-29 21:16:13,423 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:16:13,424 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:18:03,803 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone apple
+2024-11-29 21:18:03,803 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:18:23,805 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone 1000.0
+2024-11-29 21:18:23,805 - INFO - NOT_AVAILABLE sent to Peer1 for item 'Iphone' with RQ# 5d1e7070-695c-4f4e-b050-1f793fc105f2
+2024-11-29 21:18:37,542 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 5d1e7070-695c-4f4e-b050-1f793fc105f2 something something
+2024-11-29 21:18:37,542 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'something'
+2024-11-29 21:18:37,548 - INFO - Offer received from Peer2 for item 'something' at price 400.0
+2024-11-29 21:18:37,548 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 5d1e7070-695c-4f4e-b050-1f793fc105f2 something 400.0
+2024-11-29 21:18:47,549 - INFO - Processing offers for request 5d1e7070-695c-4f4e-b050-1f793fc105f2 after timeout.
+2024-11-29 21:18:47,549 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 5d1e7070-695c-4f4e-b050-1f793fc105f2 something 400.0 from Peer2
+2024-11-29 21:18:47,549 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 5d1e7070-695c-4f4e-b050-1f793fc105f2 something 400.0
+2024-11-29 21:18:47,549 - INFO - RESERVE message sent to Peer2 for item 'something' at price 400.0
+2024-11-29 21:18:47,550 - INFO - Item 'something' reserved for Peer1 from Peer2 at price 400.0
+2024-11-29 21:18:50,425 - INFO - CANCEL received from buyer for RQ# 5d1e7070-695c-4f4e-b050-1f793fc105f2, item 'something', price 400.0
+2024-11-29 21:18:50,425 - INFO - Sent UDP response to ('192.168.2.107', 6001): CANCEL 5d1e7070-695c-4f4e-b050-1f793fc105f2 something 400.0
+2024-11-29 21:18:50,425 - INFO - CANCEL message sent to seller Peer2 for item 'something' at 400.0
+2024-11-29 21:21:43,026 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:22:06,070 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 6ab63ffc-1276-4173-ab99-5819f139c026
+2024-11-29 21:22:06,736 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 6ab63ffc-1276-4173-ab99-5819f139c026
+2024-11-29 21:22:23,087 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 8362d2f6-e8a3-4a96-b437-f1991c3afc7f
+2024-11-29 21:22:23,977 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 8362d2f6-e8a3-4a96-b437-f1991c3afc7f
+2024-11-29 21:22:34,439 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 6ab63ffc-1276-4173-ab99-5819f139c026 Iphone apple
+2024-11-29 21:22:34,439 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:22:34,443 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:22:34,443 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 6ab63ffc-1276-4173-ab99-5819f139c026 Iphone 1000.0
+2024-11-29 21:22:44,443 - INFO - Processing offers for request 6ab63ffc-1276-4173-ab99-5819f139c026 after timeout.
+2024-11-29 21:22:44,443 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 6ab63ffc-1276-4173-ab99-5819f139c026 Iphone 1000.0 from Peer2
+2024-11-29 21:22:44,443 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 6ab63ffc-1276-4173-ab99-5819f139c026 Iphone 1000.0
+2024-11-29 21:22:44,443 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:22:44,444 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:26:43,306 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:27:05,350 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED c1ef5c6d-d175-4363-b607-2bdced764140
+2024-11-29 21:27:06,212 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED c1ef5c6d-d175-4363-b607-2bdced764140
+2024-11-29 21:27:47,006 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED e5314255-8b97-4bcb-a66c-004eeb6ede25
+2024-11-29 21:27:47,767 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED e5314255-8b97-4bcb-a66c-004eeb6ede25
+2024-11-29 21:27:57,704 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH c1ef5c6d-d175-4363-b607-2bdced764140 Iphone apple
+2024-11-29 21:27:57,704 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:27:57,710 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:27:57,710 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED c1ef5c6d-d175-4363-b607-2bdced764140 Iphone 1000.0
+2024-11-29 21:28:07,711 - INFO - Processing offers for request c1ef5c6d-d175-4363-b607-2bdced764140 after timeout.
+2024-11-29 21:28:07,711 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND c1ef5c6d-d175-4363-b607-2bdced764140 Iphone 1000.0 from Peer2
+2024-11-29 21:28:07,711 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE c1ef5c6d-d175-4363-b607-2bdced764140 Iphone 1000.0
+2024-11-29 21:28:07,711 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:28:07,711 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:28:11,712 - ERROR - Error during TCP transaction for RQ# c1ef5c6d-d175-4363-b607-2bdced764140: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-11-29 21:28:34,673 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH c1ef5c6d-d175-4363-b607-2bdced764140 Iphone apple
+2024-11-29 21:28:34,673 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:28:54,675 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE c1ef5c6d-d175-4363-b607-2bdced764140 Iphone 1000.0
+2024-11-29 21:28:54,675 - INFO - NOT_AVAILABLE sent to Peer1 for item 'Iphone' with RQ# c1ef5c6d-d175-4363-b607-2bdced764140
+2024-11-29 21:37:37,845 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:37:49,711 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED fa85f9f9-4016-420d-8d65-a694bc50d7ec
+2024-11-29 21:37:50,409 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED fa85f9f9-4016-420d-8d65-a694bc50d7ec
+2024-11-29 21:38:04,870 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED c015d178-ee91-481b-be33-37c7a7f596fd
+2024-11-29 21:38:05,570 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED c015d178-ee91-481b-be33-37c7a7f596fd
+2024-11-29 21:38:15,637 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH fa85f9f9-4016-420d-8d65-a694bc50d7ec Iphone apple
+2024-11-29 21:38:15,637 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:38:15,643 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:38:15,643 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED fa85f9f9-4016-420d-8d65-a694bc50d7ec Iphone 1000.0
+2024-11-29 21:38:25,643 - INFO - Processing offers for request fa85f9f9-4016-420d-8d65-a694bc50d7ec after timeout.
+2024-11-29 21:38:25,643 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND fa85f9f9-4016-420d-8d65-a694bc50d7ec Iphone 1000.0 from Peer2
+2024-11-29 21:38:25,643 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE fa85f9f9-4016-420d-8d65-a694bc50d7ec Iphone 1000.0
+2024-11-29 21:38:25,643 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:38:25,644 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:38:51,392 - ERROR - Error during TCP transaction for RQ# fa85f9f9-4016-420d-8d65-a694bc50d7ec: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-11-29 21:39:00,785 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH fa85f9f9-4016-420d-8d65-a694bc50d7ec something something
+2024-11-29 21:39:00,785 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'something'
+2024-11-29 21:39:00,792 - INFO - Offer received from Peer2 for item 'something' at price 400.0
+2024-11-29 21:39:00,792 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED fa85f9f9-4016-420d-8d65-a694bc50d7ec something 400.0
+2024-11-29 21:39:10,793 - INFO - Processing offers for request fa85f9f9-4016-420d-8d65-a694bc50d7ec after timeout.
+2024-11-29 21:39:10,793 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND fa85f9f9-4016-420d-8d65-a694bc50d7ec something 400.0 from Peer2
+2024-11-29 21:39:10,793 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE fa85f9f9-4016-420d-8d65-a694bc50d7ec something 400.0
+2024-11-29 21:39:10,793 - INFO - RESERVE message sent to Peer2 for item 'something' at price 400.0
+2024-11-29 21:39:10,794 - INFO - Item 'something' reserved for Peer1 from Peer2 at price 400.0
+2024-11-29 21:40:44,745 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:40:57,390 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED a282f554-9ae2-40d7-a5dc-a282961a9629
+2024-11-29 21:40:57,910 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED a282f554-9ae2-40d7-a5dc-a282961a9629
+2024-11-29 21:41:12,997 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED ac88288d-0c33-4ef9-82a8-5665609bd805
+2024-11-29 21:41:13,714 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED ac88288d-0c33-4ef9-82a8-5665609bd805
+2024-11-29 21:41:21,463 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH a282f554-9ae2-40d7-a5dc-a282961a9629 Iphone apple
+2024-11-29 21:41:21,463 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:41:21,467 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:41:21,467 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED a282f554-9ae2-40d7-a5dc-a282961a9629 Iphone 1000.0
+2024-11-29 21:41:31,468 - INFO - Processing offers for request a282f554-9ae2-40d7-a5dc-a282961a9629 after timeout.
+2024-11-29 21:41:31,468 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND a282f554-9ae2-40d7-a5dc-a282961a9629 Iphone 1000.0 from Peer2
+2024-11-29 21:41:31,468 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE a282f554-9ae2-40d7-a5dc-a282961a9629 Iphone 1000.0
+2024-11-29 21:41:31,468 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:41:31,469 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:41:42,988 - ERROR - Error during TCP transaction for RQ# a282f554-9ae2-40d7-a5dc-a282961a9629: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-11-29 21:44:37,596 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-11-29 21:44:52,986 - INFO - Sent UDP response to ('192.168.2.44', 6000): DE-REGISTERED 8088687d-3f34-41cb-87e5-f5f5d83653ab
+2024-11-29 21:44:53,527 - INFO - Sent UDP response to ('192.168.2.44', 6000): REGISTERED 8088687d-3f34-41cb-87e5-f5f5d83653ab
+2024-11-29 21:45:10,165 - INFO - Sent UDP response to ('192.168.2.107', 6001): DE-REGISTERED 69393015-ba9b-44dc-9e8c-9d1206d1ea0e
+2024-11-29 21:45:10,955 - INFO - Sent UDP response to ('192.168.2.107', 6001): REGISTERED 69393015-ba9b-44dc-9e8c-9d1206d1ea0e
+2024-11-29 21:45:17,149 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 8088687d-3f34-41cb-87e5-f5f5d83653ab Iphone apple
+2024-11-29 21:45:17,150 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Iphone'
+2024-11-29 21:45:17,155 - INFO - Offer received from Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:45:17,155 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 8088687d-3f34-41cb-87e5-f5f5d83653ab Iphone 1000.0
+2024-11-29 21:45:27,156 - INFO - Processing offers for request 8088687d-3f34-41cb-87e5-f5f5d83653ab after timeout.
+2024-11-29 21:45:27,156 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 8088687d-3f34-41cb-87e5-f5f5d83653ab Iphone 1000.0 from Peer2
+2024-11-29 21:45:27,156 - INFO - Sent UDP response to ('192.168.2.107', 6001): RESERVE 8088687d-3f34-41cb-87e5-f5f5d83653ab Iphone 1000.0
+2024-11-29 21:45:27,156 - INFO - RESERVE message sent to Peer2 for item 'Iphone' at price 1000.0
+2024-11-29 21:45:27,157 - INFO - Item 'Iphone' reserved for Peer1 from Peer2 at price 1000.0
+2024-11-29 21:45:31,609 - INFO - Initiating TCP transaction for RQ# 8088687d-3f34-41cb-87e5-f5f5d83653ab, item 'Iphone', price 1000.0
+2024-11-29 21:45:33,647 - ERROR - Error during TCP transaction for RQ# 8088687d-3f34-41cb-87e5-f5f5d83653ab: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-11-29 21:54:05,063 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 8088687d-3f34-41cb-87e5-f5f5d83653ab samsung galax
+2024-11-29 21:54:05,063 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'samsung'
+2024-11-29 21:54:25,063 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_AVAILABLE 8088687d-3f34-41cb-87e5-f5f5d83653ab samsung 200.0
+2024-11-29 21:54:25,063 - INFO - NOT_AVAILABLE sent to Peer1 for item 'samsung' with RQ# 8088687d-3f34-41cb-87e5-f5f5d83653ab
+2024-11-29 21:54:38,389 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 2016
+2024-11-29 21:54:38,390 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 21:54:38,395 - INFO - Offer received from Peer2 for item 'imac' at price 600.0
+2024-11-29 21:54:38,395 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 600.0
+2024-11-29 21:54:48,396 - INFO - Processing offers for request 8088687d-3f34-41cb-87e5-f5f5d83653ab after timeout.
+2024-11-29 21:54:48,396 - INFO - Sent UDP response to ('192.168.2.107', 6001): NEGOTIATE 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 500.0
+2024-11-29 21:54:48,396 - INFO - Negotiation initiated with Peer2 for item 'imac' at max price 500.0
+2024-11-29 21:54:53,381 - INFO - Sent UDP response to ('192.168.2.44', 6000): NOT_FOUND 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 500.0
+2024-11-29 21:54:53,381 - INFO - Negotiation failed: imac not sold to Peer1
+2024-11-29 21:55:18,433 - INFO - Sent UDP response to ('192.168.2.107', 6001): SEARCH 8088687d-3f34-41cb-87e5-f5f5d83653ab imac apple
+2024-11-29 21:55:18,433 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'imac'
+2024-11-29 21:55:18,440 - INFO - Offer received from Peer2 for item 'imac' at price 600.0
+2024-11-29 21:55:18,440 - INFO - Sent UDP response to ('192.168.2.107', 6001): OFFER-RECEIVED 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 600.0
+2024-11-29 21:55:28,441 - INFO - Processing offers for request 8088687d-3f34-41cb-87e5-f5f5d83653ab after timeout.
+2024-11-29 21:55:28,441 - INFO - Sent UDP response to ('192.168.2.107', 6001): NEGOTIATE 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 215.0
+2024-11-29 21:55:28,441 - INFO - Negotiation initiated with Peer2 for item 'imac' at max price 215.0
+2024-11-29 21:55:36,900 - INFO - Sent UDP response to ('192.168.2.44', 6000): FOUND 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 600.0 from Peer2
+2024-11-29 21:55:36,900 - INFO - Negotiation successful: imac sold to Peer1 by Peer2 at price 600.0
+2024-11-29 21:55:40,866 - INFO - Initiating TCP transaction for RQ# 8088687d-3f34-41cb-87e5-f5f5d83653ab, item 'imac', price 600.0
+2024-11-29 21:55:42,912 - ERROR - Error during TCP transaction for RQ# 8088687d-3f34-41cb-87e5-f5f5d83653ab: [WinError 10061] No connection could be made because the target machine actively refused it

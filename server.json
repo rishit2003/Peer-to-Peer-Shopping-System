@@ -1,24 +1,56 @@
 {
     "registered_peers": {
+        "Peer1": {
+            "rq_number": "8088687d-3f34-41cb-87e5-f5f5d83653ab",
+            "udp_socket": "6000",
+            "tcp_socket": "9000",
+            "address": [
+                "192.168.2.44",
+                6000
+            ]
+        },
         "Peer2": {
-            "rq_number": "6a6b9ec9-3ac4-4b4b-8251-7761f678fd21",
+            "rq_number": "69393015-ba9b-44dc-9e8c-9d1206d1ea0e",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
-                "192.168.0.19",
+                "192.168.2.107",
                 6001
             ]
         }
     },
     "active_requests": {
-        "6a6b9ec9-3ac4-4b4b-8251-7761f678fd21": {
-            "name": "Peer2",
+        "8088687d-3f34-41cb-87e5-f5f5d83653ab": {
+            "name": "Peer1",
             "operation": "LOOKING_FOR",
-            "item_name": "Ipad",
-            "item_description": "New one",
-            "max_price": "800.0",
-            "status": "No Offers",
-            "offers": []
+            "item_name": "imac",
+            "item_description": "apple",
+            "max_price": "215.0",
+            "status": "Completed",
+            "offers": [
+                {
+                    "seller_name": "Peer2",
+                    "price": 600.0,
+                    "address": [
+                        "192.168.2.107",
+                        6001
+                    ]
+                }
+            ],
+            "timeout_thread_started": true,
+            "reserved_seller": {
+                "seller_name": "Peer2",
+                "price": 600.0,
+                "address": [
+                    "192.168.2.107",
+                    6001
+                ]
+            }
+        },
+        "69393015-ba9b-44dc-9e8c-9d1206d1ea0e": {
+            "name": "Peer2",
+            "operation": "REGISTER",
+            "status": "Completed"
         }
     }
 }
