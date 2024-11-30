@@ -4,5 +4,11 @@
         "item_description": "Ipad Air gen 5, 64 gb storage",
         "price": 800.0,
         "reserved": false
+    },
+    {
+        "item_name": "samsung s22",
+        "item_description": "samsung galaxy s22 256 gb",
+        "price": 400.0,
+        "reserved": false
     }
 ]

@@ -38,6 +38,7 @@ class Peer:
         self.threads = []  # To track threads
         self.is_registered = False  # Track registration status
         self.is_waiting = False  # flag to indicate waiting state
+        self.print_lock = threading.Lock()
         # Setting up dynamic logging for this peer
         log_filename = f"{self.name}.log"
         logging.basicConfig(
@@ -128,7 +129,10 @@ class Peer:
             elif msg_type == "FOUND":
                 self.response_event.set()
                 self.handle_found(message_parts, addr)
-            elif msg_type in ["REGISTERED", "DE-REGISTERED", "REGISTER-DENIED", "DE-REGISTER-DENIED", "NOT_AVAILABLE", "NOT_FOUND"]:
+            elif msg_type == "OFFER-RECEIVED":
+                self.handle_offer_received(message_parts)
+            elif msg_type in ["REGISTERED", "DE-REGISTERED", "REGISTER-DENIED", "DE-REGISTER-DENIED", "NOT_AVAILABLE",
+                              "NOT_FOUND"]:
                 self.response_event.set()
             elif msg_type == "RESERVE":
                 self.response_event.set()
@@ -137,9 +141,9 @@ class Peer:
                 self.response_event.set()
                 self.handle_cancel(message_parts)
             else:
-                print(f"Unknown message type received: {msg_type}")
+                self.synchronized_print(f"Unknown message type received: {msg_type}")
         except Exception as e:
-            print(f"Error in handle_server_message: {e}")
+            self.synchronized_print(f"Error in handle_server_message: {e}")
 
     def handle_search(self, parts):
         """Handles SEARCH message from the server."""
@@ -147,22 +151,19 @@ class Peer:
         item_name = parts[2]
         item_description = " ".join(parts[3:])
 
-        # print(f"SEARCH received: Looking for '{item_name}' with description '{item_description}'")
-
-        # Check if the item exists in the peer's inventory
         inventory = self.load_inventory()
         for item in inventory:
             if item['item_name'].lower() == item_name.lower() and not item.get("reserved", False):
-                # Item found, respond to the server with an OFFER message
                 price = item['price']
                 offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
-                self.send_and_wait_for_response(offer_msg,(server_ip, server_udp_port))
-                self.update_item_reservation(item_name, True)  # Mark as reserved
-                print(f"Sent OFFER to server: {offer_msg}")
+                self.send_and_wait_for_response(offer_msg, (server_ip, server_udp_port))
+                self.update_item_reservation(item_name, True)  # Mark as reserved only once
+                self.synchronized_print(f"Sent OFFER to server: {offer_msg}")
+                logging.info(f"OFFER sent for item '{item_name}' at price {price}")
                 return
 
-        # If the item is not found, no response is necessary
-        print(f"Item '{item_name}' not found in inventory.")
+        self.synchronized_print(f"Item '{item_name}' not found in inventory.")
+        logging.info(f"SEARCH: Item '{item_name}' not found.")
 
     def handle_negotiate(self, parts, addr):
         """Handles NEGOTIATE message from the server."""
@@ -196,53 +197,83 @@ class Peer:
     def handle_cancel(self, parts):
         self.update_item_reservation(parts[2], False)
 
+    def synchronized_print(self, message):
+        """Thread-safe print function."""
+        with self.print_lock:
+            print(message)
+
+    def synchronized_input(self, prompt):
+        """Thread-safe input function."""
+        with self.print_lock:
+            return input(prompt)
+
+    def handle_offer_received(self, parts):
+        """Handles the OFFER-RECEIVED message from the server."""
+        rq_number = parts[1]
+        item_name = parts[2]
+        price = float(parts[3])
+
+        self.synchronized_print(f"Server acknowledged OFFER for '{item_name}' at price {price}. RQ# {rq_number}")
+        logging.info(f"OFFER-RECEIVED: Acknowledged by server for '{item_name}' at price {price}")
+
     def handle_found(self, parts, addr):
         rq_number = parts[1]
         item_name = parts[2]
         price = float(parts[3])
-        print(f"FOUND received For Item: {item_name}")
-        accept_buy = input(f"Do you want to Buy {item_name}? (yes/no): ").strip().lower()
+
+        self.is_waiting = True  # Pause the menu
+        self.synchronized_print(f"FOUND received for Item: {item_name}")
+        accept_buy = self.synchronized_input(f"Do you want to Buy {item_name}? (yes/no): ").strip().lower()
         if accept_buy == "yes":
             response = f"BUY {rq_number} {item_name} {price}"
+            self.udp_socket.sendto(response.encode(), addr)  # Send immediately
+            self.synchronized_print(f"Sent response to server: {response}")
         else:
             response = f"CANCEL {rq_number} {item_name} {price}"
+            self.udp_socket.sendto(response.encode(), addr)  # Send immediately
+            self.synchronized_print(f"Sent response to server: {response}")
 
-        # Send the response back to the server
-        self.udp_socket.sendto(response.encode(), addr)
-        print(f"Sent response to server: {response}")
-
+        self.is_waiting = False  # Resume the menu
 
     def generate_rq_number(self):
         """Generate a unique RQ# using UUID."""
         return str(uuid.uuid4())
 
-    def send_and_wait_for_response(self, message, server_address, timeout=5):
-        """Send a message to the server and wait for a response via listen_to_server."""
-        self.response_event.clear()  # Reset the event before sending a message
-        self.response_message = None  # Clear any previous response
+    def send_and_wait_for_response(self, message, server_address, timeout=60):
+        """Send a message to the server and wait for a response."""
+        self.response_event.clear()  # Reset the event before sending
+        self.response_message = None  # Clear previous response
+        self.is_waiting = True  # Indicate waiting state
+
         try:
             self.udp_socket.sendto(message.encode(), server_address)
-            print(f"Message sent: {message}")
+            self.synchronized_print(f"Message sent: {message}")
             logging.info(f"Message sent: {message}")
-            if message.startswith("LOOKING_FOR"):
-                self.is_waiting = True  # Start waiting
-                if self.response_event.wait(60):  # Wait 60 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
-                    print(f"Server response received via listen_to_server: {self.response_message}")
-                    # Handle NOT_AVAILABLE response
-                    if "NOT_AVAILABLE" in self.response_message:
-                        print(f"Item not available: {self.response_message}")
-                        logging.info(f"Item not available: {self.response_message}")
-                else:
-                    print("Timeout LOOKING_FOR: No response from the server.")
-            elif self.response_event.wait(timeout):  # Wait for the response within the timeout
-                print(f"Server response received via listen_to_server: {self.response_message}")
-                logging.info(f"Server response received via listen_to_server: {self.response_message}")
+
+            # Wait for a response or timeout
+            if self.response_event.wait(timeout):
+                self.synchronized_print(f"Server response received: {self.response_message}")
+                logging.info(f"Server response received: {self.response_message}")
+
+                # Process specific server responses
+                if "NOT_AVAILABLE" in self.response_message:
+                    self.synchronized_print(f"Item not available: {self.response_message}")
+                    logging.info(f"Item not available: {self.response_message}")
+                elif "OFFER-RECEIVED" in self.response_message:
+                    # Handle acknowledgment of OFFER
+                    self.handle_offer_received(self.response_message.split())
+                elif "FOUND" in self.response_message:
+                    # Found item message will be processed by `handle_found`
+                    self.response_event.set()  # Ensure it's properly handled
             else:
-                print("Timeout: No response from the server.")
+                # Timeout handling
+                self.synchronized_print(f"Timeout: No response from the server for message: {message}")
+                logging.warning(f"Timeout waiting for response: {message}")
         except Exception as e:
-            print(f"Error sending message: {e}")
+            self.synchronized_print(f"Error while sending message: {e}")
+            logging.error(f"Error in send_and_wait_for_response: {e}")
         finally:
-            self.is_waiting = False  # End waiting
+            self.is_waiting = False  # Reset waiting state
 
     def register_with_server(self):
         register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.client.address} {self.udp_port} {self.tcp_port}"
@@ -299,47 +330,48 @@ class Peer:
             server_socket.close()
 
     def start_interactive_loop(self):
-        """Interactive loop for user actions."""
         try:
             while self.running:
+                # Check if waiting for a response
                 if self.is_waiting:
-                    print("Waiting for server response. Please wait...")
-                    time.sleep(1)  # Avoid busy-waiting
+                    time.sleep(1)  # Prevent busy-waiting
                     continue
 
-                print("\nOptions:")
-                print("1. Register")
-                print("2. Deregister")
-                print("3. Look for item")
-                print("4. Add Item to Inventory")
-                print("5. Exit")
-                choice = input("Choose an option: ")
+                # Display the interactive menu
+                self.synchronized_print("\nOptions:")
+                self.synchronized_print("1. Register")
+                self.synchronized_print("2. Deregister")
+                self.synchronized_print("3. Look for item")
+                self.synchronized_print("4. Add Item to Inventory")
+                self.synchronized_print("5. Exit")
+                choice = self.synchronized_input("Choose an option: ")
+
                 if choice in ["3", "4"]:
                     if not self.is_registered:
-                        print("You must register with the server before performing this action.")
+                        self.synchronized_print("You must register with the server before performing this action.")
                         continue
-                    itemName = input("Item_name: ")
-                    itemDescription = input("Description: ")
-                    itemPrice = float(input("Price: "))
+                    itemName = self.synchronized_input("Item_name: ")
+                    itemDescription = self.synchronized_input("Description: ")
+                    itemPrice = float(self.synchronized_input("Price: "))
 
                 if choice == '1':
                     self.register_with_server()
                 elif choice == '2':
                     self.deregister_with_server()
                 elif choice == '3':
-                    self.is_waiting = True  # Set waiting state
+                    self.is_waiting = True  # Block menu while waiting
                     self.looking_for_item_server(itemName, itemDescription, itemPrice)
                     self.is_waiting = False  # Reset waiting state after response
                 elif choice == '4':
                     self.add_item_to_inventory(itemName, itemDescription, itemPrice)
                 elif choice == '5':
-                    print("Exiting program.")
-                    self.running = False  # Exit gracefully
+                    self.synchronized_print("Exiting program.")
+                    self.running = False
                     break
                 else:
-                    print("Invalid choice. Please try again.")
+                    self.synchronized_print("Invalid choice. Please try again.")
         except KeyboardInterrupt:
-            print("\nInteractive loop interrupted.")
+            self.synchronized_print("\nInteractive loop interrupted.")
             self.running = False
         finally:
             self.shutdown()
@@ -377,37 +409,18 @@ class Peer:
 
 def get_local_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-        # The IP here (8.8.8.8) is a dummy; no data is sent to it
         s.connect(("8.8.8.8", 80))
         return s.getsockname()[0]
 
-# def simulate_peers_from_file(filename):
-#     with open(filename, 'r') as f:
-#         for line in f:
-#             name, udp_port, tcp_port = line.strip().split()
-#             peer = Peer(name, int(udp_port), int(tcp_port))
-#             threading.Thread(target=peer.start).start()
-#             time.sleep(1)
-
 if __name__ == "__main__":
-    # simulate_peers_from_file("test_peers.txt")
-    # Peer1 = Peer(name="Peer1", udp_port=6000, tcp_port=9000, rq_number="RQ1")
-    # threading.Thread(target=Peer1.start).start()
-    # time.sleep(1)  # Delay to simulate staggered registration
-    # Peer2 = Peer(name="Peer2", udp_port=6001, tcp_port=9001, rq_number="RQ2")
-    # threading.Thread(target=Peer2.start).start()
 
     server_ip = input("Enter Server's IP: ")
     server_udp_port = int(input("Enter Server's UDP port: "))
 
-    # Single-line input for peer details
     input_line = input("Enter peer details (e.g., Peer1 6000 9000): ")
     name, udp_port, tcp_port = input_line.split()
     udp_port = int(udp_port)
     tcp_port = int(tcp_port)
 
-    # Create Peer object
     peer = Peer(name, udp_port, tcp_port)
-    peer.start()  # Start listening and TCP transaction handling
-
-
+    peer.start()

@@ -6,3 +6,151 @@
 2024-11-29 14:54:48,520 - INFO - Server response received via listen_to_server: REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
 2024-11-29 14:57:45,911 - INFO - Message sent: DE-REGISTER d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc Peer1
 2024-11-29 14:57:45,916 - INFO - Server response received via listen_to_server: DE-REGISTERED d8da8cdd-f9d6-4d9b-abad-7eeca3ba0bcc
+2024-11-29 17:47:57,021 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 17:47:58,033 - INFO - Sending registration message: REGISTER 65b6952a-3642-4b7c-a056-0d6c5128099a Peer1 192.168.2.44 6000 9000
+2024-11-29 17:47:58,034 - INFO - Message sent: REGISTER 65b6952a-3642-4b7c-a056-0d6c5128099a Peer1 192.168.2.44 6000 9000
+2024-11-29 17:47:58,036 - INFO - Server response received via listen_to_server: REGISTERED 65b6952a-3642-4b7c-a056-0d6c5128099a
+2024-11-29 17:49:00,594 - INFO - Message sent: LOOKING_FOR 65b6952a-3642-4b7c-a056-0d6c5128099a Peer1 imac 215 600.0
+2024-11-29 17:50:53,020 - INFO - Message sent: LOOKING_FOR 65b6952a-3642-4b7c-a056-0d6c5128099a Peer1 imac 215 600.0
+2024-11-29 17:51:13,022 - INFO - Item not available: NOT_AVAILABLE 65b6952a-3642-4b7c-a056-0d6c5128099a imac 600.0
+2024-11-29 18:01:02,956 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 18:03:06,620 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 18:04:53,347 - INFO - Sending registration message: REGISTER 3e02ece0-8607-411d-b086-bfdf5758085f Peer1 192.168.2.44 6000 9000
+2024-11-29 18:04:53,348 - INFO - Message sent: REGISTER 3e02ece0-8607-411d-b086-bfdf5758085f Peer1 192.168.2.44 6000 9000
+2024-11-29 18:04:53,349 - INFO - Server response received via listen_to_server: REGISTER-DENIED 3e02ece0-8607-411d-b086-bfdf5758085f Name already in use
+2024-11-29 18:04:55,482 - INFO - Sending deregistration message: DE-REGISTER 3e02ece0-8607-411d-b086-bfdf5758085f Peer1
+2024-11-29 18:04:55,482 - INFO - Message sent: DE-REGISTER 3e02ece0-8607-411d-b086-bfdf5758085f Peer1
+2024-11-29 18:04:55,484 - INFO - Server response received via listen_to_server: DE-REGISTERED 3e02ece0-8607-411d-b086-bfdf5758085f
+2024-11-29 18:04:56,017 - INFO - Sending registration message: REGISTER 3e02ece0-8607-411d-b086-bfdf5758085f Peer1 192.168.2.44 6000 9000
+2024-11-29 18:04:56,018 - INFO - Message sent: REGISTER 3e02ece0-8607-411d-b086-bfdf5758085f Peer1 192.168.2.44 6000 9000
+2024-11-29 18:04:56,019 - INFO - Server response received via listen_to_server: REGISTERED 3e02ece0-8607-411d-b086-bfdf5758085f
+2024-11-29 18:05:19,608 - INFO - Message sent: LOOKING_FOR 3e02ece0-8607-411d-b086-bfdf5758085f Peer1 imac 215 600.0
+2024-11-29 18:05:39,610 - INFO - Item not available: NOT_AVAILABLE 3e02ece0-8607-411d-b086-bfdf5758085f imac 600.0
+2024-11-29 18:06:17,068 - INFO - Message sent: LOOKING_FOR 3e02ece0-8607-411d-b086-bfdf5758085f Peer1 imac 2017 700.0
+2024-11-29 18:13:12,066 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 18:13:36,213 - INFO - Sending deregistration message: DE-REGISTER 71ee3bd3-0b4d-415a-908a-c8d30b367c65 Peer1
+2024-11-29 18:13:36,213 - INFO - Message sent: DE-REGISTER 71ee3bd3-0b4d-415a-908a-c8d30b367c65 Peer1
+2024-11-29 18:13:36,215 - INFO - Server response received via listen_to_server: DE-REGISTERED 71ee3bd3-0b4d-415a-908a-c8d30b367c65
+2024-11-29 18:13:36,669 - INFO - Sending registration message: REGISTER 71ee3bd3-0b4d-415a-908a-c8d30b367c65 Peer1 192.168.2.44 6000 9000
+2024-11-29 18:13:36,669 - INFO - Message sent: REGISTER 71ee3bd3-0b4d-415a-908a-c8d30b367c65 Peer1 192.168.2.44 6000 9000
+2024-11-29 18:13:36,672 - INFO - Server response received via listen_to_server: REGISTERED 71ee3bd3-0b4d-415a-908a-c8d30b367c65
+2024-11-29 18:14:25,591 - INFO - Message sent: LOOKING_FOR 71ee3bd3-0b4d-415a-908a-c8d30b367c65 Peer1 imac 2016 700.0
+2024-11-29 18:16:02,181 - INFO - Message sent: LOOKING_FOR 71ee3bd3-0b4d-415a-908a-c8d30b367c65 Peer1 imac 2016 700.0
+2024-11-29 18:16:22,183 - INFO - Item not available: NOT_AVAILABLE 71ee3bd3-0b4d-415a-908a-c8d30b367c65 imac 700.0
+2024-11-29 18:19:37,033 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 18:19:38,480 - INFO - Sending deregistration message: DE-REGISTER e296d70f-4913-48f8-88f3-458a58bf91c4 Peer1
+2024-11-29 18:19:38,481 - INFO - Message sent: DE-REGISTER e296d70f-4913-48f8-88f3-458a58bf91c4 Peer1
+2024-11-29 18:19:38,482 - INFO - Server response received via listen_to_server: DE-REGISTERED e296d70f-4913-48f8-88f3-458a58bf91c4
+2024-11-29 18:19:40,102 - INFO - Sending registration message: REGISTER e296d70f-4913-48f8-88f3-458a58bf91c4 Peer1 192.168.2.44 6000 9000
+2024-11-29 18:19:40,102 - INFO - Message sent: REGISTER e296d70f-4913-48f8-88f3-458a58bf91c4 Peer1 192.168.2.44 6000 9000
+2024-11-29 18:19:40,103 - INFO - Server response received via listen_to_server: REGISTERED e296d70f-4913-48f8-88f3-458a58bf91c4
+2024-11-29 18:19:46,510 - INFO - Message sent: LOOKING_FOR e296d70f-4913-48f8-88f3-458a58bf91c4 Peer1 imac 216 700.0
+2024-11-29 19:25:25,343 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 19:26:01,074 - INFO - Sending deregistration message: DE-REGISTER baa82272-1024-477e-8631-1fd31f3b2ad0 Peer1
+2024-11-29 19:26:01,074 - INFO - Message sent: DE-REGISTER baa82272-1024-477e-8631-1fd31f3b2ad0 Peer1
+2024-11-29 19:26:01,075 - INFO - Server response received via listen_to_server: DE-REGISTERED baa82272-1024-477e-8631-1fd31f3b2ad0
+2024-11-29 19:26:06,891 - INFO - Sending registration message: REGISTER baa82272-1024-477e-8631-1fd31f3b2ad0 Peer1 192.168.2.44 6000 9000
+2024-11-29 19:26:06,891 - INFO - Message sent: REGISTER baa82272-1024-477e-8631-1fd31f3b2ad0 Peer1 192.168.2.44 6000 9000
+2024-11-29 19:26:06,893 - INFO - Server response received via listen_to_server: REGISTERED baa82272-1024-477e-8631-1fd31f3b2ad0
+2024-11-29 19:26:14,435 - INFO - Message sent: LOOKING_FOR baa82272-1024-477e-8631-1fd31f3b2ad0 Peer1 imac 2016 700.0
+2024-11-29 19:37:15,067 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 19:38:13,427 - INFO - Sending deregistration message: DE-REGISTER e7ad74da-17f2-4946-a876-4f4b3b535082 Peer1
+2024-11-29 19:38:13,427 - INFO - Message sent: DE-REGISTER e7ad74da-17f2-4946-a876-4f4b3b535082 Peer1
+2024-11-29 19:38:13,428 - INFO - Server response received via listen_to_server: DE-REGISTERED e7ad74da-17f2-4946-a876-4f4b3b535082
+2024-11-29 19:38:14,357 - INFO - Sending registration message: REGISTER e7ad74da-17f2-4946-a876-4f4b3b535082 Peer1 192.168.2.44 6000 9000
+2024-11-29 19:38:14,357 - INFO - Message sent: REGISTER e7ad74da-17f2-4946-a876-4f4b3b535082 Peer1 192.168.2.44 6000 9000
+2024-11-29 19:38:14,359 - INFO - Server response received via listen_to_server: REGISTERED e7ad74da-17f2-4946-a876-4f4b3b535082
+2024-11-29 19:38:22,120 - INFO - Message sent: LOOKING_FOR e7ad74da-17f2-4946-a876-4f4b3b535082 Peer1 imac 2016 700.0
+2024-11-29 20:47:31,786 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 20:47:33,045 - INFO - Sending deregistration message: DE-REGISTER 0f08ee19-0549-4f1f-9477-78469d1b2e3f Peer1
+2024-11-29 20:47:33,045 - INFO - Message sent: DE-REGISTER 0f08ee19-0549-4f1f-9477-78469d1b2e3f Peer1
+2024-11-29 20:47:33,047 - INFO - Server response received via listen_to_server: DE-REGISTERED 0f08ee19-0549-4f1f-9477-78469d1b2e3f
+2024-11-29 20:47:33,340 - INFO - Sending registration message: REGISTER 0f08ee19-0549-4f1f-9477-78469d1b2e3f Peer1 192.168.2.44 6000 9000
+2024-11-29 20:47:33,340 - INFO - Message sent: REGISTER 0f08ee19-0549-4f1f-9477-78469d1b2e3f Peer1 192.168.2.44 6000 9000
+2024-11-29 20:47:33,341 - INFO - Server response received via listen_to_server: REGISTERED 0f08ee19-0549-4f1f-9477-78469d1b2e3f
+2024-11-29 20:48:35,972 - INFO - Message sent: LOOKING_FOR 0f08ee19-0549-4f1f-9477-78469d1b2e3f Peer1 iphone apple 500.0
+2024-11-29 21:02:44,640 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:02:45,988 - INFO - Sending deregistration message: DE-REGISTER 609fda71-4897-4e41-b955-a1000539d523 Peer1
+2024-11-29 21:02:45,988 - INFO - Message sent: DE-REGISTER 609fda71-4897-4e41-b955-a1000539d523 Peer1
+2024-11-29 21:02:45,990 - INFO - Server response received via listen_to_server: DE-REGISTERED 609fda71-4897-4e41-b955-a1000539d523
+2024-11-29 21:02:46,557 - INFO - Sending registration message: REGISTER 609fda71-4897-4e41-b955-a1000539d523 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:02:46,557 - INFO - Message sent: REGISTER 609fda71-4897-4e41-b955-a1000539d523 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:02:46,559 - INFO - Server response received via listen_to_server: REGISTERED 609fda71-4897-4e41-b955-a1000539d523
+2024-11-29 21:03:18,913 - INFO - Message sent: LOOKING_FOR 609fda71-4897-4e41-b955-a1000539d523 Peer1 iphone apple 1000.0
+2024-11-29 21:03:38,915 - INFO - Item not available: NOT_AVAILABLE 609fda71-4897-4e41-b955-a1000539d523 iphone 1000.0
+2024-11-29 21:04:13,192 - INFO - Message sent: LOOKING_FOR 609fda71-4897-4e41-b955-a1000539d523 Peer1 Iphone apple 1000.0
+2024-11-29 21:04:33,194 - INFO - Item not available: NOT_AVAILABLE 609fda71-4897-4e41-b955-a1000539d523 Iphone 1000.0
+2024-11-29 21:04:57,757 - INFO - Message sent: LOOKING_FOR 609fda71-4897-4e41-b955-a1000539d523 Peer1 Iphone apple 1000.0
+2024-11-29 21:11:20,896 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:11:22,307 - INFO - Sending deregistration message: DE-REGISTER aed8e432-29dd-4310-8eb7-c8912f98a718 Peer1
+2024-11-29 21:11:22,307 - INFO - Message sent: DE-REGISTER aed8e432-29dd-4310-8eb7-c8912f98a718 Peer1
+2024-11-29 21:11:22,309 - INFO - Server response received via listen_to_server: DE-REGISTERED aed8e432-29dd-4310-8eb7-c8912f98a718
+2024-11-29 21:11:22,905 - INFO - Sending registration message: REGISTER aed8e432-29dd-4310-8eb7-c8912f98a718 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:11:22,905 - INFO - Message sent: REGISTER aed8e432-29dd-4310-8eb7-c8912f98a718 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:11:22,906 - INFO - Server response received via listen_to_server: REGISTERED aed8e432-29dd-4310-8eb7-c8912f98a718
+2024-11-29 21:11:55,555 - INFO - Message sent: LOOKING_FOR aed8e432-29dd-4310-8eb7-c8912f98a718 Peer1 Iphone apple 1000.0
+2024-11-29 21:15:33,357 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:15:34,808 - INFO - Sending deregistration message: DE-REGISTER 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1
+2024-11-29 21:15:34,808 - INFO - Message sent: DE-REGISTER 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1
+2024-11-29 21:15:34,810 - INFO - Server response received via listen_to_server: DE-REGISTERED 5d1e7070-695c-4f4e-b050-1f793fc105f2
+2024-11-29 21:15:35,484 - INFO - Sending registration message: REGISTER 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:15:35,484 - INFO - Message sent: REGISTER 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:15:35,486 - INFO - Server response received via listen_to_server: REGISTERED 5d1e7070-695c-4f4e-b050-1f793fc105f2
+2024-11-29 21:16:03,416 - INFO - Message sent: LOOKING_FOR 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1 Iphone apple 1000.0
+2024-11-29 21:18:03,802 - INFO - Message sent: LOOKING_FOR 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1 Iphone apple 1000.0
+2024-11-29 21:18:23,805 - INFO - Item not available: NOT_AVAILABLE 5d1e7070-695c-4f4e-b050-1f793fc105f2 Iphone 1000.0
+2024-11-29 21:18:37,541 - INFO - Message sent: LOOKING_FOR 5d1e7070-695c-4f4e-b050-1f793fc105f2 Peer1 something something 400.0
+2024-11-29 21:22:04,652 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:22:06,068 - INFO - Sending deregistration message: DE-REGISTER 6ab63ffc-1276-4173-ab99-5819f139c026 Peer1
+2024-11-29 21:22:06,069 - INFO - Message sent: DE-REGISTER 6ab63ffc-1276-4173-ab99-5819f139c026 Peer1
+2024-11-29 21:22:06,070 - INFO - Server response received via listen_to_server: DE-REGISTERED 6ab63ffc-1276-4173-ab99-5819f139c026
+2024-11-29 21:22:06,734 - INFO - Sending registration message: REGISTER 6ab63ffc-1276-4173-ab99-5819f139c026 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:22:06,734 - INFO - Message sent: REGISTER 6ab63ffc-1276-4173-ab99-5819f139c026 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:22:06,736 - INFO - Server response received via listen_to_server: REGISTERED 6ab63ffc-1276-4173-ab99-5819f139c026
+2024-11-29 21:22:34,438 - INFO - Message sent: LOOKING_FOR 6ab63ffc-1276-4173-ab99-5819f139c026 Peer1 Iphone apple 1000.0
+2024-11-29 21:27:03,554 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:27:05,349 - INFO - Sending deregistration message: DE-REGISTER c1ef5c6d-d175-4363-b607-2bdced764140 Peer1
+2024-11-29 21:27:05,349 - INFO - Message sent: DE-REGISTER c1ef5c6d-d175-4363-b607-2bdced764140 Peer1
+2024-11-29 21:27:05,350 - INFO - Server response received via listen_to_server: DE-REGISTERED c1ef5c6d-d175-4363-b607-2bdced764140
+2024-11-29 21:27:06,210 - INFO - Sending registration message: REGISTER c1ef5c6d-d175-4363-b607-2bdced764140 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:27:06,210 - INFO - Message sent: REGISTER c1ef5c6d-d175-4363-b607-2bdced764140 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:27:06,212 - INFO - Server response received via listen_to_server: REGISTERED c1ef5c6d-d175-4363-b607-2bdced764140
+2024-11-29 21:27:57,703 - INFO - Message sent: LOOKING_FOR c1ef5c6d-d175-4363-b607-2bdced764140 Peer1 Iphone apple 1000.0
+2024-11-29 21:28:34,672 - INFO - Message sent: LOOKING_FOR c1ef5c6d-d175-4363-b607-2bdced764140 Peer1 Iphone apple 1000.0
+2024-11-29 21:28:54,675 - INFO - Item not available: NOT_AVAILABLE c1ef5c6d-d175-4363-b607-2bdced764140 Iphone 1000.0
+2024-11-29 21:37:48,441 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:37:49,709 - INFO - Sending deregistration message: DE-REGISTER fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1
+2024-11-29 21:37:49,709 - INFO - Message sent: DE-REGISTER fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1
+2024-11-29 21:37:49,711 - INFO - Server response received: DE-REGISTERED fa85f9f9-4016-420d-8d65-a694bc50d7ec
+2024-11-29 21:37:50,408 - INFO - Sending registration message: REGISTER fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1 192.168.2.44 6000 9000
+2024-11-29 21:37:50,408 - INFO - Message sent: REGISTER fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1 192.168.2.44 6000 9000
+2024-11-29 21:37:50,409 - INFO - Server response received: REGISTERED fa85f9f9-4016-420d-8d65-a694bc50d7ec
+2024-11-29 21:38:15,636 - INFO - Message sent: LOOKING_FOR fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1 Iphone apple 1000.0
+2024-11-29 21:38:20,641 - WARNING - Timeout waiting for server response: LOOKING_FOR fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1 Iphone apple 1000.0
+2024-11-29 21:39:00,784 - INFO - Message sent: LOOKING_FOR fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1 something something 400.0
+2024-11-29 21:39:05,796 - WARNING - Timeout waiting for server response: LOOKING_FOR fa85f9f9-4016-420d-8d65-a694bc50d7ec Peer1 something something 400.0
+2024-11-29 21:40:55,855 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:40:57,389 - INFO - Sending deregistration message: DE-REGISTER a282f554-9ae2-40d7-a5dc-a282961a9629 Peer1
+2024-11-29 21:40:57,389 - INFO - Message sent: DE-REGISTER a282f554-9ae2-40d7-a5dc-a282961a9629 Peer1
+2024-11-29 21:40:57,390 - INFO - Server response received: DE-REGISTERED a282f554-9ae2-40d7-a5dc-a282961a9629
+2024-11-29 21:40:57,909 - INFO - Sending registration message: REGISTER a282f554-9ae2-40d7-a5dc-a282961a9629 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:40:57,909 - INFO - Message sent: REGISTER a282f554-9ae2-40d7-a5dc-a282961a9629 Peer1 192.168.2.44 6000 9000
+2024-11-29 21:40:57,910 - INFO - Server response received: REGISTERED a282f554-9ae2-40d7-a5dc-a282961a9629
+2024-11-29 21:41:21,462 - INFO - Message sent: LOOKING_FOR a282f554-9ae2-40d7-a5dc-a282961a9629 Peer1 Iphone apple 1000.0
+2024-11-29 21:41:40,947 - INFO - Server response received: FOUND a282f554-9ae2-40d7-a5dc-a282961a9629 Iphone 1000.0 from Peer2
+2024-11-29 21:44:51,668 - INFO - Peer Peer1 initialized with UDP port 6000 and TCP port 9000.
+2024-11-29 21:44:52,984 - INFO - Sending deregistration message: DE-REGISTER 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1
+2024-11-29 21:44:52,984 - INFO - Message sent: DE-REGISTER 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1
+2024-11-29 21:44:52,986 - INFO - Server response received: DE-REGISTERED 8088687d-3f34-41cb-87e5-f5f5d83653ab
+2024-11-29 21:44:53,526 - INFO - Sending registration message: REGISTER 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1 192.168.2.44 6000 9000
+2024-11-29 21:44:53,526 - INFO - Message sent: REGISTER 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1 192.168.2.44 6000 9000
+2024-11-29 21:44:53,527 - INFO - Server response received: REGISTERED 8088687d-3f34-41cb-87e5-f5f5d83653ab
+2024-11-29 21:45:17,149 - INFO - Message sent: LOOKING_FOR 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1 Iphone apple 1000.0
+2024-11-29 21:45:31,609 - INFO - Server response received: FOUND 8088687d-3f34-41cb-87e5-f5f5d83653ab Iphone 1000.0 from Peer2
+2024-11-29 21:54:05,061 - INFO - Message sent: LOOKING_FOR 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1 samsung galax 200.0
+2024-11-29 21:54:25,063 - INFO - Server response received: NOT_AVAILABLE 8088687d-3f34-41cb-87e5-f5f5d83653ab samsung 200.0
+2024-11-29 21:54:25,063 - INFO - Item not available: NOT_AVAILABLE 8088687d-3f34-41cb-87e5-f5f5d83653ab samsung 200.0
+2024-11-29 21:54:38,389 - INFO - Message sent: LOOKING_FOR 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1 imac 2016 500.0
+2024-11-29 21:54:53,381 - INFO - Server response received: NOT_FOUND 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 500.0
+2024-11-29 21:55:18,432 - INFO - Message sent: LOOKING_FOR 8088687d-3f34-41cb-87e5-f5f5d83653ab Peer1 imac apple 215.0
+2024-11-29 21:55:40,866 - INFO - Server response received: FOUND 8088687d-3f34-41cb-87e5-f5f5d83653ab imac 600.0 from Peer2
