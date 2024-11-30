@@ -7,6 +7,7 @@ import os
 import signal
 import sys
 import time
+import uuid
 
 logging.basicConfig(
     filename="server.log",  # Log to file
@@ -171,60 +172,6 @@ class Server:
 
             threading.Thread(target=handle_timeout, daemon=True).start()
 
-    # def handle_offer(self, message_parts, addr):
-    #     rq_number = message_parts[1]
-    #     seller_name = message_parts[2]
-    #     item_name = message_parts[3]
-    #     price = float(message_parts[4])
-    #
-    #     logging.info(f"Offer received from {seller_name} for item '{item_name}' at price {price}")
-    #
-    #     with self.peer_lock:
-    #         if rq_number not in self.active_requests:
-    #             # response = f"INVALID_RQ {rq_number} Request not found"
-    #             # self.send_udp_response(response, addr)
-    #             logging.warning(f"Invalid RQ number in offer: {rq_number}")
-    #             return
-    #
-    #         buyer_request = self.active_requests[rq_number]
-    #         max_price = float(buyer_request.get('max_price', 0))
-    #         buyer_name = buyer_request['name']
-    #         buyer_address = self.registered_peers[buyer_name]['address']
-    #         buyer_request.setdefault('offers', []).append({'seller_name': seller_name, 'price': price, 'address': tuple(addr)})
-    #
-    #         # Initialize a timeout if not already set
-    #         if 'timeout_started' not in buyer_request:
-    #             buyer_request['timeout_started'] = True
-    #             buyer_request['timeout'] = time.time() + 10  # Wait 10 seconds for all offers
-    #
-    #         # Check if timeout has expired
-    #         if time.time() >= buyer_request['timeout']:
-    #             logging.info(f"Processing offers for request {rq_number} after timeout.")
-    #             valid_offers = [offer for offer in buyer_request['offers'] if offer['price'] <= max_price]
-    #
-    #             if valid_offers:
-    #                 # Find the cheapest valid offer
-    #                 cheapest_offer = min(valid_offers, key=lambda x: x['price'])
-    #                 # Notify the requester about the cheapest valid offer
-    #                 response_to_buyer = f"FOUND {rq_number} {item_name} {cheapest_offer['price']} from {cheapest_offer['seller_name']}"
-    #                 self.send_udp_response(response_to_buyer, buyer_address)
-    #
-    #                 # Update the request status
-    #                 buyer_request['status'] = 'Found'
-    #                 buyer_request['reserved_seller'] = cheapest_offer
-    #                 self.save_server_state()
-    #                 logging.info(f"Item '{item_name}' reserved for {buyer_name} from {cheapest_offer['seller_name']} at price {cheapest_offer['price']}")
-    #             else:
-    #                 # All offers exceed max price, initiate negotiation with all sellers
-    #                 for offer in buyer_request['offers']:
-    #                     negotiate_message = f"NEGOTIATE {rq_number} {item_name} {max_price}"
-    #                     self.send_udp_response(negotiate_message, offer['address'])
-    #                     logging.info(f"Negotiation initiated with {offer['seller_name']} for item '{item_name}' at max price {max_price}")
-    #
-    #                 # Update the status to indicate negotiation is in progress
-    #                 buyer_request['status'] = 'Negotiating'
-    #                 self.save_server_state()
-
 
     def handle_offer(self, message_parts, addr):
         rq_number = message_parts[1]
@@ -361,6 +308,91 @@ class Server:
             buyer_request['status'] = 'Cancelled'
             del buyer_request['reserved_seller']  # Remove the reserved seller entry
             self.save_server_state()
+
+    def handle_tcp(self, message_parts, addr):
+        """Handles the TCP transaction between buyer and seller."""
+        rq_number_buyer = message_parts[1]
+        rq_number = self.generate_rq_number()
+        item_name = message_parts[2]
+        price = float(message_parts[3])
+
+        logging.info(f"Initiating TCP transaction for RQ# {rq_number}, item '{item_name}', price {price}")
+
+        # Retrieve buyer and seller info
+        with self.peer_lock:
+            buyer_request = self.active_requests.get(rq_number)
+            if not buyer_request or 'reserved_seller' not in buyer_request:
+                logging.warning(f"No reserved seller found for RQ# {rq_number}")
+                return
+
+            buyer_name = buyer_request['name']
+            seller_name = buyer_request['reserved_seller']['seller_name']
+            buyer_info = self.registered_peers[buyer_name]
+            seller_info = self.registered_peers[seller_name]
+
+        try:
+            # Establish TCP connections
+            buyer_address = (buyer_info['address'][0], int(buyer_info['tcp_socket']))
+            seller_address = (seller_info['address'][0], int(seller_info['tcp_socket']))
+
+            with socket.create_connection(buyer_address) as buyer_conn, \
+                    socket.create_connection(seller_address) as seller_conn:
+
+                logging.info(f"TCP connections established with buyer {buyer_name} and seller {seller_name}")
+
+                # Send INFORM_Req to buyer and seller
+                inform_message = f"INFORM_Req {rq_number} {item_name} {price}"
+                buyer_conn.sendall(inform_message.encode())
+                seller_conn.sendall(inform_message.encode())
+
+                # Receive INFORM_Res from buyer and seller
+                buyer_response = buyer_conn.recv(1024).decode()
+                seller_response = seller_conn.recv(1024).decode()
+                logging.info(f"Buyer response: {buyer_response}")
+                logging.info(f"Seller response: {seller_response}")
+
+                # Process the transaction
+                if self.process_transaction(buyer_response, seller_response, price):
+                    # Transaction successful: Send Shipping_Info to seller
+                    buyer_details = buyer_response.split()
+                    shipping_info = f"Shipping_Info {rq_number} {buyer_details[2]} {buyer_details[-1]}"
+                    seller_conn.sendall(shipping_info.encode())
+                    logging.info(f"Transaction successful. Shipping_Info sent to seller {seller_name}")
+                else:
+                    # Transaction failed: Notify buyer and seller
+                    cancel_message = f"CANCEL {rq_number} Transaction failed"
+                    buyer_conn.sendall(cancel_message.encode())
+                    seller_conn.sendall(cancel_message.encode())
+                    logging.warning(f"Transaction failed for RQ# {rq_number}")
+
+        except Exception as e:
+            logging.error(f"Error during TCP transaction for RQ# {rq_number}: {e}")
+
+    def process_transaction(self, buyer_response, seller_response, price):
+        """Simulates the transaction process."""
+        try:
+            # Parse buyer and seller details from INFORM_Res
+            buyer_details = buyer_response.split()
+            seller_details = seller_response.split()
+
+            buyer_cc = buyer_details[3]
+            seller_cc = seller_details[3]
+            buyer_name = buyer_details[2]
+            transaction_amount = price * 0.9  # 90% goes to the seller
+
+            # Simulate payment
+            logging.info(f"Processing payment: Charging {buyer_cc} and crediting {seller_cc} with {transaction_amount}")
+            logging.info(f"Server keeps 10% as transaction fee.")
+
+            # Simulate a successful transaction
+            return True
+        except Exception as e:
+            logging.error(f"Error in processing transaction: {e}")
+            return False
+
+    def generate_rq_number(self):
+        """Generate a unique RQ# using UUID."""
+        return str(uuid.uuid4())
 
 
     def send_udp_response(self, message, addr):
