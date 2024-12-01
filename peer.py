@@ -43,6 +43,7 @@ class Peer:
         self.lock = threading.Lock()  # Lock for terminal access
         self.in_negotiation = False
         self.in_found = False
+        self.in_tcp = False
         self.input_event = threading.Event()    # Event to manage input flow
 
         # Setting up dynamic logging for this peer
@@ -169,7 +170,8 @@ class Peer:
                 offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
                 self.send_and_wait_for_response(offer_msg,(server_ip, server_udp_port))
                 self.update_item_reservation(item_name, True)  # Mark as reserved
-                print(f"Sent OFFER to server: {offer_msg}")
+                # print(f"Sent OFFER to server: {offer_msg}")
+                logging.info(f"Sent OFFER to server: {offer_msg}")
                 return
 
         # If the item is not found, no response is necessary
@@ -183,8 +185,8 @@ class Peer:
         max_price = float(parts[3])
 
         with self.lock:  # Acquire the lock for terminal interaction
-            print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
-
+            # print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
+            logging.info(print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}"))
             # Pause interactive loop
             self.input_event.set()  # Signal input should stop elsewhere
             self.in_negotiation = True
@@ -226,7 +228,7 @@ class Peer:
         price = float(parts[3])
 
         with self.lock:
-            print(f"FOUND received For Item: {item_name}")
+            print(f"\nItem: {item_name} found")
             # Pause interactive loop
             self.input_event.set()  # Signal input should stop elsewhere
             self.in_found = True
@@ -239,7 +241,8 @@ class Peer:
 
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
-        print(f"Sent response to server: {response}")
+        # print(f"Sent response to server: {response}")
+        logging.info(f"Sent response to server: {response}")
 
         with self.lock:  # Lock again for thread-safe updates
             # self.update_item_reservation(item_name, accept_negotiation == "y")
@@ -257,25 +260,29 @@ class Peer:
         self.response_message = None  # Clear any previous response
         try:
             self.udp_socket.sendto(message.encode(), server_address)
-            print(f"\nMessage sent: {message}")
+            # print(f"\nMessage sent: {message}")
             logging.info(f"Message sent: {message}")
             if message.startswith("LOOKING_FOR"):
                 self.is_waiting = True  # Start waiting
                 if self.response_event.wait(90):  # Wait 90 seconds TODO: Should be greater than 2 minutes but keep it at the same for testing
-                    print(f"Server response received via listen_to_server: {self.response_message}")
+                    # print(f"Server response received via listen_to_server: {self.response_message}")
+                    logging.info(f"Server response received via listen_to_server: {self.response_message}")
                     # Handle NOT_AVAILABLE response
                     if "NOT_AVAILABLE" in self.response_message:
-                        print(f"Item not available: {self.response_message}")
+                        # print(f"Item not available: {self.response_message}")
                         logging.info(f"Item not available: {self.response_message}")
                 else:
-                    print("Timeout LOOKING_FOR: No response from the server.")
+                    print("Timeout LF: No response from the server.")
+                    logging.info("Timeout LF: No response from the server.")
             elif self.response_event.wait(timeout):  # Wait for the response within the timeout
-                print(f"Server response received via listen_to_server: {self.response_message}")
+                # print(f"Server response received via listen_to_server: {self.response_message}")
                 logging.info(f"Server response received via listen_to_server: {self.response_message}")
             else:
                 print("Timeout: No response from the server.")
+                logging.info("Timeout: No response from the server.")
         except Exception as e:
             print(f"Error sending message: {e}")
+            logging.warning(f"Error sending message: {e}")
         finally:
             self.is_waiting = False  # End waiting
 
@@ -297,53 +304,156 @@ class Peer:
             self.is_registered = False
             print("Successfully deregistered.")
         else:
-            print("Deregistration failed.")
+            print("De-registration failed.")
 
     def looking_for_item_server(self, itemName, itemDescription, maxPrice):
+        self.is_waiting = True  # Start waiting
         looking_for_msg = f"LOOKING_FOR {self.client.rq_number} {self.name} {itemName} {itemDescription} {maxPrice}"
-        print(f"Sending looking for: {looking_for_msg}")
+        # print(f"Sending looking for: {looking_for_msg}")
+        logging.info(f"Sending looking for: {looking_for_msg}")
         self.send_and_wait_for_response(looking_for_msg, (server_ip, server_udp_port))
+        self.is_waiting = False  # Stop waiting after the response
 
-    def handle_tcp_transaction(self):
-        """Handle TCP transactions initiated by the server."""
+    def tcp_listener(self):
+        """Continuously listen for incoming TCP connections."""
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((self.address, self.tcp_port))
         server_socket.listen(5)
-        # print(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
-        logging.info(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
+        logging.info(f"{self.name} listening for TCP connections on port {self.tcp_port}.")
 
         while self.running:
             try:
                 conn, addr = server_socket.accept()
-                print(f"TCP transaction started with {addr}")
-                logging.info(f"TCP transaction started with {addr}")
-
-                # Receive INFORM_Req message from the server
-                data = conn.recv(1024).decode()
-                if data.startswith("INFORM_Req"):
-                    print(f"Received: {data}")
-                    logging.info(f"Received: {data}")
-                    parts = data.split()
-                    rq_number, item_name, price = parts[1], parts[2], parts[3]
-
-                    # Respond with INFORM_Res
-                    response = f"INFORM_Res {rq_number} {self.name} {self.client.credit_card.number} {self.client.credit_card.expiry_date} {self.client.address}"
-                    conn.sendall(response.encode())
-                    print(f"Sent: {response}")
-                    logging.info(f"Sent: {response}")
-
-                # Handle Shipping_Info or CANCEL messages
-                data = conn.recv(1024).decode()
-                if data.startswith("Shipping_Info"):
-                    print(f"Shipping Info received: {data}")
-                    logging.info(f"Shipping Info received: {data}")
-                elif data.startswith("CANCEL"):
-                    print(f"Transaction cancelled: {data}")
-
-                conn.close()
+                logging.info(f"Accepted TCP connection from {addr}")
+                # Handle the connection in a separate thread
+                threading.Thread(target=self.handle_tcp_connection, args=(conn, addr), daemon=True).start()
             except Exception as e:
                 if self.running:
-                    print(f"Error during TCP transaction: {e}")
+                    logging.error(f"Error accepting TCP connection: {e}")
+        server_socket.close()
+
+    def handle_tcp_connection(self, conn, addr):
+        """Continuously handle messages from a single TCP connection."""
+        logging.info(f"Handling TCP connection from {addr}")
+        try:
+            while self.running:
+                data = conn.recv(1024).decode()
+                if not data:
+                    logging.info(f"Connection closed by {addr}")
+                    break
+
+                logging.info(f"Received TCP message from {addr}: {data}")
+                parts = data.split()
+                msg_type = parts[0]
+
+                # Spawn a new thread for each message type
+                if msg_type == "INFORM_Req":
+                    threading.Thread(target=self.process_inform_request, args=(conn, addr, parts), daemon=True).start()
+                elif msg_type == "Shipping_Info":
+                    threading.Thread(target=self.process_shipping_info, args=(conn, addr, parts), daemon=True).start()
+                elif msg_type == "CANCEL":
+                    threading.Thread(target=self.process_cancel_transaction, args=(conn, addr, parts),daemon=True).start()
+                else:
+                    logging.warning(f"Unknown TCP message type received: {msg_type}")
+
+        except Exception as e:
+            logging.error(f"Error handling TCP connection: {e}")
+        finally:
+            conn.close()
+            logging.info(f"Connection with {addr} closed.")
+
+    def process_inform_request(self, conn, addr, parts):
+        """Process an INFORM_Req message."""
+        rq_number, item_name, price = parts[1], parts[2], parts[3]
+        logging.info(f"Processing INFORM_Req for RQ#{rq_number}, Item: {item_name}, Price: {price}")
+
+        with self.lock:  # Acquire the lock for terminal interaction
+            # Pause interactive loop
+            self.input_event.set()  # Signal input should stop elsewhere
+            self.in_tcp = True
+
+        # Collect buyer/seller information
+        self.client.credit_card.number = input("Credit Card number: ")
+        self.client.credit_card.expiry_date = input("Expiry date (MM/YY): ")
+        self.client.address = input("Address: ")
+
+        # Send INFORM_Res response
+        response = f"INFORM_Res {rq_number} {self.name} {self.client.credit_card.number} {self.client.credit_card.expiry_date} {self.client.address}"
+        conn.sendall(response.encode())
+        logging.info(f"Sent INFORM_Res: {response}")
+
+        with self.lock:
+            self.in_tcp = False
+            self.input_event.clear()  # Resume interactive loop
+
+    def process_shipping_info(self, conn, addr, parts):
+        """Process a Shipping_Info message."""
+        print("In Process Shipping Info")
+        rq_number, buyer_name, buyer_address = parts[1], parts[2], parts[3]
+        logging.info(f"Processing Shipping_Info for RQ#{rq_number}, Buyer: {buyer_name}, Address: {buyer_address}")
+        print(f"Shipping Info: Send item to {buyer_name} at {buyer_address}.")
+
+    def process_cancel_transaction(self, conn, addr, parts):
+        """Process a CANCEL message."""
+        rq_number, reason = parts[1], " ".join(parts[2:])
+        logging.info(f"Processing CANCEL for RQ#{rq_number}, Reason: {reason}")
+        print(f"Transaction cancelled. Reason: {reason}")
+
+    # def handle_tcp_transaction(self):
+    #     """Handle TCP transactions initiated by the server."""
+    #     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #     server_socket.bind((self.address, self.tcp_port))
+    #     server_socket.listen(5)
+    #     # print(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
+    #     logging.info(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
+    #
+    #     while self.running:
+    #         try:
+    #             conn, addr = server_socket.accept()
+    #             # print(f"TCP transaction started with {addr}")
+    #             logging.info(f"TCP transaction started with {addr}")
+    #
+    #             # Receive INFORM_Req message from the server
+    #             data = conn.recv(1024).decode()
+    #             with self.lock:  # Acquire the lock for terminal interaction
+    #                 # Pause interactive loop
+    #                 self.input_event.set()  # Signal input should stop elsewhere
+    #                 self.in_tcp = True
+    #
+    #
+    #             if data.startswith("INFORM_Req"):
+    #                 # print(f"Received: {data}")
+    #                 logging.info(f"Received: {data}")
+    #                 parts = data.split()
+    #                 rq_number, item_name, price = parts[1], parts[2], parts[3]
+    #
+    #                 self.client.credit_card.number = input("Credit Card number: ")
+    #                 self.client.credit_card.expiry_date = input("Expiry date (MM/YY): ")
+    #                 self.client.address = input("Address: ")
+    #
+    #                 # Respond with INFORM_Res
+    #                 response = f"INFORM_Res {rq_number} {self.name} {self.client.credit_card.number} {self.client.credit_card.expiry_date} {self.client.address}"
+    #                 conn.sendall(response.encode())
+    #                 # print(f"Sent: {response}")
+    #                 logging.info(f"Sent: {response}")
+    #
+    #             # Handle Shipping_Info or CANCEL messages
+    #             data = conn.recv(1024).decode()
+    #             if data.startswith("Shipping_Info"):
+    #                 print(f"Shipping Info received: {data}")
+    #                 logging.info(f"Shipping Info received: {data}")
+    #             elif data.startswith("CANCEL"):
+    #                 print(f"Transaction cancelled: {data}")
+    #                 logging.info(f"Transaction cancelled: {data}")
+    #             conn.close()
+    #
+    #         except Exception as e:
+    #             if self.running:
+    #                 print(f"Error during TCP transaction: {e}")
+    #         finally:
+    #             with self.lock:
+    #                 self.in_tcp = False
+    #                 self.input_event.clear()  # Resume interactive loop
 
     def start_interactive_loop(self):
         """Interactive loop for user actions."""
@@ -351,15 +461,11 @@ class Peer:
             printed_options = False
             while self.running:
                 with self.lock:
-                    if self.in_negotiation:
+                    if self.in_negotiation or self.in_found or self.in_tcp or self.is_waiting:
                         # print("Waiting for server response. Please wait...")
                         self.input_event.wait()
                         continue
 
-                    if self.in_found:
-                        # print("Waiting for server response. Please wait...")
-                        self.input_event.wait()
-                        continue
 
                 # Print options only once until user input is processed
                 if not printed_options:
@@ -377,8 +483,8 @@ class Peer:
                 if ready:
                     choice = sys.stdin.readline().strip()
                     with self.lock:  # Ensure thread-safety while processing
-                        if self.in_negotiation:
-                            print("\nNegotiation in progress. Please wait.")
+                        if self.in_negotiation or self.in_found or self.in_tcp or self.is_waiting:
+                            print("\nConsole in use. Please wait.")
                             continue
                         if choice in ["3", "4"]:
                             if not self.is_registered:
@@ -394,6 +500,7 @@ class Peer:
                             self.deregister_with_server()
                         elif choice == '3':
                             self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                            continue
                         elif choice == '4':
                             self.add_item_to_inventory(itemName, itemDescription, itemPrice)
                         elif choice == '5':
@@ -416,13 +523,13 @@ class Peer:
 
     def start(self):
         listen_thread = threading.Thread(target=self.listen_to_server, daemon=True)  # Start listening in a thread
-        tcp_thread = threading.Thread(target=self.handle_tcp_transaction, daemon=True)  # Start TCP handler in a thread
+        tcp_listener_thread = threading.Thread(target=self.tcp_listener, daemon=True)  # Start TCP listener
         interactive_thread = threading.Thread(target=self.start_interactive_loop)  # Interactive loop thread
 
-        self.threads.extend([listen_thread, tcp_thread, interactive_thread])
+        self.threads.extend([listen_thread, tcp_listener_thread, interactive_thread])
 
         listen_thread.start()
-        tcp_thread.start()
+        tcp_listener_thread.start()
         interactive_thread.start()
 
     def shutdown(self):

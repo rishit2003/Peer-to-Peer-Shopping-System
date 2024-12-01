@@ -134,7 +134,7 @@ class Server:
         item_description = " ".join(message_parts[4:-1])
         max_price = message_parts[-1]
 
-        print(f"In Handle Search for {name}")
+        # print(f"In Handle Search for {name}")
 
         with self.peer_lock:
             self.active_requests[rq_number] = {
@@ -163,8 +163,7 @@ class Server:
                         buyer_address = self.registered_peers[name]['address']
                         response_to_buyer = f"NOT_AVAILABLE {rq_number} {item_name} {max_price}"
                         self.send_udp_response(response_to_buyer, buyer_address)
-                        logging.info(
-                            f"NOT_AVAILABLE sent to {name} for item '{item_name}' with RQ# {rq_number}")
+                        logging.info(f"NOT_AVAILABLE sent to {name} for item '{item_name}' with RQ# {rq_number}")
 
                         # Mark the request as completed without offers
                         buyer_request['status'] = 'No Offers'
@@ -218,8 +217,7 @@ class Server:
                             buyer_request['status'] = 'Found'
                             buyer_request['reserved_seller'] = cheapest_offer
                             self.save_server_state()
-                            logging.info(
-                                f"Item '{item_name}' reserved for {buyer_name} from {cheapest_offer['seller_name']} at price {cheapest_offer['price']}")
+                            logging.info(f"Item '{item_name}' reserved for {buyer_name} from {cheapest_offer['seller_name']} at price {cheapest_offer['price']}")
                         else:
                             # All offers exceed max price, initiate negotiation with the cheapest offer
                             cheapest_offer = min(buyer_request['offers'], key=lambda x: x['price'])
@@ -249,11 +247,15 @@ class Server:
         buyer_address = self.registered_peers[buyer_name]['address']
 
         if response_type == "ACCEPT":
+
             # Determine the seller from the address
             offers = buyer_request.get('offers', [])
             reserved_seller = next((offer for offer in offers if offer['address'] == tuple(addr)), None)
 
             if reserved_seller:
+                # Update the offer price to the max_price
+                reserved_seller['price'] = max_price
+
                 # Update the request with reserved seller information
                 buyer_request['reserved_seller'] = reserved_seller
 
