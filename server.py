@@ -311,18 +311,18 @@ class Server:
 
     def handle_tcp(self, message_parts, addr):
         """Handles the TCP transaction between buyer and seller."""
-        rq_number_buyer = message_parts[1]
+        rq_number_buy_msg = message_parts[1]
         rq_number = self.generate_rq_number()
         item_name = message_parts[2]
         price = float(message_parts[3])
 
-        logging.info(f"Initiating TCP transaction for RQ# {rq_number}, item '{item_name}', price {price}")
+        logging.info(f"Initiating TCP transaction for RQ# {rq_number_buy_msg}, item '{item_name}', price {price}")
 
         # Retrieve buyer and seller info
         with self.peer_lock:
-            buyer_request = self.active_requests.get(rq_number)
+            buyer_request = self.active_requests.get(rq_number_buy_msg)
             if not buyer_request or 'reserved_seller' not in buyer_request:
-                logging.warning(f"No reserved seller found for RQ# {rq_number}")
+                logging.warning(f"No reserved seller found for RQ# {rq_number_buy_msg}")
                 return
 
             buyer_name = buyer_request['name']
@@ -336,7 +336,7 @@ class Server:
             seller_address = (seller_info['address'][0], int(seller_info['tcp_socket']))
 
             with socket.create_connection(buyer_address) as buyer_conn, \
-                    socket.create_connection(seller_address) as seller_conn:
+                    socket.create_connection(seller_address) as seller_conn:    # Creating TCP Connection to Buyer and Seller
 
                 logging.info(f"TCP connections established with buyer {buyer_name} and seller {seller_name}")
 
@@ -357,7 +357,7 @@ class Server:
                     buyer_details = buyer_response.split()
                     shipping_info = f"Shipping_Info {rq_number} {buyer_details[2]} {buyer_details[-1]}"
                     seller_conn.sendall(shipping_info.encode())
-                    logging.info(f"Transaction successful. Shipping_Info sent to seller {seller_name}")
+                    logging.info(f"Transaction successful. Shipping_Info sent to seller {seller_name} at address {buyer_details[-1]}")
                 else:
                     # Transaction failed: Notify buyer and seller
                     cancel_message = f"CANCEL {rq_number} Transaction failed"

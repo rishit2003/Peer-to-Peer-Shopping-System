@@ -29,7 +29,7 @@ class Peer:
         self.udp_port = udp_port
         self.tcp_port = tcp_port
         self.address = get_local_ip()
-        self.client = self.Client(self.generate_rq_number(), name, self.address)
+        self.client = self.Client(self.generate_rq_number(), name, "1176")
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind((self.address, self.udp_port))  # Bind to listen for messages
         self.response_event = threading.Event()  # Event to signal when a response is received
@@ -145,6 +145,8 @@ class Peer:
             elif msg_type == "CANCEL":
                 self.response_event.set()
                 self.handle_cancel(message_parts)
+            # elif msg_type == "INFORM_Req":
+            #     self.handle_tcp_transaction()
             else:
                 print(f"Unknown message type received: {msg_type}")
         except Exception as e:
@@ -278,7 +280,7 @@ class Peer:
             self.is_waiting = False  # End waiting
 
     def register_with_server(self):
-        register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.client.address} {self.udp_port} {self.tcp_port}"
+        register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.address} {self.udp_port} {self.tcp_port}"
         logging.info(f"Sending registration message: {register_msg}")
         self.send_and_wait_for_response(register_msg, (server_ip, server_udp_port))
         if self.response_message and "REGISTERED" in self.response_message:
@@ -307,29 +309,34 @@ class Peer:
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((self.address, self.tcp_port))
         server_socket.listen(5)
-        print(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
+        # print(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
+        logging.info(f"{self.name} ready for TCP transactions on port {self.tcp_port}.")
 
         while self.running:
             try:
                 conn, addr = server_socket.accept()
                 print(f"TCP transaction started with {addr}")
+                logging.info(f"TCP transaction started with {addr}")
 
                 # Receive INFORM_Req message from the server
                 data = conn.recv(1024).decode()
                 if data.startswith("INFORM_Req"):
                     print(f"Received: {data}")
+                    logging.info(f"Received: {data}")
                     parts = data.split()
                     rq_number, item_name, price = parts[1], parts[2], parts[3]
 
                     # Respond with INFORM_Res
-                    response = f"INFORM_Res {rq_number} {self.name} {self.client.credit_card.number} {self.client.credit_card.expiry_date} {self.address}"
+                    response = f"INFORM_Res {rq_number} {self.name} {self.client.credit_card.number} {self.client.credit_card.expiry_date} {self.client.address}"
                     conn.sendall(response.encode())
                     print(f"Sent: {response}")
+                    logging.info(f"Sent: {response}")
 
                 # Handle Shipping_Info or CANCEL messages
                 data = conn.recv(1024).decode()
                 if data.startswith("Shipping_Info"):
                     print(f"Shipping Info received: {data}")
+                    logging.info(f"Shipping Info received: {data}")
                 elif data.startswith("CANCEL"):
                     print(f"Transaction cancelled: {data}")
 
