@@ -320,6 +320,9 @@ class Server:
 
         logging.info(f"Initiating TCP transaction for RQ# {rq_number_buy_msg}, item '{item_name}', price {price}")
 
+        buyer_conn = None
+        seller_conn = None
+
         # Retrieve buyer and seller info
         with self.peer_lock:
             buyer_request = self.active_requests.get(rq_number_buy_msg)
@@ -337,11 +340,13 @@ class Server:
             buyer_address = (buyer_info['address'][0], int(buyer_info['tcp_socket']))
             seller_address = (seller_info['address'][0], int(seller_info['tcp_socket']))
 
-            with socket.create_connection(buyer_address) as buyer_conn, \
-                    socket.create_connection(seller_address) as seller_conn:    # Creating TCP Connection to Buyer and Seller
+            buyer_conn = socket.create_connection(buyer_address)
+            seller_conn = socket.create_connection(seller_address)    # Creating TCP Connection to Buyer and Seller
 
-                logging.info(f"TCP connections established with buyer {buyer_name} and seller {seller_name}")
+            logging.info(f"TCP connections established with buyer {buyer_name} and seller {seller_name}")
 
+
+            try:
                 # Send INFORM_Req to buyer and seller
                 inform_message = f"INFORM_Req {rq_number} {item_name} {price}"
                 buyer_conn.sendall(inform_message.encode())
@@ -360,6 +365,11 @@ class Server:
                     shipping_info = f"Shipping_Info {rq_number} {buyer_details[2]} {buyer_details[-1]}"
                     seller_conn.sendall(shipping_info.encode())
                     logging.info(f"Transaction successful. Shipping_Info sent to seller {seller_name} at address {buyer_details[-1]}")
+
+                    # Close buyer connection after sending Shipping_Info to the seller
+                    logging.info(f"Closing TCP connection to buyer {buyer_name}")
+                    buyer_conn.close()
+
                 else:
                     # Transaction failed: Notify buyer and seller
                     cancel_message = f"CANCEL {rq_number} Transaction failed"
@@ -367,8 +377,22 @@ class Server:
                     seller_conn.sendall(cancel_message.encode())
                     logging.warning(f"Transaction failed for RQ# {rq_number}")
 
+                    # Close both connections after sending CANCEL
+                    logging.info(f"Closing TCP connections to buyer {buyer_name} and seller {seller_name}")
+                    buyer_conn.close()
+                    seller_conn.close()
+            finally:
+                # Ensure the seller connection is closed
+                if not seller_conn.close():
+                    seller_conn.close()
+                    logging.info(f"TCP connection to seller {seller_name} closed.")
         except Exception as e:
             logging.error(f"Error during TCP transaction for RQ# {rq_number}: {e}")
+        finally:
+            # Ensure the buyer connection is closed in case of errors
+            if buyer_conn and not buyer_conn.close:
+                buyer_conn.close()
+                logging.info(f"TCP connection to buyer {buyer_name} closed.")
 
     def process_transaction(self, buyer_response, seller_response, price):
         """Simulates the transaction process."""

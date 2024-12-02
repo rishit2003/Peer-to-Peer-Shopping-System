@@ -191,19 +191,19 @@ class Peer:
             self.input_event.set()  # Signal input should stop elsewhere
             self.in_negotiation = True
 
-        # Logic to decide whether to accept or refuse the negotiation
-        while True:
-            accept_negotiation = input(f"Accept negotiation? (y/n): ").strip().lower()
-            if accept_negotiation == 'y':
-                response = f"ACCEPT {rq_number} {item_name} {max_price}"
-                self.update_item_reservation(item_name, True)
-                break
-            elif accept_negotiation == 'n':
-                response = f"REFUSE {rq_number} {item_name} {max_price}"
-                self.update_item_reservation(item_name, False)
-                break
-            else:
-                print("Invalid response received.")
+            # Logic to decide whether to accept or refuse the negotiation
+            while True:
+                accept_negotiation = input(f"Accept negotiation? (y/n): ").strip().lower()
+                if accept_negotiation == 'y':
+                    response = f"ACCEPT {rq_number} {item_name} {max_price}"
+                    self.update_item_reservation(item_name, True)
+                    break
+                elif accept_negotiation == 'n':
+                    response = f"REFUSE {rq_number} {item_name} {max_price}"
+                    self.update_item_reservation(item_name, False)
+                    break
+                else:
+                    print("Invalid response received.")
 
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
@@ -233,11 +233,11 @@ class Peer:
             self.input_event.set()  # Signal input should stop elsewhere
             self.in_found = True
 
-        accept_buy = input(f"Do you want to Buy {item_name}? (y/n): ").strip().lower()
-        if accept_buy == 'y':
-            response = f"BUY {rq_number} {item_name} {price}"
-        else:
-            response = f"CANCEL {rq_number} {item_name} {price}"
+            accept_buy = input(f"Do you want to Buy {item_name}? (y/n): ").strip().lower()
+            if accept_buy == 'y':
+                response = f"BUY {rq_number} {item_name} {price}"
+            else:
+                response = f"CANCEL {rq_number} {item_name} {price}"
 
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
@@ -350,7 +350,8 @@ class Peer:
                 if msg_type == "INFORM_Req":
                     threading.Thread(target=self.process_inform_request, args=(conn, addr, parts), daemon=True).start()
                 elif msg_type == "Shipping_Info":
-                    threading.Thread(target=self.process_shipping_info, args=(conn, addr, parts), daemon=True).start()
+                    self.process_shipping_info(conn, addr, parts)
+                    break # Exit the loop after closing the connection
                 elif msg_type == "CANCEL":
                     threading.Thread(target=self.process_cancel_transaction, args=(conn, addr, parts),daemon=True).start()
                 else:
@@ -388,10 +389,20 @@ class Peer:
 
     def process_shipping_info(self, conn, addr, parts):
         """Process a Shipping_Info message."""
-        print("In Process Shipping Info")
-        rq_number, buyer_name, buyer_address = parts[1], parts[2], parts[3]
-        logging.info(f"Processing Shipping_Info for RQ#{rq_number}, Buyer: {buyer_name}, Address: {buyer_address}")
-        print(f"Shipping Info: Send item to {buyer_name} at {buyer_address}.")
+        try:
+            # Parse the message
+            rq_number, buyer_name, buyer_address = parts[1], parts[2], parts[3]
+            logging.info(f"Processing Shipping_Info for RQ#{rq_number}, Buyer: {buyer_name}, Address: {buyer_address}")
+            print(f"Shipping Info: Send item to {buyer_name} at {buyer_address}.")
+
+            # After processing the message, close the connection
+            conn.close()
+            logging.info(f"TCP connection with {addr} closed by {self.name} after processing Shipping_Info.")
+        except Exception as e:
+            logging.error(f"Error processing Shipping_Info: {e}")
+        finally:
+            if not conn.close:
+                conn.close()
 
     def process_cancel_transaction(self, conn, addr, parts):
         """Process a CANCEL message."""
