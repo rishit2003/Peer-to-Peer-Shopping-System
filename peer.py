@@ -272,7 +272,7 @@ class Peer:
                     logging.info(f"Server response received via listen_to_server: {self.response_message}")
                     # Handle NOT_AVAILABLE response
                     if "NOT_AVAILABLE" in self.response_message:
-                        # print(f"Item not available: {self.response_message}")
+                        print(f"Item not available: {self.response_message}")
                         logging.info(f"Item not available: {self.response_message}")
                 else:
                     print("Timeout LF: No response from the server.")
