@@ -359,3 +359,41 @@
 2024-12-02 04:28:16,152 - INFO - Sent INFORM_Res: INFORM_Res d616bc1c-81ae-4ab8-9e4a-dd2d47243f0b Peer2 c2 e2 a2
 2024-12-02 04:28:23,050 - INFO - Connection closed by ('192.168.0.19', 56294)
 2024-12-02 04:28:23,051 - INFO - Connection with ('192.168.0.19', 56294) closed.
+2024-12-02 04:41:14,022 - INFO - Peer Peer2 initialized with UDP port 6002 and TCP port 9002.
+2024-12-02 04:41:14,023 - INFO - Peer2 listening for TCP connections on port 9002.
+2024-12-02 04:41:15,155 - INFO - Sending deregistration message: DE-REGISTER 62773deb-7147-4935-92f8-3b6ccc4720eb Peer2
+2024-12-02 04:41:15,156 - INFO - Message sent: DE-REGISTER 62773deb-7147-4935-92f8-3b6ccc4720eb Peer2
+2024-12-02 04:41:15,158 - INFO - Server response received via listen_to_server: DE-REGISTERED 62773deb-7147-4935-92f8-3b6ccc4720eb
+2024-12-02 04:41:15,661 - INFO - Sending registration message: REGISTER 62773deb-7147-4935-92f8-3b6ccc4720eb Peer2 192.168.0.19 6002 9002
+2024-12-02 04:41:15,661 - INFO - Message sent: REGISTER 62773deb-7147-4935-92f8-3b6ccc4720eb Peer2 192.168.0.19 6002 9002
+2024-12-02 04:41:15,662 - INFO - Server response received via listen_to_server: REGISTERED 62773deb-7147-4935-92f8-3b6ccc4720eb
+2024-12-02 04:41:21,352 - INFO - Sending looking for: LOOKING_FOR 62773deb-7147-4935-92f8-3b6ccc4720eb Peer2 Ipad New 700.0
+2024-12-02 04:41:21,352 - INFO - Message sent: LOOKING_FOR 62773deb-7147-4935-92f8-3b6ccc4720eb Peer2 Ipad New 700.0
+2024-12-02 04:41:32,746 - INFO - Server response received via listen_to_server: FOUND 62773deb-7147-4935-92f8-3b6ccc4720eb Ipad 700.0 from Peer1
+2024-12-02 04:41:36,470 - INFO - Sent response to server: BUY 62773deb-7147-4935-92f8-3b6ccc4720eb Ipad 700.0
+2024-12-02 04:41:36,490 - INFO - Accepted TCP connection from ('192.168.0.19', 56426)
+2024-12-02 04:41:36,490 - INFO - Handling TCP connection from ('192.168.0.19', 56426)
+2024-12-02 04:41:36,491 - INFO - Received TCP message from ('192.168.0.19', 56426): INFORM_Req 56339ae0-f1e9-48bb-bf8a-dc75ee6f800e Ipad 700.0
+2024-12-02 04:41:36,491 - INFO - Processing INFORM_Req for RQ#56339ae0-f1e9-48bb-bf8a-dc75ee6f800e, Item: Ipad, Price: 700.0
+2024-12-02 04:41:36,491 - INFO - Connection with ('192.168.0.19', 56426) closed.
+2024-12-02 04:41:51,744 - ERROR - Error in process_inform_request: [Errno 9] Bad file descriptor
+2024-12-02 04:41:51,744 - INFO - Connection with ('192.168.0.19', 56426) closed after INFORM_Req processing.
+2024-12-02 04:49:35,759 - INFO - Peer Peer2 initialized with UDP port 6002 and TCP port 9002.
+2024-12-02 04:49:35,760 - INFO - Peer2 listening for TCP connections on port 9002.
+2024-12-02 04:49:36,661 - INFO - Sending deregistration message: DE-REGISTER 29512621-d26d-4021-8d54-69885ef60eaf Peer2
+2024-12-02 04:49:36,662 - INFO - Message sent: DE-REGISTER 29512621-d26d-4021-8d54-69885ef60eaf Peer2
+2024-12-02 04:49:36,665 - INFO - Server response received via listen_to_server: DE-REGISTERED 29512621-d26d-4021-8d54-69885ef60eaf
+2024-12-02 04:49:37,185 - INFO - Sending registration message: REGISTER 29512621-d26d-4021-8d54-69885ef60eaf Peer2 192.168.0.19 6002 9002
+2024-12-02 04:49:37,185 - INFO - Message sent: REGISTER 29512621-d26d-4021-8d54-69885ef60eaf Peer2 192.168.0.19 6002 9002
+2024-12-02 04:49:37,187 - INFO - Server response received via listen_to_server: REGISTERED 29512621-d26d-4021-8d54-69885ef60eaf
+2024-12-02 04:49:41,972 - INFO - Sending looking for: LOOKING_FOR 29512621-d26d-4021-8d54-69885ef60eaf Peer2 Ipad New 700.0
+2024-12-02 04:49:41,972 - INFO - Message sent: LOOKING_FOR 29512621-d26d-4021-8d54-69885ef60eaf Peer2 Ipad New 700.0
+2024-12-02 04:49:53,232 - INFO - Server response received via listen_to_server: FOUND 29512621-d26d-4021-8d54-69885ef60eaf Ipad 700.0 from Peer1
+2024-12-02 04:49:56,165 - INFO - Sent response to server: BUY 29512621-d26d-4021-8d54-69885ef60eaf Ipad 700.0
+2024-12-02 04:49:56,180 - INFO - Accepted TCP connection from ('192.168.0.19', 56501)
+2024-12-02 04:49:56,180 - INFO - Handling TCP connection from ('192.168.0.19', 56501)
+2024-12-02 04:49:56,181 - INFO - Received TCP message from ('192.168.0.19', 56501): INFORM_Req 3555313e-05a5-485b-9483-6199193f5b16 Ipad 700.0
+2024-12-02 04:49:56,181 - INFO - Processing INFORM_Req for RQ#3555313e-05a5-485b-9483-6199193f5b16, Item: Ipad, Price: 700.0
+2024-12-02 04:50:12,825 - INFO - Sent INFORM_Res: INFORM_Res 3555313e-05a5-485b-9483-6199193f5b16 Peer2 c2 e2 a2
+2024-12-02 04:50:12,826 - INFO - Connection closed by ('192.168.0.19', 56501)
+2024-12-02 04:50:12,826 - INFO - Connection with ('192.168.0.19', 56501) closed.

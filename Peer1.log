@@ -457,3 +457,57 @@
 2024-12-02 04:28:23,051 - INFO - Processing Shipping_Info for RQ#d616bc1c-81ae-4ab8-9e4a-dd2d47243f0b, Buyer: Peer2, Address: a2
 2024-12-02 04:28:23,051 - INFO - TCP connection with ('192.168.0.19', 56295) closed by Peer1 after processing Shipping_Info.
 2024-12-02 04:28:23,051 - INFO - Connection with ('192.168.0.19', 56295) closed.
+2024-12-02 04:40:47,622 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 04:40:47,623 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 04:40:48,799 - INFO - Sending deregistration message: DE-REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1
+2024-12-02 04:40:48,799 - INFO - Message sent: DE-REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1
+2024-12-02 04:40:48,802 - INFO - Server response received via listen_to_server: DE-REGISTERED 3cd6578c-710f-4878-b0bd-c4a4bdae07c8
+2024-12-02 04:40:49,509 - INFO - Sending registration message: REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1 192.168.0.19 6001 9001
+2024-12-02 04:40:49,510 - INFO - Message sent: REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1 192.168.0.19 6001 9001
+2024-12-02 04:40:49,512 - INFO - Server response received via listen_to_server: REGISTERED 3cd6578c-710f-4878-b0bd-c4a4bdae07c8
+2024-12-02 04:40:56,512 - INFO - Sending deregistration message: DE-REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1
+2024-12-02 04:40:56,513 - INFO - Message sent: DE-REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1
+2024-12-02 04:40:56,515 - INFO - Server response received via listen_to_server: DE-REGISTERED 3cd6578c-710f-4878-b0bd-c4a4bdae07c8
+2024-12-02 04:40:57,021 - INFO - Sending registration message: REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1 192.168.0.19 6001 9001
+2024-12-02 04:40:57,022 - INFO - Message sent: REGISTER 3cd6578c-710f-4878-b0bd-c4a4bdae07c8 Peer1 192.168.0.19 6001 9001
+2024-12-02 04:40:57,024 - INFO - Server response received via listen_to_server: REGISTERED 3cd6578c-710f-4878-b0bd-c4a4bdae07c8
+2024-12-02 04:41:21,355 - INFO - Message sent: OFFER 62773deb-7147-4935-92f8-3b6ccc4720eb Peer1 Ipad 800.0
+2024-12-02 04:41:26,360 - INFO - Timeout: No response from the server.
+2024-12-02 04:41:26,362 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 04:41:26,362 - INFO - Sent OFFER to server: OFFER 62773deb-7147-4935-92f8-3b6ccc4720eb Peer1 Ipad 800.0
+2024-12-02 04:41:31,362 - INFO - NEGOTIATE received: Buyer willing to pay 700.0 for Ipad
+2024-12-02 04:41:32,745 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 04:41:32,745 - INFO - Sent response to server: ACCEPT 62773deb-7147-4935-92f8-3b6ccc4720eb Ipad 700.0
+2024-12-02 04:41:32,746 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 04:41:36,492 - INFO - Accepted TCP connection from ('192.168.0.19', 56427)
+2024-12-02 04:41:36,493 - INFO - Handling TCP connection from ('192.168.0.19', 56427)
+2024-12-02 04:41:36,493 - INFO - Received TCP message from ('192.168.0.19', 56427): INFORM_Req 56339ae0-f1e9-48bb-bf8a-dc75ee6f800e Ipad 700.0
+2024-12-02 04:41:36,493 - INFO - Processing INFORM_Req for RQ#56339ae0-f1e9-48bb-bf8a-dc75ee6f800e, Item: Ipad, Price: 700.0
+2024-12-02 04:41:36,493 - INFO - Connection with ('192.168.0.19', 56427) closed.
+2024-12-02 04:41:45,034 - ERROR - Error in process_inform_request: [Errno 9] Bad file descriptor
+2024-12-02 04:41:45,034 - INFO - Connection with ('192.168.0.19', 56427) closed after INFORM_Req processing.
+2024-12-02 04:49:16,013 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 04:49:16,015 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 04:49:23,063 - INFO - Sending deregistration message: DE-REGISTER e05a891c-c3f9-4ffd-9377-e5d9753cf77d Peer1
+2024-12-02 04:49:23,064 - INFO - Message sent: DE-REGISTER e05a891c-c3f9-4ffd-9377-e5d9753cf77d Peer1
+2024-12-02 04:49:23,067 - INFO - Server response received via listen_to_server: DE-REGISTERED e05a891c-c3f9-4ffd-9377-e5d9753cf77d
+2024-12-02 04:49:23,543 - INFO - Sending registration message: REGISTER e05a891c-c3f9-4ffd-9377-e5d9753cf77d Peer1 192.168.0.19 6001 9001
+2024-12-02 04:49:23,543 - INFO - Message sent: REGISTER e05a891c-c3f9-4ffd-9377-e5d9753cf77d Peer1 192.168.0.19 6001 9001
+2024-12-02 04:49:23,545 - INFO - Server response received via listen_to_server: REGISTERED e05a891c-c3f9-4ffd-9377-e5d9753cf77d
+2024-12-02 04:49:41,975 - INFO - Message sent: OFFER 29512621-d26d-4021-8d54-69885ef60eaf Peer1 Ipad 800.0
+2024-12-02 04:49:46,980 - INFO - Timeout: No response from the server.
+2024-12-02 04:49:46,984 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 04:49:46,984 - INFO - Sent OFFER to server: OFFER 29512621-d26d-4021-8d54-69885ef60eaf Peer1 Ipad 800.0
+2024-12-02 04:49:51,982 - INFO - NEGOTIATE received: Buyer willing to pay 700.0 for Ipad
+2024-12-02 04:49:53,230 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 04:49:53,230 - INFO - Sent response to server: ACCEPT 29512621-d26d-4021-8d54-69885ef60eaf Ipad 700.0
+2024-12-02 04:49:53,231 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 04:49:56,183 - INFO - Accepted TCP connection from ('192.168.0.19', 56502)
+2024-12-02 04:49:56,183 - INFO - Handling TCP connection from ('192.168.0.19', 56502)
+2024-12-02 04:49:56,183 - INFO - Received TCP message from ('192.168.0.19', 56502): INFORM_Req 3555313e-05a5-485b-9483-6199193f5b16 Ipad 700.0
+2024-12-02 04:49:56,184 - INFO - Processing INFORM_Req for RQ#3555313e-05a5-485b-9483-6199193f5b16, Item: Ipad, Price: 700.0
+2024-12-02 04:50:05,944 - INFO - Sent INFORM_Res: INFORM_Res 3555313e-05a5-485b-9483-6199193f5b16 Peer1 c1 e1 a1
+2024-12-02 04:50:12,826 - INFO - Received TCP message from ('192.168.0.19', 56502): Shipping_Info 3555313e-05a5-485b-9483-6199193f5b16 Peer2 a2
+2024-12-02 04:50:12,826 - INFO - Processing Shipping_Info for RQ#3555313e-05a5-485b-9483-6199193f5b16, Buyer: Peer2, Address: a2
+2024-12-02 04:50:12,826 - INFO - TCP connection with ('192.168.0.19', 56502) closed by Peer1 after processing Shipping_Info.
+2024-12-02 04:50:12,826 - INFO - Connection with ('192.168.0.19', 56502) closed.
