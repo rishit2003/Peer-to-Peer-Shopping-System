@@ -544,3 +544,19 @@
 2024-12-02 16:34:06,535 - INFO - Sending registration message: REGISTER 79262ba9-b732-497c-aa20-0a4fde8b82d0 Peer1 172.30.94.92 6001 9001
 2024-12-02 16:34:06,535 - INFO - Message sent: REGISTER 79262ba9-b732-497c-aa20-0a4fde8b82d0 Peer1 172.30.94.92 6001 9001
 2024-12-02 16:34:06,537 - INFO - Server response received via listen_to_server: REGISTERED 79262ba9-b732-497c-aa20-0a4fde8b82d0
+2024-12-02 17:50:32,874 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 17:50:32,875 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 17:50:34,927 - INFO - Sending deregistration message: DE-REGISTER b59776de-1f67-4368-8e6e-bddfecaefdf0 Peer1
+2024-12-02 17:50:34,927 - INFO - Message sent: DE-REGISTER b59776de-1f67-4368-8e6e-bddfecaefdf0 Peer1
+2024-12-02 17:50:34,931 - INFO - Server response received via listen_to_server: DE-REGISTERED b59776de-1f67-4368-8e6e-bddfecaefdf0
+2024-12-02 17:50:36,025 - INFO - Sending registration message: REGISTER b59776de-1f67-4368-8e6e-bddfecaefdf0 Peer1 172.30.94.92 6001 9001
+2024-12-02 17:50:36,026 - INFO - Message sent: REGISTER b59776de-1f67-4368-8e6e-bddfecaefdf0 Peer1 172.30.94.92 6001 9001
+2024-12-02 17:50:36,028 - INFO - Server response received via listen_to_server: REGISTERED b59776de-1f67-4368-8e6e-bddfecaefdf0
+2024-12-02 17:51:50,100 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 17:51:50,102 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 17:51:51,826 - INFO - Sending deregistration message: DE-REGISTER 288a2609-1019-4bf8-806b-dc43653435c4 Peer1
+2024-12-02 17:51:51,826 - INFO - Message sent: DE-REGISTER 288a2609-1019-4bf8-806b-dc43653435c4 Peer1
+2024-12-02 17:51:51,843 - INFO - Server response received via listen_to_server: DE-REGISTERED 288a2609-1019-4bf8-806b-dc43653435c4
+2024-12-02 17:51:52,371 - INFO - Sending registration message: REGISTER 288a2609-1019-4bf8-806b-dc43653435c4 Peer1 172.30.94.92 6001 9001
+2024-12-02 17:51:52,372 - INFO - Message sent: REGISTER 288a2609-1019-4bf8-806b-dc43653435c4 Peer1 172.30.94.92 6001 9001
+2024-12-02 17:51:52,375 - INFO - Server response received via listen_to_server: REGISTERED 288a2609-1019-4bf8-806b-dc43653435c4

@@ -536,6 +536,8 @@ class Peer:
                         print("Exiting program.")
                         self.running = False  # Exit gracefully
                         break
+                    elif choice == '':
+                        printed_options = False
                     else:
                         print("Invalid choice. Please try again.")
                     # Reset the flag to print options again after input is handled
