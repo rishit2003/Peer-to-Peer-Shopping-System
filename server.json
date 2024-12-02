@@ -1,35 +1,35 @@
 {
     "registered_peers": {
         "Peer1": {
-            "rq_number": "2a43a839-f4ac-4f87-ba43-6f760d5e1671",
-            "udp_socket": "6000",
-            "tcp_socket": "9000",
-            "address": [
-                "192.168.0.19",
-                6000
-            ]
-        },
-        "Peer2": {
-            "rq_number": "2e1b9f09-f7a1-4984-a895-afe084352a22",
+            "rq_number": "56fef5e9-ca11-4be1-a0b0-0e31fb9c3754",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
                 "192.168.0.19",
                 6001
             ]
+        },
+        "Peer2": {
+            "rq_number": "de53c9df-cfae-4995-823f-16cdb871cbb7",
+            "udp_socket": "6002",
+            "tcp_socket": "9002",
+            "address": [
+                "192.168.0.19",
+                6002
+            ]
         }
     },
     "active_requests": {
-        "2a43a839-f4ac-4f87-ba43-6f760d5e1671": {
+        "56fef5e9-ca11-4be1-a0b0-0e31fb9c3754": {
             "name": "Peer1",
             "operation": "REGISTER",
-            "status": "Failed"
+            "status": "Completed"
         },
-        "2e1b9f09-f7a1-4984-a895-afe084352a22": {
+        "de53c9df-cfae-4995-823f-16cdb871cbb7": {
             "name": "Peer2",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
-            "item_description": "new",
+            "item_description": "New",
             "max_price": "700.0",
             "status": "Completed",
             "offers": [
@@ -38,7 +38,7 @@
                     "price": 700.0,
                     "address": [
                         "192.168.0.19",
-                        6000
+                        6001
                     ]
                 }
             ],
@@ -48,7 +48,7 @@
                 "price": 700.0,
                 "address": [
                     "192.168.0.19",
-                    6000
+                    6001
                 ]
             }
         }

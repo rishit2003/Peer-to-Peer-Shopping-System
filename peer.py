@@ -45,6 +45,7 @@ class Peer:
         self.in_found = False
         self.in_tcp = False
         self.input_event = threading.Event()    # Event to manage input flow
+        self.input_event.set()
 
         # Setting up dynamic logging for this peer
         log_filename = f"{self.name}.log"
@@ -117,7 +118,8 @@ class Peer:
         if updated:
             with open(self.inventory_file, "w") as file:
                 json.dump(inventory, file, indent=4)
-            print(f"Updated reservation status for item '{item_name}' to {reserved}.")
+            # print(f"Updated reservation status for item '{item_name}' to {reserved}.")
+            logging.info(f"Updated reservation status for item '{item_name}' to {reserved}.")
         else:
             # print(f"Item '{item_name}' not found in inventory.")
             logging.warning(f"Item '{item_name}' not found in inventory.")
@@ -134,6 +136,7 @@ class Peer:
                 self.handle_search(message_parts)
             elif msg_type == "NEGOTIATE":
                 # self.lock.release_lock()
+                self.response_event.set()
                 self.handle_negotiate(message_parts, addr)
             elif msg_type == "FOUND":
                 self.response_event.set()
@@ -186,10 +189,9 @@ class Peer:
 
         with self.lock:  # Acquire the lock for terminal interaction
             # print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}")
-            logging.info(print(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}"))
-            # Pause interactive loop
-            self.input_event.set()  # Signal input should stop elsewhere
+            logging.info(f"NEGOTIATE received: Buyer willing to pay {max_price} for {item_name}") # Pause interactive loop
             self.in_negotiation = True
+            self.input_event.clear()  # Signal input should stop elsewhere
 
             # Logic to decide whether to accept or refuse the negotiation
             while True:
@@ -207,14 +209,15 @@ class Peer:
 
         # Send the response back to the server
         self.udp_socket.sendto(response.encode(), addr)
-        print(f"Sent response to server: {response}")
+        # print(f"Sent response to server: {response}")
+        logging.info(f"Sent response to server: {response}")
         # Resume interactive loop
         # self.is_waiting = False
 
         with self.lock:  # Lock again for thread-safe updates
             self.update_item_reservation(item_name, accept_negotiation == "y")
             self.in_negotiation = False
-            self.input_event.clear()  # Allow main loop input handling
+            self.input_event.set()  # Allow main loop input handling
 
     def handle_reserved(self, parts):
         self.update_item_reservation(parts[2], True)
@@ -230,7 +233,7 @@ class Peer:
         with self.lock:
             print(f"\nItem: {item_name} found")
             # Pause interactive loop
-            self.input_event.set()  # Signal input should stop elsewhere
+            self.input_event.clear()  # Signal input should stop elsewhere
             self.in_found = True
 
             accept_buy = input(f"Do you want to Buy {item_name}? (y/n): ").strip().lower()
@@ -247,7 +250,7 @@ class Peer:
         with self.lock:  # Lock again for thread-safe updates
             # self.update_item_reservation(item_name, accept_negotiation == "y")
             self.in_found = False
-            self.input_event.clear()
+            self.input_event.set()
 
 
     def generate_rq_number(self):
@@ -278,7 +281,7 @@ class Peer:
                 # print(f"Server response received via listen_to_server: {self.response_message}")
                 logging.info(f"Server response received via listen_to_server: {self.response_message}")
             else:
-                print("Timeout: No response from the server.")
+                print("\nTimeout: No response from the server.")
                 logging.info("Timeout: No response from the server.")
         except Exception as e:
             print(f"Error sending message: {e}")
@@ -369,9 +372,8 @@ class Peer:
         logging.info(f"Processing INFORM_Req for RQ#{rq_number}, Item: {item_name}, Price: {price}")
 
         with self.lock:  # Acquire the lock for terminal interaction
-            # Pause interactive loop
-            self.input_event.set()  # Signal input should stop elsewhere
             self.in_tcp = True
+            self.input_event.clear()  # Clear the event to pause the interactive loop
 
         # Collect buyer/seller information
         self.client.credit_card.number = input("Credit Card number: ")
@@ -385,7 +387,7 @@ class Peer:
 
         with self.lock:
             self.in_tcp = False
-            self.input_event.clear()  # Resume interactive loop
+            self.input_event.set()  # Resume interactive loop
 
     def process_shipping_info(self, conn, addr, parts):
         """Process a Shipping_Info message."""
@@ -403,12 +405,21 @@ class Peer:
         finally:
             if not conn.close:
                 conn.close()
+            # Clear the input event to resume interactive loop
+            with self.lock:
+                self.in_tcp = False
+                self.input_event.set()
 
     def process_cancel_transaction(self, conn, addr, parts):
         """Process a CANCEL message."""
+        # with self.lock:
+        #     self.input_event.clear()
         rq_number, reason = parts[1], " ".join(parts[2:])
         logging.info(f"Processing CANCEL for RQ#{rq_number}, Reason: {reason}")
         print(f"Transaction cancelled. Reason: {reason}")
+        with self.lock:
+            self.in_tcp = False
+            self.input_event.set()
 
     # def handle_tcp_transaction(self):
     #     """Handle TCP transactions initiated by the server."""
@@ -471,23 +482,25 @@ class Peer:
         try:
             printed_options = False
             while self.running:
+                self.input_event.wait()
                 with self.lock:
                     if self.in_negotiation or self.in_found or self.in_tcp or self.is_waiting:
                         # print("Waiting for server response. Please wait...")
-                        self.input_event.wait()
+
+                        printed_options = False
                         continue
 
 
-                # Print options only once until user input is processed
-                if not printed_options:
-                    print("\nOptions:")
-                    print("1. Register")
-                    print("2. Deregister")
-                    print("3. Look for item")
-                    print("4. Add Item to Inventory")
-                    print("5. Exit")
-                    print("Choose an option (1-5): ", end="", flush=True)
-                    printed_options = True  # Mark options as printed
+                    # Print options only once until user input is processed
+                    if not printed_options:
+                        print("\nOptions:")
+                        print("1. Register")
+                        print("2. Deregister")
+                        print("3. Look for item")
+                        print("4. Add Item to Inventory")
+                        print("5. Exit")
+                        print("Choose an option (1-5): ", end="", flush=True)
+                        printed_options = True  # Mark options as printed
 
                 # Non-blocking input check
                 ready, _, _ = select.select([sys.stdin], [], [], 1)  # 1-second timeout
@@ -520,9 +533,8 @@ class Peer:
                             break
                         else:
                             print("Invalid choice. Please try again.")
-
-                    # Reset the flag to print options again after input is handled
-                    printed_options = False
+                        # Reset the flag to print options again after input is handled
+                        printed_options = False
                 else:
                     # No input available; continue to check state
                     continue
