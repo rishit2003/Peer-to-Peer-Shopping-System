@@ -511,3 +511,36 @@
 2024-12-02 04:50:12,826 - INFO - Processing Shipping_Info for RQ#3555313e-05a5-485b-9483-6199193f5b16, Buyer: Peer2, Address: a2
 2024-12-02 04:50:12,826 - INFO - TCP connection with ('192.168.0.19', 56502) closed by Peer1 after processing Shipping_Info.
 2024-12-02 04:50:12,826 - INFO - Connection with ('192.168.0.19', 56502) closed.
+2024-12-02 14:46:56,189 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 14:46:56,191 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 14:47:06,540 - INFO - Sending deregistration message: DE-REGISTER c82b3d90-6b4f-416c-9d15-b8529649b6b7 Peer1
+2024-12-02 14:47:06,541 - INFO - Message sent: DE-REGISTER c82b3d90-6b4f-416c-9d15-b8529649b6b7 Peer1
+2024-12-02 14:47:06,544 - INFO - Server response received via listen_to_server: DE-REGISTERED c82b3d90-6b4f-416c-9d15-b8529649b6b7
+2024-12-02 14:47:07,556 - INFO - Sending registration message: REGISTER c82b3d90-6b4f-416c-9d15-b8529649b6b7 Peer1 172.30.50.69 6001 9001
+2024-12-02 14:47:07,557 - INFO - Message sent: REGISTER c82b3d90-6b4f-416c-9d15-b8529649b6b7 Peer1 172.30.50.69 6001 9001
+2024-12-02 14:47:07,559 - INFO - Server response received via listen_to_server: REGISTERED c82b3d90-6b4f-416c-9d15-b8529649b6b7
+2024-12-02 14:47:28,687 - INFO - Message sent: OFFER 2f24c5b0-df25-4543-9539-848b9729189a Peer1 Ipad 800.0
+2024-12-02 14:47:33,693 - INFO - Timeout: No response from the server.
+2024-12-02 14:47:33,695 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 14:47:33,695 - INFO - Sent OFFER to server: OFFER 2f24c5b0-df25-4543-9539-848b9729189a Peer1 Ipad 800.0
+2024-12-02 14:47:38,693 - INFO - NEGOTIATE received: Buyer willing to pay 700.0 for Ipad
+2024-12-02 14:47:40,587 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 14:47:40,587 - INFO - Sent response to server: ACCEPT 2f24c5b0-df25-4543-9539-848b9729189a Ipad 700.0
+2024-12-02 14:47:40,588 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 14:47:51,822 - INFO - Accepted TCP connection from ('172.30.50.69', 57314)
+2024-12-02 14:47:51,823 - INFO - Handling TCP connection from ('172.30.50.69', 57314)
+2024-12-02 14:47:51,823 - INFO - Received TCP message from ('172.30.50.69', 57314): INFORM_Req a4d51916-d585-402c-b0ac-a297dc2dc8c7 Ipad 700.0
+2024-12-02 14:47:51,823 - INFO - Processing INFORM_Req for RQ#a4d51916-d585-402c-b0ac-a297dc2dc8c7, Item: Ipad, Price: 700.0
+2024-12-02 14:48:09,071 - INFO - Sent INFORM_Res: INFORM_Res a4d51916-d585-402c-b0ac-a297dc2dc8c7 Peer1 c1 e1 a1
+2024-12-02 14:48:09,073 - INFO - Received TCP message from ('172.30.50.69', 57314): Shipping_Info a4d51916-d585-402c-b0ac-a297dc2dc8c7 Peer2 a2
+2024-12-02 14:48:09,073 - INFO - Processing Shipping_Info for RQ#a4d51916-d585-402c-b0ac-a297dc2dc8c7, Buyer: Peer2, Address: a2
+2024-12-02 14:48:09,073 - INFO - TCP connection with ('172.30.50.69', 57314) closed by Peer1 after processing Shipping_Info.
+2024-12-02 14:48:09,073 - INFO - Connection with ('172.30.50.69', 57314) closed.
+2024-12-02 16:34:02,024 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 16:34:02,026 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 16:34:04,726 - INFO - Sending deregistration message: DE-REGISTER 79262ba9-b732-497c-aa20-0a4fde8b82d0 Peer1
+2024-12-02 16:34:04,726 - INFO - Message sent: DE-REGISTER 79262ba9-b732-497c-aa20-0a4fde8b82d0 Peer1
+2024-12-02 16:34:04,736 - INFO - Server response received via listen_to_server: DE-REGISTERED 79262ba9-b732-497c-aa20-0a4fde8b82d0
+2024-12-02 16:34:06,535 - INFO - Sending registration message: REGISTER 79262ba9-b732-497c-aa20-0a4fde8b82d0 Peer1 172.30.94.92 6001 9001
+2024-12-02 16:34:06,535 - INFO - Message sent: REGISTER 79262ba9-b732-497c-aa20-0a4fde8b82d0 Peer1 172.30.94.92 6001 9001
+2024-12-02 16:34:06,537 - INFO - Server response received via listen_to_server: REGISTERED 79262ba9-b732-497c-aa20-0a4fde8b82d0

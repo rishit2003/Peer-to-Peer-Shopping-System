@@ -250,7 +250,7 @@ class Peer:
         with self.lock:  # Lock again for thread-safe updates
             # self.update_item_reservation(item_name, accept_negotiation == "y")
             self.in_found = False
-            self.input_event.set()
+            # self.input_event.set()
 
 
     def generate_rq_number(self):
@@ -502,42 +502,47 @@ class Peer:
                         print("Choose an option (1-5): ", end="", flush=True)
                         printed_options = True  # Mark options as printed
 
-                # Non-blocking input check
-                ready, _, _ = select.select([sys.stdin], [], [], 1)  # 1-second timeout
-                if ready:
-                    choice = sys.stdin.readline().strip()
-                    with self.lock:  # Ensure thread-safety while processing
-                        if self.in_negotiation or self.in_found or self.in_tcp or self.is_waiting:
-                            print("\nConsole in use. Please wait.")
-                            continue
-                        if choice in ["3", "4"]:
-                            if not self.is_registered:
-                                print("You must register with the server before performing this action.")
-                                continue
-                            itemName = input("Item_name: ")
-                            itemDescription = input("Description: ")
-                            itemPrice = float(input("Price: "))
+                try:
+                    choice = input()
+                except EOFError:
+                    break # Exit on EOF
 
-                        if choice == '1':
-                            self.register_with_server()
-                        elif choice == '2':
-                            self.deregister_with_server()
-                        elif choice == '3':
-                            self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                # # Non-blocking input check
+                # ready, _, _ = select.select([sys.stdin], [], [], 1)  # 1-second timeout
+                # if ready:
+                #     choice = sys.stdin.readline().strip()
+                with self.lock:  # Ensure thread-safety while processing
+                    if self.in_negotiation or self.in_found or self.in_tcp or self.is_waiting:
+                        print("\nConsole in use. Please wait.")
+                        continue
+                    if choice in ["3", "4"]:
+                        if not self.is_registered:
+                            print("You must register with the server before performing this action.")
                             continue
-                        elif choice == '4':
-                            self.add_item_to_inventory(itemName, itemDescription, itemPrice)
-                        elif choice == '5':
-                            print("Exiting program.")
-                            self.running = False  # Exit gracefully
-                            break
-                        else:
-                            print("Invalid choice. Please try again.")
-                        # Reset the flag to print options again after input is handled
-                        printed_options = False
-                else:
-                    # No input available; continue to check state
-                    continue
+                        itemName = input("Item_name: ")
+                        itemDescription = input("Description: ")
+                        itemPrice = float(input("Price: "))
+
+                    if choice == '1':
+                        self.register_with_server()
+                    elif choice == '2':
+                        self.deregister_with_server()
+                    elif choice == '3':
+                        self.looking_for_item_server(itemName, itemDescription, itemPrice)
+                        continue
+                    elif choice == '4':
+                        self.add_item_to_inventory(itemName, itemDescription, itemPrice)
+                    elif choice == '5':
+                        print("Exiting program.")
+                        self.running = False  # Exit gracefully
+                        break
+                    else:
+                        print("Invalid choice. Please try again.")
+                    # Reset the flag to print options again after input is handled
+                    printed_options = False
+                # else:
+                #     # No input available; continue to check state
+                #     continue
         except KeyboardInterrupt:
             print("\nInteractive loop interrupted.")
             self.running = False
@@ -559,18 +564,19 @@ class Peer:
         """Gracefully shut down the peer."""
         print("Shutting down peer...")
         self.running = False
+        self.input_event.set()
 
         try:
             self.udp_socket.close()  # Close the UDP socket
-            if hasattr(self, 'server_socket'):
-                self.server_socket.close()  # Close the TCP server socket
         except Exception as e:
             print(f"Error closing UDP socket: {e}")
 
         for thread in self.threads:
+            if thread is threading.current_thread():
+                continue # Skip joining current thread
             if thread.is_alive():
                 print(f"Waiting for thread {thread.name} to finish...")
-                thread.join(timeout=2)  # Wait for each thread to terminate
+                # thread.join(timeout=2)  # Wait for each thread to terminate
                 if thread.is_alive():
                     print(f"Thread {thread.name} did not terminate.")
         print("Peer shut down successfully.")

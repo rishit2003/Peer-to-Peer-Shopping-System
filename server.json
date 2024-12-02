@@ -1,31 +1,26 @@
 {
     "registered_peers": {
-        "Peer1": {
-            "rq_number": "e05a891c-c3f9-4ffd-9377-e5d9753cf77d",
-            "udp_socket": "6001",
-            "tcp_socket": "9001",
-            "address": [
-                "192.168.0.19",
-                6001
-            ]
-        },
         "Peer2": {
-            "rq_number": "29512621-d26d-4021-8d54-69885ef60eaf",
+            "rq_number": "2f24c5b0-df25-4543-9539-848b9729189a",
             "udp_socket": "6002",
             "tcp_socket": "9002",
             "address": [
-                "192.168.0.19",
+                "172.30.50.69",
                 6002
+            ]
+        },
+        "Peer1": {
+            "rq_number": "79262ba9-b732-497c-aa20-0a4fde8b82d0",
+            "udp_socket": "6001",
+            "tcp_socket": "9001",
+            "address": [
+                "172.30.94.92",
+                6001
             ]
         }
     },
     "active_requests": {
-        "e05a891c-c3f9-4ffd-9377-e5d9753cf77d": {
-            "name": "Peer1",
-            "operation": "REGISTER",
-            "status": "Completed"
-        },
-        "29512621-d26d-4021-8d54-69885ef60eaf": {
+        "2f24c5b0-df25-4543-9539-848b9729189a": {
             "name": "Peer2",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
@@ -37,7 +32,7 @@
                     "seller_name": "Peer1",
                     "price": 700.0,
                     "address": [
-                        "192.168.0.19",
+                        "172.30.50.69",
                         6001
                     ]
                 }
@@ -47,10 +42,15 @@
                 "seller_name": "Peer1",
                 "price": 700.0,
                 "address": [
-                    "192.168.0.19",
+                    "172.30.50.69",
                     6001
                 ]
             }
+        },
+        "79262ba9-b732-497c-aa20-0a4fde8b82d0": {
+            "name": "Peer1",
+            "operation": "REGISTER",
+            "status": "Completed"
         }
     }
 }
