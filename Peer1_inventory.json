@@ -2,6 +2,13 @@
     {
         "item_name": "Ipad",
         "item_description": "Ipad Air gen 5, 64 gb storage",
-        "price": 800.0
+        "price": 800.0,
+        "reserved": false
+    },
+    {
+        "item_name": "Clip",
+        "item_description": "Branded",
+        "price": 50.0,
+        "reserved": false
     }
 ]
