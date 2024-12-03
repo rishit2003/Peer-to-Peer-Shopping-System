@@ -170,8 +170,8 @@ class Peer:
                 # Item found, respond to the server with an OFFER message
                 price = item['price']
                 offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
-                self.send_and_wait_for_response(offer_msg, (server_ip, server_udp_port))
-                self.update_item_reservation(item_name, True)  # Mark as reserved
+                self.udp_socket.sendto(offer_msg.encode(), (server_ip, server_udp_port))
+                # self.update_item_reservation(item_name, True)  # Mark as reserved
                 logging.info(f"Sent OFFER to server: {offer_msg}")
                 return
 
@@ -228,6 +228,12 @@ class Peer:
 
     def handle_cancel(self, parts):
         self.update_item_reservation(parts[2], False)
+        print(f"Canceled item '{parts[2]}' from server.")
+        logging.info(f"Canceled item '{parts[2]}' from server.")
+        # To make sure options are printed if cancel is received
+        with self.input_lock:
+            self.in_negotiation = False
+            self.input_available_event.clear()
 
     def handle_found(self, parts, addr):
         rq_number = parts[1]
@@ -276,15 +282,19 @@ class Peer:
             logging.info(f"Message sent: {message}")
             if message.startswith("LOOKING_FOR"):
                 self.is_waiting = True  # Start waiting
-                if self.response_event.wait(90):  # Wait 90 seconds
+                if self.response_event.wait(150):  # Wait 150 seconds
+                    message = self.response_message.split()
+                    print(message[0])
                     logging.info(f"Server response received via listen_to_server: {self.response_message}")
-                    if "NOT_AVAILABLE" in self.response_message:
-                        print(f"Item not available: {self.response_message}")
-                        logging.info(f"Item not available: {self.response_message}")
+                    # if "NOT_AVAILABLE" in self.response_message:
+                    #     print(f"Item not available: {self.response_message}")
+                    #     logging.info(f"Item not available: {self.response_message}")
                 else:
                     print("Timeout LF: No response from the server.")
                     logging.info("Timeout LF: No response from the server.")
             elif self.response_event.wait(timeout):  # Wait for the response within the timeout
+                message = self.response_message.split()
+                print(message[0])
                 logging.info(f"Server response received via listen_to_server: {self.response_message}")
             else:
                 print("\nTimeout: No response from the server.")
@@ -301,9 +311,9 @@ class Peer:
         self.send_and_wait_for_response(register_msg, (server_ip, server_udp_port))
         if self.response_message and "REGISTERED" in self.response_message:
             self.is_registered = True
-            print("Successfully registered.")
-        else:
-            print("Registration failed.")
+            # print("Successfully registered.")
+        # else:
+        #     print("Registration failed.")
 
     def deregister_with_server(self):
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
@@ -311,9 +321,9 @@ class Peer:
         self.send_and_wait_for_response(deregister_msg, (server_ip, server_udp_port))
         if self.response_message and "DE-REGISTERED" in self.response_message:
             self.is_registered = False
-            print("Successfully deregistered.")
-        else:
-            print("De-registration failed.")
+            # print("Successfully deregistered.")
+        # else:
+        #     print("De-registration failed.")
 
     def looking_for_item_server(self, itemName, itemDescription, maxPrice):
         self.is_waiting = True  # Start waiting

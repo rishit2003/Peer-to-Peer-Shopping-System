@@ -78,7 +78,7 @@ class Server:
         elif msg_type == "CANCEL":
             self.handle_cancel(message_parts, addr)
         elif msg_type == "BUY":
-            self.handle_tcp(message_parts, addr) # TODO: To implement it
+            self.handle_tcp(message_parts, addr)
         else:
             logging.warning(f"Unknown message type from {addr}: {data.decode()}")
 
@@ -156,7 +156,7 @@ class Server:
 
             # Start a timeout thread to handle the case when no offers are received
             def handle_timeout():
-                time.sleep(20)  # Wait for 20 sec TODO: Should be 2 minutes but for testing keep it at this
+                time.sleep(120)  # Wait for 2 min to see if any offers are there
                 with self.peer_lock:  # Ensure thread safety
                     buyer_request = self.active_requests.get(rq_number, {})
                     if buyer_request and not buyer_request['offers']:  # No offers received
