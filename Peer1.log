@@ -8,3 +8,5 @@
 2024-12-03 15:17:42,749 - INFO - Server response received via listen_to_server: REGISTERED Peer1-2e5e9191-20ac-4a16-957b-70137c04f179-2
 2024-12-03 15:18:12,226 - INFO - Sending looking for: LOOKING_FOR Peer1-2171dc51-197e-4405-a154-3dd0e0f9bcf3-3 Peer1 Ipad New 700.0
 2024-12-03 15:18:12,228 - INFO - Message sent: LOOKING_FOR Peer1-2171dc51-197e-4405-a154-3dd0e0f9bcf3-3 Peer1 Ipad New 700.0
+2024-12-03 15:20:13,048 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-03 15:20:13,049 - INFO - Peer1 listening for TCP connections on port 9001.

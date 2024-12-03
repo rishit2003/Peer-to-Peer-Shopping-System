@@ -3,3 +3,4 @@
 2024-12-03 15:17:42,749 - INFO - Sent UDP response to ('172.31.10.102', 6001): REGISTERED Peer1-2e5e9191-20ac-4a16-957b-70137c04f179-2
 2024-12-03 15:18:12,231 - INFO - Sent UDP response to ('192.168.0.19', 6002): SEARCH Peer1-2171dc51-197e-4405-a154-3dd0e0f9bcf3-3 Ipad New
 2024-12-03 15:18:12,232 - INFO - SEARCH request from Peer1 forwarded to Peer2 for item 'Ipad'
+2024-12-03 15:19:53,565 - INFO - Server started, listening on UDP port {server_udp_port}...
