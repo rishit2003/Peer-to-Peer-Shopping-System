@@ -62,8 +62,8 @@ class Peer:
         )
         logging.info(f"Peer {self.name} initialized with UDP port {self.udp_port} and TCP port {self.tcp_port}.")
 
+    # Continuously listens for server messages on a dedicated thread.
     def listen_to_server(self):
-        """Continuously listens for server messages on a dedicated thread."""
         print(f"{self.name} is now listening for server messages...")
         while self.running:
             try:
@@ -79,8 +79,8 @@ class Peer:
                 print(f"Error while listening to server messages: {e}")
                 break
 
+    #Initialize the inventory file for the peer.
     def initialize_inventory(self):
-        """Initialize the inventory file for the peer."""
         if not os.path.exists(self.inventory_file):
             # Create an empty inventory or predefined structure
             inventory = []
@@ -96,8 +96,8 @@ class Peer:
                 json.dump(updated_inventory, file, indent=4)
             print(f"Inventory file updated: {self.inventory_file}")
 
+    # Add an item to the peer's inventory.
     def add_item_to_inventory(self, item_name, item_description, price):
-        """Add an item to the peer's inventory."""
         item = {"item_name": item_name, "item_description": item_description, "price": price, "reserved": False}
         # Load existing inventory, update, and save back
         inventory = self.load_inventory()
@@ -106,13 +106,13 @@ class Peer:
             json.dump(inventory, file, indent=4)
         print(f"Item added to inventory: {item}")
 
+    # Load the inventory from the JSON file.
     def load_inventory(self):
-        """Load the inventory from the JSON file."""
         with open(self.inventory_file, "r") as file:
             return json.load(file)
 
+    # Update the reservation status of an item in the inventory.
     def update_item_reservation(self, item_name, reserved):
-        """Update the reservation status of an item in the inventory."""
         inventory = self.load_inventory()
         updated = False
         for item in inventory:
@@ -128,8 +128,8 @@ class Peer:
         else:
             logging.warning(f"Item '{item_name}' not found in inventory.")
 
+    # Handles different types of server messages.
     def handle_server_message(self, data, addr):
-        """Handles different types of server messages."""
         try:
             message = data.decode()
             self.response_message = message  # Set the response message
@@ -157,8 +157,8 @@ class Peer:
         except Exception as e:
             print(f"Error in handle_server_message: {e}")
 
+    # Handles SEARCH message from the server.
     def handle_search(self, parts):
-        """Handles SEARCH message from the server."""
         rq_number = parts[1]
         item_name = parts[2]
         item_description = " ".join(parts[3:])
@@ -170,16 +170,16 @@ class Peer:
                 # Item found, respond to the server with an OFFER message
                 price = item['price']
                 offer_msg = f"OFFER {rq_number} {self.name} {item_name} {price}"
-                self.send_and_wait_for_response(offer_msg, (server_ip, server_udp_port))
-                self.update_item_reservation(item_name, True)  # Mark as reserved
+                self.udp_socket.sendto(offer_msg.encode(), (server_ip, server_udp_port))
+                # self.update_item_reservation(item_name, True)  # Mark as reserved
                 logging.info(f"Sent OFFER to server: {offer_msg}")
                 return
 
         # If the item is not found, no response is necessary
         logging.warning(f"Item '{item_name}' not found in inventory.")
 
+    # Handles NEGOTIATE message from the server.
     def handle_negotiate(self, parts, addr):
-        """Handles NEGOTIATE message from the server."""
         rq_number = parts[1]
         item_name = parts[2]
         max_price = float(parts[3])
@@ -228,6 +228,12 @@ class Peer:
 
     def handle_cancel(self, parts):
         self.update_item_reservation(parts[2], False)
+        print(f"Canceled item '{parts[2]}' from server.")
+        logging.info(f"Canceled item '{parts[2]}' from server.")
+        # To make sure options are printed if cancel is received
+        with self.input_lock:
+            self.in_negotiation = False
+            self.input_available_event.clear()
 
     def handle_found(self, parts, addr):
         rq_number = parts[1]
@@ -276,15 +282,19 @@ class Peer:
             logging.info(f"Message sent: {message}")
             if message.startswith("LOOKING_FOR"):
                 self.is_waiting = True  # Start waiting
-                if self.response_event.wait(90):  # Wait 90 seconds
+                if self.response_event.wait(150):  # Wait 150 seconds
+                    message = self.response_message.split()
+                    print(message[0])
                     logging.info(f"Server response received via listen_to_server: {self.response_message}")
-                    if "NOT_AVAILABLE" in self.response_message:
-                        print(f"Item not available: {self.response_message}")
-                        logging.info(f"Item not available: {self.response_message}")
+                    # if "NOT_AVAILABLE" in self.response_message:
+                    #     print(f"Item not available: {self.response_message}")
+                    #     logging.info(f"Item not available: {self.response_message}")
                 else:
                     print("Timeout LF: No response from the server.")
                     logging.info("Timeout LF: No response from the server.")
             elif self.response_event.wait(timeout):  # Wait for the response within the timeout
+                message = self.response_message.split()
+                print(message[0])
                 logging.info(f"Server response received via listen_to_server: {self.response_message}")
             else:
                 print("\nTimeout: No response from the server.")
@@ -301,9 +311,9 @@ class Peer:
         self.send_and_wait_for_response(register_msg, (server_ip, server_udp_port))
         if self.response_message and "REGISTERED" in self.response_message:
             self.is_registered = True
-            print("Successfully registered.")
-        else:
-            print("Registration failed.")
+            # print("Successfully registered.")
+        # else:
+        #     print("Registration failed.")
 
     def deregister_with_server(self):
         deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
@@ -311,9 +321,9 @@ class Peer:
         self.send_and_wait_for_response(deregister_msg, (server_ip, server_udp_port))
         if self.response_message and "DE-REGISTERED" in self.response_message:
             self.is_registered = False
-            print("Successfully deregistered.")
-        else:
-            print("De-registration failed.")
+            # print("Successfully deregistered.")
+        # else:
+        #     print("De-registration failed.")
 
     def looking_for_item_server(self, itemName, itemDescription, maxPrice):
         self.is_waiting = True  # Start waiting
@@ -322,8 +332,8 @@ class Peer:
         self.send_and_wait_for_response(looking_for_msg, (server_ip, server_udp_port))
         self.is_waiting = False  # Stop waiting after the response
 
+    # Continuously listen for incoming TCP connections.
     def tcp_listener(self):
-        """Continuously listen for incoming TCP connections."""
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((self.address, self.tcp_port))
         server_socket.listen(5)
@@ -340,8 +350,8 @@ class Peer:
                     logging.error(f"Error accepting TCP connection: {e}")
         server_socket.close()
 
+    # Continuously handle messages from a single TCP connection.
     def handle_tcp_connection(self, conn, addr):
-        """Continuously handle messages from a single TCP connection."""
         logging.info(f"Handling TCP connection from {addr}")
         try:
             while self.running:
@@ -371,8 +381,8 @@ class Peer:
             conn.close()
             logging.info(f"Connection with {addr} closed.")
 
+    # Process an INFORM_Req message.
     def process_inform_request(self, conn, addr, parts):
-        """Process an INFORM_Req message."""
         rq_number, item_name, price = parts[1], parts[2], parts[3]
         logging.info(f"Processing INFORM_Req for RQ#{rq_number}, Item: {item_name}, Price: {price}")
 
@@ -430,8 +440,8 @@ class Peer:
         with self.lock:
             self.in_negotiation = False
 
+    # Process a Shipping_Info message.
     def process_shipping_info(self, conn, addr, parts):
-        """Process a Shipping_Info message."""
         try:
             # Parse the message
             rq_number, buyer_name, buyer_address = parts[1], parts[2], parts[3]
@@ -450,8 +460,8 @@ class Peer:
                 self.in_tcp = False
                 self.input_available_event.clear()
 
+    # Process a CANCEL message.
     def process_cancel_transaction(self, conn, addr, parts):
-        """Process a CANCEL message."""
         rq_number, reason = parts[1], " ".join(parts[2:])
         logging.info(f"Processing CANCEL for RQ#{rq_number}, Reason: {reason}")
         print(f"Transaction cancelled. Reason: {reason}")
@@ -459,8 +469,8 @@ class Peer:
             self.in_tcp = False
             self.input_available_event.clear()
 
+    # Interactive loop for user actions.
     def start_interactive_loop(self):
-        """Interactive loop for user actions."""
         try:
             printed_options = False
             while self.running:
@@ -550,8 +560,8 @@ class Peer:
         finally:
             self.shutdown()
 
+    # Thread function to handle user input.
     def input_thread_function(self):
-        """Thread function to handle user input."""
         while self.running:
             try:
                 user_input = input()
@@ -575,8 +585,8 @@ class Peer:
         input_thread.start()
         interactive_thread.start()
 
+    # Gracefully shut down the peer.
     def shutdown(self):
-        """Gracefully shut down the peer."""
         print("Shutting down peer...")
         self.running = False
         self.input_available_event.set()

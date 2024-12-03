@@ -43,8 +43,8 @@ class Server:
             self.active_requests = {}
             print("No previous state found. Starting fresh.")
 
+    # Save registered peers and active requests to server.json.
     def save_server_state(self):
-        """Save registered peers and active requests to server.json."""
         with open(self.server_file, "w") as file:
             json.dump({"registered_peers": self.registered_peers, "active_requests": self.active_requests}, file, indent=4)
 
@@ -78,7 +78,7 @@ class Server:
         elif msg_type == "CANCEL":
             self.handle_cancel(message_parts, addr)
         elif msg_type == "BUY":
-            self.handle_tcp(message_parts, addr) # TODO: To implement it
+            self.handle_tcp(message_parts, addr)
         else:
             logging.warning(f"Unknown message type from {addr}: {data.decode()}")
 
@@ -156,7 +156,7 @@ class Server:
 
             # Start a timeout thread to handle the case when no offers are received
             def handle_timeout():
-                time.sleep(20)  # Wait for 20 sec TODO: Should be 2 minutes but for testing keep it at this
+                time.sleep(120)  # Wait for 2 min to see if any offers are there
                 with self.peer_lock:  # Ensure thread safety
                     buyer_request = self.active_requests.get(rq_number, {})
                     if buyer_request and not buyer_request['offers']:  # No offers received
@@ -273,8 +273,8 @@ class Server:
             buyer_request['status'] = 'Not Found'
             logging.info(f"Negotiation failed: {item_name} not sold to {buyer_name}")
 
+    # Handles a CANCEL message from the buyer and notifies the seller to cancel the reservation.
     def handle_cancel(self, message_parts, addr):
-        """Handles a CANCEL message from the buyer and notifies the seller to cancel the reservation."""
         rq_number = message_parts[1]
         item_name = message_parts[2]
         price = float(message_parts[3])
@@ -311,8 +311,8 @@ class Server:
             del buyer_request['reserved_seller']  # Remove the reserved seller entry
             self.save_server_state()
 
+    # Handles the TCP transaction between buyer and seller.
     def handle_tcp(self, message_parts, addr):
-        """Handles the TCP transaction between buyer and seller."""
         rq_number_buy_msg = message_parts[1]
         rq_number = self.generate_rq_number()
         item_name = message_parts[2]
@@ -394,8 +394,8 @@ class Server:
                 buyer_conn.close()
                 logging.info(f"TCP connection to buyer {buyer_name} closed.")
 
+    # Simulates the transaction process.
     def process_transaction(self, buyer_response, seller_response, price):
-        """Simulates the transaction process."""
         try:
             # Parse buyer and seller details from INFORM_Res
             buyer_details = buyer_response.split()
@@ -416,8 +416,8 @@ class Server:
             logging.error(f"Error in processing transaction: {e}")
             return False
 
+    # Generate a unique RQ# using UUID.
     def generate_rq_number(self):
-        """Generate a unique RQ# using UUID."""
         return str(uuid.uuid4())
 
 
@@ -429,8 +429,8 @@ class Server:
     def start(self):
         threading.Thread(target=self.udp_listener).start()
 
+# Determine the server's network IP.
 def get_server_ip():
-    """Determine the server's network IP."""
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))  # Connect to a public IP to determine local network IP
         return s.getsockname()[0]
