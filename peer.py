@@ -276,8 +276,8 @@ class Peer:
             rq_number = f"{self.name}-{str(uuid.uuid4())}-{self.rq_counter}"
         return rq_number
 
+    # Send a message to the server and wait for a response via listen_to_server.
     def send_and_wait_for_response(self, message, server_address, timeout=5):
-        """Send a message to the server and wait for a response via listen_to_server."""
         self.response_event.clear()  # Reset the event before sending a message
         self.response_message = None  # Clear any previous response
         try:
