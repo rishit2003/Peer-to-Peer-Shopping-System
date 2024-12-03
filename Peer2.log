@@ -638,3 +638,47 @@
 2024-12-03 03:56:09,245 - INFO - Message sent: LOOKING_FOR 1fe564db-a679-487d-93c3-d84fd622822b Peer2 Ipad New 600.0
 2024-12-03 03:56:21,625 - INFO - Server response received via listen_to_server: FOUND 1fe564db-a679-487d-93c3-d84fd622822b Ipad 600.0 from Peer1
 2024-12-03 03:56:25,084 - INFO - Sent response to server: CANCEL 1fe564db-a679-487d-93c3-d84fd622822b Ipad 600.0
+2024-12-03 04:21:09,201 - INFO - Peer Peer2 initialized with UDP port 6002 and TCP port 9002.
+2024-12-03 04:21:09,203 - INFO - Peer2 listening for TCP connections on port 9002.
+2024-12-03 04:21:11,780 - INFO - Sending registration message: REGISTER Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2 192.168.0.19 6002 9002
+2024-12-03 04:21:11,781 - INFO - Message sent: REGISTER Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2 192.168.0.19 6002 9002
+2024-12-03 04:21:11,785 - INFO - Server response received via listen_to_server: REGISTERED Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1
+2024-12-03 04:21:53,176 - INFO - Sending looking for: LOOKING_FOR Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2 Ipad New 700.0
+2024-12-03 04:21:53,177 - INFO - Message sent: LOOKING_FOR Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2 Ipad New 700.0
+2024-12-03 04:22:06,122 - INFO - Server response received via listen_to_server: FOUND Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Ipad 700.0 from Peer1
+2024-12-03 04:22:18,210 - INFO - Sent response to server: BUY Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Ipad 700.0
+2024-12-03 04:22:18,231 - INFO - Accepted TCP connection from ('192.168.0.19', 54703)
+2024-12-03 04:22:18,232 - INFO - Handling TCP connection from ('192.168.0.19', 54703)
+2024-12-03 04:22:18,232 - INFO - Received TCP message from ('192.168.0.19', 54703): INFORM_Req 3dfa4a93-3c39-4013-8028-8358b2bb19fc Ipad 700.0
+2024-12-03 04:22:18,232 - INFO - Processing INFORM_Req for RQ#3dfa4a93-3c39-4013-8028-8358b2bb19fc, Item: Ipad, Price: 700.0
+2024-12-03 04:22:23,562 - INFO - Sent INFORM_Res: INFORM_Res 3dfa4a93-3c39-4013-8028-8358b2bb19fc Peer2 c2 e2 a2
+2024-12-03 04:22:30,920 - INFO - Connection closed by ('192.168.0.19', 54703)
+2024-12-03 04:22:30,920 - INFO - Connection with ('192.168.0.19', 54703) closed.
+2024-12-03 04:26:12,220 - INFO - Sending looking for: LOOKING_FOR Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2 Ipad New 600.0
+2024-12-03 04:26:12,222 - INFO - Message sent: LOOKING_FOR Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2 Ipad New 600.0
+2024-12-03 04:28:42,218 - INFO - Timeout LF: No response from the server.
+2024-12-03 04:28:57,776 - INFO - Sending deregistration message: DE-REGISTER Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2
+2024-12-03 04:28:57,777 - INFO - Message sent: DE-REGISTER Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2
+2024-12-03 04:29:02,781 - INFO - Timeout: No response from the server.
+2024-12-03 04:29:05,920 - INFO - Sending deregistration message: DE-REGISTER Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2
+2024-12-03 04:29:05,921 - INFO - Message sent: DE-REGISTER Peer2-1cc2fdf6-43d5-4201-868b-3ec9002b7523-1 Peer2
+2024-12-03 04:29:10,921 - INFO - Timeout: No response from the server.
+2024-12-03 04:30:03,514 - INFO - Peer Peer2 initialized with UDP port 6002 and TCP port 9002.
+2024-12-03 04:30:03,515 - INFO - Peer2 listening for TCP connections on port 9002.
+2024-12-03 04:30:05,380 - INFO - Sending deregistration message: DE-REGISTER Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Peer2
+2024-12-03 04:30:05,381 - INFO - Message sent: DE-REGISTER Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Peer2
+2024-12-03 04:30:05,384 - INFO - Server response received via listen_to_server: DE-REGISTERED Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1
+2024-12-03 04:30:06,008 - INFO - Sending registration message: REGISTER Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Peer2 192.168.0.19 6002 9002
+2024-12-03 04:30:06,008 - INFO - Message sent: REGISTER Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Peer2 192.168.0.19 6002 9002
+2024-12-03 04:30:06,011 - INFO - Server response received via listen_to_server: REGISTERED Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1
+2024-12-03 04:30:10,026 - INFO - Sending looking for: LOOKING_FOR Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Peer2 Ipad New 600.0
+2024-12-03 04:30:10,027 - INFO - Message sent: LOOKING_FOR Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Peer2 Ipad New 600.0
+2024-12-03 04:30:22,368 - INFO - Server response received via listen_to_server: FOUND Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Ipad 600.0 from Peer1
+2024-12-03 04:30:27,595 - INFO - Sent response to server: BUY Peer2-fa9b13cd-8839-4dbe-a4b9-e097c9ad71ff-1 Ipad 600.0
+2024-12-03 04:30:27,620 - INFO - Accepted TCP connection from ('192.168.0.19', 54828)
+2024-12-03 04:30:27,620 - INFO - Handling TCP connection from ('192.168.0.19', 54828)
+2024-12-03 04:30:27,620 - INFO - Received TCP message from ('192.168.0.19', 54828): INFORM_Req Server-96a41938-331a-44e1-9189-c50b9bb1a657-1 Ipad 600.0
+2024-12-03 04:30:27,620 - INFO - Processing INFORM_Req for RQ#Server-96a41938-331a-44e1-9189-c50b9bb1a657-1, Item: Ipad, Price: 600.0
+2024-12-03 04:30:33,863 - INFO - Sent INFORM_Res: INFORM_Res Server-96a41938-331a-44e1-9189-c50b9bb1a657-1 Peer2 c2 e2 a2
+2024-12-03 04:30:42,237 - INFO - Connection closed by ('192.168.0.19', 54828)
+2024-12-03 04:30:42,237 - INFO - Connection with ('192.168.0.19', 54828) closed.

@@ -26,6 +26,7 @@ class Peer:
         self.udp_port = udp_port
         self.tcp_port = tcp_port
         self.address = get_local_ip()
+        self.rq_counter = 0  # Initialize the counter
         self.client = self.Client(self.generate_rq_number(), name, "Address")
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind((self.address, self.udp_port))  # Bind to listen for messages
@@ -227,9 +228,9 @@ class Peer:
         self.update_item_reservation(parts[2], True)
 
     def handle_cancel(self, parts):
+        logging.info(f"Canceled item '{parts[2]}' from server.")
         self.update_item_reservation(parts[2], False)
         print(f"Canceled item '{parts[2]}' from server.")
-        logging.info(f"Canceled item '{parts[2]}' from server.")
         # To make sure options are printed if cancel is received
         with self.input_lock:
             self.in_negotiation = False
@@ -270,8 +271,10 @@ class Peer:
             self.input_available_event.clear()
 
     def generate_rq_number(self):
-        """Generate a unique RQ# using UUID."""
-        return str(uuid.uuid4())
+        with threading.Lock():
+            self.rq_counter += 1
+            rq_number = f"{self.name}-{str(uuid.uuid4())}-{self.rq_counter}"
+        return rq_number
 
     def send_and_wait_for_response(self, message, server_address, timeout=5):
         """Send a message to the server and wait for a response via listen_to_server."""
