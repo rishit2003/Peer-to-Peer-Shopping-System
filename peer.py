@@ -15,8 +15,7 @@ class Peer:
                 self.number = number
                 self.expiry_date = expiry_date
 
-        def __init__(self, rq_number, name, address):
-            self.rq_number = rq_number
+        def __init__(self, name, address):
             self.name = name
             self.address = address
             self.credit_card = self.CreditCard()
@@ -27,7 +26,7 @@ class Peer:
         self.tcp_port = tcp_port
         self.address = get_local_ip()
         self.rq_counter = 0  # Initialize the counter
-        self.client = self.Client(self.generate_rq_number(), name, "Address")
+        self.client = self.Client(name, "Address")
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind((self.address, self.udp_port))  # Bind to listen for messages
         self.response_event = threading.Event()  # Event to signal when a response is received
@@ -309,7 +308,8 @@ class Peer:
             self.is_waiting = False  # End waiting
 
     def register_with_server(self):
-        register_msg = f"REGISTER {self.client.rq_number} {self.client.name} {self.address} {self.udp_port} {self.tcp_port}"
+        rq_number = self.generate_rq_number()
+        register_msg = f"REGISTER {rq_number} {self.client.name} {self.address} {self.udp_port} {self.tcp_port}"
         logging.info(f"Sending registration message: {register_msg}")
         self.send_and_wait_for_response(register_msg, (server_ip, server_udp_port))
         if self.response_message and "REGISTERED" in self.response_message:
@@ -319,7 +319,8 @@ class Peer:
         #     print("Registration failed.")
 
     def deregister_with_server(self):
-        deregister_msg = f"DE-REGISTER {self.client.rq_number} {self.client.name}"
+        rq_number = self.generate_rq_number()
+        deregister_msg = f"DE-REGISTER {rq_number} {self.client.name}"
         logging.info(f"Sending deregistration message: {deregister_msg}")
         self.send_and_wait_for_response(deregister_msg, (server_ip, server_udp_port))
         if self.response_message and "DE-REGISTERED" in self.response_message:
@@ -329,8 +330,9 @@ class Peer:
         #     print("De-registration failed.")
 
     def looking_for_item_server(self, itemName, itemDescription, maxPrice):
+        rq_number = self.generate_rq_number()
         self.is_waiting = True  # Start waiting
-        looking_for_msg = f"LOOKING_FOR {self.client.rq_number} {self.name} {itemName} {itemDescription} {maxPrice}"
+        looking_for_msg = f"LOOKING_FOR {rq_number} {self.name} {itemName} {itemDescription} {maxPrice}"
         logging.info(f"Sending looking for: {looking_for_msg}")
         self.send_and_wait_for_response(looking_for_msg, (server_ip, server_udp_port))
         self.is_waiting = False  # Stop waiting after the response
