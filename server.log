@@ -21,3 +21,78 @@
 2024-12-02 17:50:36,028 - INFO - Sent UDP response to ('172.30.94.92', 6001): REGISTERED b59776de-1f67-4368-8e6e-bddfecaefdf0
 2024-12-02 17:51:51,843 - INFO - Sent UDP response to ('172.30.94.92', 6001): DE-REGISTERED 288a2609-1019-4bf8-806b-dc43653435c4
 2024-12-02 17:51:52,374 - INFO - Sent UDP response to ('172.30.94.92', 6001): REGISTERED 288a2609-1019-4bf8-806b-dc43653435c4
+2024-12-02 18:57:04,204 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-12-02 18:57:18,542 - INFO - Sent UDP response to ('172.30.94.92', 6001): DE-REGISTERED 355e6d3b-a460-41b1-8e42-5dfa1fb3bb6f
+2024-12-02 18:57:26,798 - INFO - Sent UDP response to ('172.30.94.92', 6001): DE-REGISTER-DENIED 355e6d3b-a460-41b1-8e42-5dfa1fb3bb6f Name not found
+2024-12-02 18:57:28,049 - INFO - Sent UDP response to ('172.30.94.92', 6001): REGISTERED 355e6d3b-a460-41b1-8e42-5dfa1fb3bb6f
+2024-12-02 18:57:44,542 - INFO - Sent UDP response to ('172.30.94.92', 6002): DE-REGISTERED d6424d96-646f-4e44-b075-0e64d763112f
+2024-12-02 18:57:45,171 - INFO - Sent UDP response to ('172.30.94.92', 6002): REGISTERED d6424d96-646f-4e44-b075-0e64d763112f
+2024-12-02 18:57:49,748 - INFO - Sent UDP response to ('172.30.94.92', 6001): SEARCH d6424d96-646f-4e44-b075-0e64d763112f Ipad New
+2024-12-02 18:57:49,748 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-12-02 18:57:49,749 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-12-02 18:57:59,753 - INFO - Processing offers for request d6424d96-646f-4e44-b075-0e64d763112f after timeout.
+2024-12-02 18:57:59,755 - INFO - Sent UDP response to ('172.30.94.92', 6001): NEGOTIATE d6424d96-646f-4e44-b075-0e64d763112f Ipad 700.0
+2024-12-02 18:57:59,755 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-12-02 19:02:53,624 - INFO - Sent UDP response to ('172.30.94.92', 6001): DE-REGISTERED ad311269-e15f-4c3c-ab29-62638702cd71
+2024-12-02 19:02:54,460 - INFO - Sent UDP response to ('172.30.94.92', 6001): REGISTERED ad311269-e15f-4c3c-ab29-62638702cd71
+2024-12-02 19:03:06,694 - INFO - Sent UDP response to ('172.30.94.92', 6002): DE-REGISTERED 618ae893-33c5-490f-b3aa-eff44f290b22
+2024-12-02 19:03:07,118 - INFO - Sent UDP response to ('172.30.94.92', 6002): REGISTERED 618ae893-33c5-490f-b3aa-eff44f290b22
+2024-12-02 19:03:12,644 - INFO - Sent UDP response to ('172.30.94.92', 6001): SEARCH 618ae893-33c5-490f-b3aa-eff44f290b22 Ipad New
+2024-12-02 19:03:12,644 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-12-02 19:03:12,647 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-12-02 19:03:22,655 - INFO - Processing offers for request 618ae893-33c5-490f-b3aa-eff44f290b22 after timeout.
+2024-12-02 19:03:22,658 - INFO - Sent UDP response to ('172.30.94.92', 6001): NEGOTIATE 618ae893-33c5-490f-b3aa-eff44f290b22 Ipad 700.0
+2024-12-02 19:03:22,658 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-12-02 19:03:44,716 - INFO - Sent UDP response to ('172.30.94.92', 6002): FOUND 618ae893-33c5-490f-b3aa-eff44f290b22 Ipad 700.0 from Peer1
+2024-12-02 19:03:44,716 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 700.0
+2024-12-02 19:03:54,818 - INFO - Initiating TCP transaction for RQ# 618ae893-33c5-490f-b3aa-eff44f290b22, item 'Ipad', price 700.0
+2024-12-02 19:03:54,831 - INFO - TCP connections established with buyer Peer2 and seller Peer1
+2024-12-02 19:04:15,470 - INFO - Buyer response: INFORM_Res b21ee494-9bbe-4d17-b403-5dd3a04784be Peer2 c2 e2 a2
+2024-12-02 19:04:15,471 - INFO - Seller response: INFORM_Res b21ee494-9bbe-4d17-b403-5dd3a04784be Peer1 c1 e1 a1
+2024-12-02 19:04:15,471 - INFO - Processing payment: Charging c2 and crediting c1 with 630.0
+2024-12-02 19:04:15,471 - INFO - Server keeps 10% as transaction fee.
+2024-12-02 19:04:15,471 - INFO - Transaction successful. Shipping_Info sent to seller Peer1 at address a2
+2024-12-02 19:04:15,471 - INFO - Closing TCP connection to buyer Peer2
+2024-12-02 19:04:15,471 - INFO - TCP connection to seller Peer1 closed.
+2024-12-02 19:15:03,274 - INFO - Sent UDP response to ('172.30.94.92', 6001): DE-REGISTERED 98b0e8b6-02d4-4f45-bedc-232fe76bcd04
+2024-12-02 19:15:04,164 - INFO - Sent UDP response to ('172.30.94.92', 6001): REGISTERED 98b0e8b6-02d4-4f45-bedc-232fe76bcd04
+2024-12-02 19:15:18,763 - INFO - Sent UDP response to ('172.30.94.92', 6002): DE-REGISTERED d651e5b3-2804-4871-a713-20651aadd63d
+2024-12-02 19:15:19,384 - INFO - Sent UDP response to ('172.30.94.92', 6002): REGISTERED d651e5b3-2804-4871-a713-20651aadd63d
+2024-12-02 19:15:24,667 - INFO - Sent UDP response to ('172.30.94.92', 6001): SEARCH d651e5b3-2804-4871-a713-20651aadd63d Ipad New
+2024-12-02 19:15:24,670 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-12-02 19:15:24,674 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-12-02 19:15:34,681 - INFO - Processing offers for request d651e5b3-2804-4871-a713-20651aadd63d after timeout.
+2024-12-02 19:15:34,683 - INFO - Sent UDP response to ('172.30.94.92', 6001): NEGOTIATE d651e5b3-2804-4871-a713-20651aadd63d Ipad 700.0
+2024-12-02 19:15:34,683 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-12-02 19:15:39,141 - INFO - Sent UDP response to ('172.30.94.92', 6002): FOUND d651e5b3-2804-4871-a713-20651aadd63d Ipad 700.0 from Peer1
+2024-12-02 19:15:39,142 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 700.0
+2024-12-02 19:15:43,490 - INFO - Initiating TCP transaction for RQ# d651e5b3-2804-4871-a713-20651aadd63d, item 'Ipad', price 700.0
+2024-12-02 19:15:43,493 - INFO - TCP connections established with buyer Peer2 and seller Peer1
+2024-12-02 19:15:56,322 - INFO - Buyer response: INFORM_Res 1218f530-5e53-4307-bc70-28c6e2ce039a Peer2 c2 e2 a2
+2024-12-02 19:15:56,323 - INFO - Seller response: INFORM_Res 1218f530-5e53-4307-bc70-28c6e2ce039a Peer1 c1 e1 a1
+2024-12-02 19:15:56,323 - INFO - Processing payment: Charging c2 and crediting c1 with 630.0
+2024-12-02 19:15:56,323 - INFO - Server keeps 10% as transaction fee.
+2024-12-02 19:15:56,323 - INFO - Transaction successful. Shipping_Info sent to seller Peer1 at address a2
+2024-12-02 19:15:56,323 - INFO - Closing TCP connection to buyer Peer2
+2024-12-02 19:15:56,324 - INFO - TCP connection to seller Peer1 closed.
+2024-12-02 20:05:28,557 - INFO - Sent UDP response to ('172.30.94.92', 6001): DE-REGISTERED 5bff1315-7ddf-43d9-bc0e-5a51bed479fd
+2024-12-02 20:05:29,201 - INFO - Sent UDP response to ('172.30.94.92', 6001): REGISTERED 5bff1315-7ddf-43d9-bc0e-5a51bed479fd
+2024-12-02 20:05:39,967 - INFO - Sent UDP response to ('172.30.94.92', 6002): DE-REGISTERED f5ba8267-a1b7-469c-9e96-fe6dc4310313
+2024-12-02 20:05:40,434 - INFO - Sent UDP response to ('172.30.94.92', 6002): REGISTERED f5ba8267-a1b7-469c-9e96-fe6dc4310313
+2024-12-02 20:05:45,485 - INFO - Sent UDP response to ('172.30.94.92', 6001): SEARCH f5ba8267-a1b7-469c-9e96-fe6dc4310313 Ipad New
+2024-12-02 20:05:45,485 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-12-02 20:05:45,489 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-12-02 20:05:55,494 - INFO - Processing offers for request f5ba8267-a1b7-469c-9e96-fe6dc4310313 after timeout.
+2024-12-02 20:05:55,495 - INFO - Sent UDP response to ('172.30.94.92', 6001): NEGOTIATE f5ba8267-a1b7-469c-9e96-fe6dc4310313 Ipad 700.0
+2024-12-02 20:05:55,495 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-12-02 20:05:57,882 - INFO - Sent UDP response to ('172.30.94.92', 6002): FOUND f5ba8267-a1b7-469c-9e96-fe6dc4310313 Ipad 700.0 from Peer1
+2024-12-02 20:05:57,884 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 700.0
+2024-12-02 20:06:06,784 - INFO - Initiating TCP transaction for RQ# f5ba8267-a1b7-469c-9e96-fe6dc4310313, item 'Ipad', price 700.0
+2024-12-02 20:06:06,786 - INFO - TCP connections established with buyer Peer2 and seller Peer1
+2024-12-02 20:06:22,356 - INFO - Buyer response: INFORM_Res f91a80d4-0f9c-4bfc-b9fe-a3410ddc89d6 Peer2 c2 e2 a2
+2024-12-02 20:06:22,357 - INFO - Seller response: INFORM_Res f91a80d4-0f9c-4bfc-b9fe-a3410ddc89d6 Peer1 c1 e1 a1
+2024-12-02 20:06:22,357 - INFO - Processing payment: Charging c2 and crediting c1 with 630.0
+2024-12-02 20:06:22,357 - INFO - Server keeps 10% as transaction fee.
+2024-12-02 20:06:22,357 - INFO - Transaction successful. Shipping_Info sent to seller Peer1 at address a2
+2024-12-02 20:06:22,357 - INFO - Closing TCP connection to buyer Peer2
+2024-12-02 20:06:22,357 - INFO - TCP connection to seller Peer1 closed.

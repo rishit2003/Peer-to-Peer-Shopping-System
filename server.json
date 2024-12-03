@@ -1,26 +1,31 @@
 {
     "registered_peers": {
-        "Peer2": {
-            "rq_number": "b717a99f-50c2-4e35-9809-a559e8f93a6e",
-            "udp_socket": "6001",
-            "tcp_socket": "9001",
-            "address": [
-                "132.205.94.92",
-                6001
-            ]
-        },
         "Peer1": {
-            "rq_number": "288a2609-1019-4bf8-806b-dc43653435c4",
+            "rq_number": "5bff1315-7ddf-43d9-bc0e-5a51bed479fd",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
                 "172.30.94.92",
                 6001
             ]
+        },
+        "Peer2": {
+            "rq_number": "f5ba8267-a1b7-469c-9e96-fe6dc4310313",
+            "udp_socket": "6002",
+            "tcp_socket": "9002",
+            "address": [
+                "172.30.94.92",
+                6002
+            ]
         }
     },
     "active_requests": {
-        "b717a99f-50c2-4e35-9809-a559e8f93a6e": {
+        "5bff1315-7ddf-43d9-bc0e-5a51bed479fd": {
+            "name": "Peer1",
+            "operation": "REGISTER",
+            "status": "Completed"
+        },
+        "f5ba8267-a1b7-469c-9e96-fe6dc4310313": {
             "name": "Peer2",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
@@ -32,8 +37,8 @@
                     "seller_name": "Peer1",
                     "price": 700.0,
                     "address": [
-                        "132.205.94.91",
-                        6000
+                        "172.30.94.92",
+                        6001
                     ]
                 }
             ],
@@ -42,15 +47,10 @@
                 "seller_name": "Peer1",
                 "price": 700.0,
                 "address": [
-                    "132.205.94.91",
-                    6000
+                    "172.30.94.92",
+                    6001
                 ]
             }
-        },
-        "288a2609-1019-4bf8-806b-dc43653435c4": {
-            "name": "Peer1",
-            "operation": "REGISTER",
-            "status": "Completed"
         }
     }
 }
