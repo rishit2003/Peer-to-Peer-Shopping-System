@@ -18,6 +18,7 @@ logging.basicConfig(
 class Server:
     def __init__(self):
         self.registered_peers = {}
+        self.rq_counter = 0
         self.peer_lock = threading.RLock() # Use a reentrant lock
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Single socket for both send and receive
         self.server_file = "server.json"
@@ -418,7 +419,10 @@ class Server:
 
     # Generate a unique RQ# using UUID.
     def generate_rq_number(self):
-        return str(uuid.uuid4())
+        with threading.Lock():
+            self.rq_counter += 1
+            rq_number = f"Server-{str(uuid.uuid4())}-{self.rq_counter}"
+        return rq_number
 
 
     def send_udp_response(self, message, addr):
