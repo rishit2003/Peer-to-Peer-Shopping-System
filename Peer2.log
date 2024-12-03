@@ -484,3 +484,27 @@
 2024-12-02 20:06:15,393 - INFO - Sent INFORM_Res: INFORM_Res f91a80d4-0f9c-4bfc-b9fe-a3410ddc89d6 Peer2 c2 e2 a2
 2024-12-02 20:06:22,358 - INFO - Connection closed by ('172.30.94.92', 61421)
 2024-12-02 20:06:22,358 - INFO - Connection with ('172.30.94.92', 61421) closed.
+2024-12-02 20:44:30,045 - INFO - Peer Peer2 initialized with UDP port 6002 and TCP port 9002.
+2024-12-02 20:44:30,046 - INFO - Peer2 listening for TCP connections on port 9002.
+2024-12-02 20:44:31,127 - INFO - Sending deregistration message: DE-REGISTER 72787351-6a8a-4352-af8f-a8e26e38d831 Peer2
+2024-12-02 20:44:31,127 - INFO - Message sent: DE-REGISTER 72787351-6a8a-4352-af8f-a8e26e38d831 Peer2
+2024-12-02 20:44:31,131 - INFO - Server response received via listen_to_server: DE-REGISTERED 72787351-6a8a-4352-af8f-a8e26e38d831
+2024-12-02 20:44:31,757 - INFO - Sending registration message: REGISTER 72787351-6a8a-4352-af8f-a8e26e38d831 Peer2 172.31.5.61 6002 9002
+2024-12-02 20:44:31,757 - INFO - Message sent: REGISTER 72787351-6a8a-4352-af8f-a8e26e38d831 Peer2 172.31.5.61 6002 9002
+2024-12-02 20:44:31,760 - INFO - Server response received via listen_to_server: REGISTERED 72787351-6a8a-4352-af8f-a8e26e38d831
+2024-12-02 20:45:11,102 - INFO - Sending looking for: LOOKING_FOR 72787351-6a8a-4352-af8f-a8e26e38d831 Peer2 apple new 400.0
+2024-12-02 20:45:11,103 - INFO - Message sent: LOOKING_FOR 72787351-6a8a-4352-af8f-a8e26e38d831 Peer2 apple new 400.0
+2024-12-02 20:45:31,116 - INFO - Server response received via listen_to_server: NOT_AVAILABLE 72787351-6a8a-4352-af8f-a8e26e38d831 apple 400.0
+2024-12-02 20:45:31,116 - INFO - Item not available: NOT_AVAILABLE 72787351-6a8a-4352-af8f-a8e26e38d831 apple 400.0
+2024-12-02 21:12:22,512 - INFO - Peer Peer2 initialized with UDP port 6002 and TCP port 9002.
+2024-12-02 21:12:22,513 - INFO - Peer2 listening for TCP connections on port 9002.
+2024-12-02 21:12:23,965 - INFO - Sending deregistration message: DE-REGISTER f1c42e2e-376b-477a-a621-ef42f5f736ae Peer2
+2024-12-02 21:12:23,966 - INFO - Message sent: DE-REGISTER f1c42e2e-376b-477a-a621-ef42f5f736ae Peer2
+2024-12-02 21:12:23,969 - INFO - Server response received via listen_to_server: DE-REGISTERED f1c42e2e-376b-477a-a621-ef42f5f736ae
+2024-12-02 21:12:24,443 - INFO - Sending registration message: REGISTER f1c42e2e-376b-477a-a621-ef42f5f736ae Peer2 172.31.5.61 6002 9002
+2024-12-02 21:12:24,443 - INFO - Message sent: REGISTER f1c42e2e-376b-477a-a621-ef42f5f736ae Peer2 172.31.5.61 6002 9002
+2024-12-02 21:12:24,445 - INFO - Server response received via listen_to_server: REGISTERED f1c42e2e-376b-477a-a621-ef42f5f736ae
+2024-12-02 21:12:36,255 - INFO - Sending looking for: LOOKING_FOR f1c42e2e-376b-477a-a621-ef42f5f736ae Peer2 Ipad New 700.0
+2024-12-02 21:12:36,256 - INFO - Message sent: LOOKING_FOR f1c42e2e-376b-477a-a621-ef42f5f736ae Peer2 Ipad New 700.0
+2024-12-02 21:13:09,537 - INFO - Server response received via listen_to_server: FOUND f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad 700.0 from Peer1
+2024-12-02 21:27:39,293 - INFO - Sent response to server: CANCEL f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad 700.0

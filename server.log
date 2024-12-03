@@ -96,3 +96,29 @@
 2024-12-02 20:06:22,357 - INFO - Transaction successful. Shipping_Info sent to seller Peer1 at address a2
 2024-12-02 20:06:22,357 - INFO - Closing TCP connection to buyer Peer2
 2024-12-02 20:06:22,357 - INFO - TCP connection to seller Peer1 closed.
+2024-12-02 20:42:50,517 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-12-02 20:43:52,790 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-12-02 20:44:13,256 - INFO - Sent UDP response to ('172.31.5.61', 6001): DE-REGISTERED bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16
+2024-12-02 20:44:14,304 - INFO - Sent UDP response to ('172.31.5.61', 6001): REGISTERED bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16
+2024-12-02 20:44:31,131 - INFO - Sent UDP response to ('172.31.5.61', 6002): DE-REGISTERED 72787351-6a8a-4352-af8f-a8e26e38d831
+2024-12-02 20:44:31,760 - INFO - Sent UDP response to ('172.31.5.61', 6002): REGISTERED 72787351-6a8a-4352-af8f-a8e26e38d831
+2024-12-02 20:45:11,107 - INFO - Sent UDP response to ('172.31.5.61', 6001): SEARCH 72787351-6a8a-4352-af8f-a8e26e38d831 apple new
+2024-12-02 20:45:11,107 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'apple'
+2024-12-02 20:45:31,114 - INFO - Sent UDP response to ('172.31.5.61', 6002): NOT_AVAILABLE 72787351-6a8a-4352-af8f-a8e26e38d831 apple 400.0
+2024-12-02 20:45:31,116 - INFO - NOT_AVAILABLE sent to Peer2 for item 'apple' with RQ# 72787351-6a8a-4352-af8f-a8e26e38d831
+2024-12-02 21:11:45,348 - INFO - Server started, listening on UDP port {server_udp_port}...
+2024-12-02 21:12:10,886 - INFO - Sent UDP response to ('172.31.5.61', 6001): DE-REGISTERED 37e3ae7e-88f7-464c-8914-be67838290a1
+2024-12-02 21:12:11,724 - INFO - Sent UDP response to ('172.31.5.61', 6001): REGISTERED 37e3ae7e-88f7-464c-8914-be67838290a1
+2024-12-02 21:12:23,969 - INFO - Sent UDP response to ('172.31.5.61', 6002): DE-REGISTERED f1c42e2e-376b-477a-a621-ef42f5f736ae
+2024-12-02 21:12:24,445 - INFO - Sent UDP response to ('172.31.5.61', 6002): REGISTERED f1c42e2e-376b-477a-a621-ef42f5f736ae
+2024-12-02 21:12:36,258 - INFO - Sent UDP response to ('172.31.5.61', 6001): SEARCH f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad New
+2024-12-02 21:12:36,258 - INFO - SEARCH request from Peer2 forwarded to Peer1 for item 'Ipad'
+2024-12-02 21:12:36,260 - INFO - Offer received from Peer1 for item 'Ipad' at price 800.0
+2024-12-02 21:12:46,265 - INFO - Processing offers for request f1c42e2e-376b-477a-a621-ef42f5f736ae after timeout.
+2024-12-02 21:12:46,266 - INFO - Sent UDP response to ('172.31.5.61', 6001): NEGOTIATE f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad 700.0
+2024-12-02 21:12:46,266 - INFO - Negotiation initiated with Peer1 for item 'Ipad' at max price 700.0
+2024-12-02 21:13:09,535 - INFO - Sent UDP response to ('172.31.5.61', 6002): FOUND f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad 700.0 from Peer1
+2024-12-02 21:13:09,536 - INFO - Negotiation successful: Ipad sold to Peer2 by Peer1 at price 700.0
+2024-12-02 21:27:39,315 - INFO - CANCEL received from buyer for RQ# f1c42e2e-376b-477a-a621-ef42f5f736ae, item 'Ipad', price 700.0
+2024-12-02 21:27:39,317 - INFO - Sent UDP response to ('172.31.5.61', 6001): CANCEL f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad 700.0
+2024-12-02 21:27:39,318 - INFO - CANCEL message sent to seller Peer1 for item 'Ipad' at 700.0

@@ -1,56 +1,48 @@
 {
     "registered_peers": {
         "Peer1": {
-            "rq_number": "5bff1315-7ddf-43d9-bc0e-5a51bed479fd",
+            "rq_number": "37e3ae7e-88f7-464c-8914-be67838290a1",
             "udp_socket": "6001",
             "tcp_socket": "9001",
             "address": [
-                "172.30.94.92",
+                "172.31.5.61",
                 6001
             ]
         },
         "Peer2": {
-            "rq_number": "f5ba8267-a1b7-469c-9e96-fe6dc4310313",
+            "rq_number": "f1c42e2e-376b-477a-a621-ef42f5f736ae",
             "udp_socket": "6002",
             "tcp_socket": "9002",
             "address": [
-                "172.30.94.92",
+                "172.31.5.61",
                 6002
             ]
         }
     },
     "active_requests": {
-        "5bff1315-7ddf-43d9-bc0e-5a51bed479fd": {
+        "37e3ae7e-88f7-464c-8914-be67838290a1": {
             "name": "Peer1",
             "operation": "REGISTER",
             "status": "Completed"
         },
-        "f5ba8267-a1b7-469c-9e96-fe6dc4310313": {
+        "f1c42e2e-376b-477a-a621-ef42f5f736ae": {
             "name": "Peer2",
             "operation": "LOOKING_FOR",
             "item_name": "Ipad",
             "item_description": "New",
             "max_price": "700.0",
-            "status": "Completed",
+            "status": "Cancelled",
             "offers": [
                 {
                     "seller_name": "Peer1",
                     "price": 700.0,
                     "address": [
-                        "172.30.94.92",
+                        "172.31.5.61",
                         6001
                     ]
                 }
             ],
-            "timeout_thread_started": true,
-            "reserved_seller": {
-                "seller_name": "Peer1",
-                "price": 700.0,
-                "address": [
-                    "172.30.94.92",
-                    6001
-                ]
-            }
+            "timeout_thread_started": true
         }
     }
 }

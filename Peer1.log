@@ -644,3 +644,46 @@
 2024-12-02 20:06:22,357 - INFO - Processing Shipping_Info for RQ#f91a80d4-0f9c-4bfc-b9fe-a3410ddc89d6, Buyer: Peer2, Address: a2
 2024-12-02 20:06:22,358 - INFO - TCP connection with ('172.30.94.92', 61422) closed by Peer1 after processing Shipping_Info.
 2024-12-02 20:06:22,358 - INFO - Connection with ('172.30.94.92', 61422) closed.
+2024-12-02 20:43:02,298 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 20:43:02,299 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 20:43:03,580 - INFO - Sending deregistration message: DE-REGISTER e95e7b22-7c39-4734-8332-aa90f692b6d5 Peer1
+2024-12-02 20:43:03,580 - INFO - Message sent: DE-REGISTER e95e7b22-7c39-4734-8332-aa90f692b6d5 Peer1
+2024-12-02 20:43:08,584 - INFO - Timeout: No response from the server.
+2024-12-02 20:43:18,540 - INFO - Sending deregistration message: DE-REGISTER e95e7b22-7c39-4734-8332-aa90f692b6d5 Peer1
+2024-12-02 20:43:18,541 - INFO - Message sent: DE-REGISTER e95e7b22-7c39-4734-8332-aa90f692b6d5 Peer1
+2024-12-02 20:43:23,547 - INFO - Timeout: No response from the server.
+2024-12-02 20:43:27,280 - INFO - Sending registration message: REGISTER e95e7b22-7c39-4734-8332-aa90f692b6d5 Peer1 172.31.5.61 6001 9001
+2024-12-02 20:43:27,281 - INFO - Message sent: REGISTER e95e7b22-7c39-4734-8332-aa90f692b6d5 Peer1 172.31.5.61 6001 9001
+2024-12-02 20:43:32,285 - INFO - Timeout: No response from the server.
+2024-12-02 20:44:12,136 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 20:44:12,137 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 20:44:13,251 - INFO - Sending deregistration message: DE-REGISTER bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16 Peer1
+2024-12-02 20:44:13,252 - INFO - Message sent: DE-REGISTER bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16 Peer1
+2024-12-02 20:44:13,257 - INFO - Server response received via listen_to_server: DE-REGISTERED bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16
+2024-12-02 20:44:14,301 - INFO - Sending registration message: REGISTER bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16 Peer1 172.31.5.61 6001 9001
+2024-12-02 20:44:14,301 - INFO - Message sent: REGISTER bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16 Peer1 172.31.5.61 6001 9001
+2024-12-02 20:44:14,304 - INFO - Server response received via listen_to_server: REGISTERED bf7c2d5b-c66c-4d5d-9a7b-7f5537d5fd16
+2024-12-02 20:45:11,109 - WARNING - Item 'apple' not found in inventory.
+2024-12-02 20:48:02,923 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 20:48:02,925 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 20:48:04,646 - INFO - Sending deregistration message: DE-REGISTER 81e4e62d-5002-40ed-bcd2-2701a28732e3 Peer1
+2024-12-02 20:48:04,647 - INFO - Message sent: DE-REGISTER 81e4e62d-5002-40ed-bcd2-2701a28732e3 Peer1
+2024-12-02 20:48:09,652 - INFO - Timeout: No response from the server.
+2024-12-02 20:48:21,890 - INFO - Sending registration message: REGISTER 81e4e62d-5002-40ed-bcd2-2701a28732e3 Peer1 172.31.5.61 6001 9001
+2024-12-02 20:48:21,892 - INFO - Message sent: REGISTER 81e4e62d-5002-40ed-bcd2-2701a28732e3 Peer1 172.31.5.61 6001 9001
+2024-12-02 20:48:26,896 - INFO - Timeout: No response from the server.
+2024-12-02 21:12:04,436 - INFO - Peer Peer1 initialized with UDP port 6001 and TCP port 9001.
+2024-12-02 21:12:04,437 - INFO - Peer1 listening for TCP connections on port 9001.
+2024-12-02 21:12:10,880 - INFO - Sending deregistration message: DE-REGISTER 37e3ae7e-88f7-464c-8914-be67838290a1 Peer1
+2024-12-02 21:12:10,881 - INFO - Message sent: DE-REGISTER 37e3ae7e-88f7-464c-8914-be67838290a1 Peer1
+2024-12-02 21:12:10,887 - INFO - Server response received via listen_to_server: DE-REGISTERED 37e3ae7e-88f7-464c-8914-be67838290a1
+2024-12-02 21:12:11,721 - INFO - Sending registration message: REGISTER 37e3ae7e-88f7-464c-8914-be67838290a1 Peer1 172.31.5.61 6001 9001
+2024-12-02 21:12:11,722 - INFO - Message sent: REGISTER 37e3ae7e-88f7-464c-8914-be67838290a1 Peer1 172.31.5.61 6001 9001
+2024-12-02 21:12:11,724 - INFO - Server response received via listen_to_server: REGISTERED 37e3ae7e-88f7-464c-8914-be67838290a1
+2024-12-02 21:12:36,260 - INFO - Message sent: OFFER f1c42e2e-376b-477a-a621-ef42f5f736ae Peer1 Ipad 800.0
+2024-12-02 21:12:41,261 - INFO - Timeout: No response from the server.
+2024-12-02 21:12:41,263 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 21:12:41,263 - INFO - Sent OFFER to server: OFFER f1c42e2e-376b-477a-a621-ef42f5f736ae Peer1 Ipad 800.0
+2024-12-02 21:13:09,528 - INFO - Updated reservation status for item 'Ipad' to True.
+2024-12-02 21:13:09,529 - INFO - Sent response to server: ACCEPT f1c42e2e-376b-477a-a621-ef42f5f736ae Ipad 700.0
+2024-12-02 21:27:39,323 - INFO - Updated reservation status for item 'Ipad' to False.
