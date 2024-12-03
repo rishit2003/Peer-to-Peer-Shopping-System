@@ -276,7 +276,7 @@ class Peer:
         return rq_number
 
     # Send a message to the server and wait for a response via listen_to_server.
-    def send_and_wait_for_response(self, message, server_address, timeout=5):
+    def send_and_wait_for_response(self, message, server_address, timeout=10):
         self.response_event.clear()  # Reset the event before sending a message
         self.response_message = None  # Clear any previous response
         try:
