@@ -117,16 +117,19 @@ Peer-to-Peer-Shopping-System/
 ## Screenshots
 
 - **Server Startup**  
-  ![Server Startup](screenshots/server_startup.png)
+   <img width="386" alt="Screenshot 2024-12-16 at 7 07 40 PM" src="https://github.com/user-attachments/assets/6a77d6de-6f7f-4cd2-8781-f9bfe73d8561" />
 
 - **Peer Registration**  
-  ![Peer Registration](screenshots/peer_registration.png)
+   <img width="489" alt="Screenshot 2024-12-16 at 7 12 13 PM" src="https://github.com/user-attachments/assets/eda6965a-4228-4df4-8431-c1aa260b71a4" />
 
-- **Item Search**  
-  ![Item Search](screenshots/item_search.png)
+- **Item Search & Transaction Finalization**
+   
+   - Peer1:
+   <img width="539" alt="Screenshot 2024-12-16 at 7 22 53 PM" src="https://github.com/user-attachments/assets/b508c10a-6ecf-44d6-90c7-cd6aa40b84b4" />
+   
+   - Peer2:
+   <img width="395" alt="Screenshot 2024-12-16 at 7 25 00 PM" src="https://github.com/user-attachments/assets/a13d2808-4335-4760-8f3c-25e4005e1bd1" />
 
-- **Transaction Finalization**  
-  ![Transaction Finalization](screenshots/transaction_finalization.png)
 
 
 ---
